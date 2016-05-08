@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.morder.mapper.TunitsMapper" >
+  <resultMap id="BaseResultMap" type="com.morder.model.Tunits" >
+    <id column="idunit" property="idunit" jdbcType="INTEGER" />
+    <result column="unitname" property="unitname" jdbcType="VARCHAR" />
+    <result column="pidunit" property="pidunit" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    idunit, unitname, pidunit
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tunits
+    where idunit = #{idunit,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tunits
+    where idunit = #{idunit,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.morder.model.Tunits" >
+    insert into tunits (idunit, unitname, pidunit
+      )
+    values (#{idunit,jdbcType=INTEGER}, #{unitname,jdbcType=VARCHAR}, #{pidunit,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.morder.model.Tunits" >
+    insert into tunits
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="idunit != null" >
+        idunit,
+      </if>
+      <if test="unitname != null" >
+        unitname,
+      </if>
+      <if test="pidunit != null" >
+        pidunit,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="idunit != null" >
+        #{idunit,jdbcType=INTEGER},
+      </if>
+      <if test="unitname != null" >
+        #{unitname,jdbcType=VARCHAR},
+      </if>
+      <if test="pidunit != null" >
+        #{pidunit,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.morder.model.Tunits" >
+    update tunits
+    <set >
+      <if test="unitname != null" >
+        unitname = #{unitname,jdbcType=VARCHAR},
+      </if>
+      <if test="pidunit != null" >
+        pidunit = #{pidunit,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where idunit = #{idunit,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.morder.model.Tunits" >
+    update tunits
+    set unitname = #{unitname,jdbcType=VARCHAR},
+      pidunit = #{pidunit,jdbcType=VARCHAR}
+    where idunit = #{idunit,jdbcType=INTEGER}
+  </update>
+</mapper>

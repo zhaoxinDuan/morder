@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.morder.mapper.TcustomerappendMapper" >
+  <resultMap id="BaseResultMap" type="com.morder.model.Tcustomerappend" >
+    <id column="idcusapp" property="idcusapp" jdbcType="INTEGER" />
+    <result column="cacontacts" property="cacontacts" jdbcType="VARCHAR" />
+    <result column="capositions" property="capositions" jdbcType="INTEGER" />
+    <result column="catelphone" property="catelphone" jdbcType="VARCHAR" />
+    <result column="camphone" property="camphone" jdbcType="VARCHAR" />
+    <result column="cafax" property="cafax" jdbcType="VARCHAR" />
+    <result column="carecaddress" property="carecaddress" jdbcType="VARCHAR" />
+    <result column="cacomments" property="cacomments" jdbcType="VARCHAR" />
+    <result column="tcustomer_idcustomer" property="tcustomerIdcustomer" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    idcusapp, cacontacts, capositions, catelphone, camphone, cafax, carecaddress, cacomments, 
+    tcustomer_idcustomer
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tcustomerappend
+    where idcusapp = #{idcusapp,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tcustomerappend
+    where idcusapp = #{idcusapp,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.morder.model.Tcustomerappend" >
+    insert into tcustomerappend (idcusapp, cacontacts, capositions, 
+      catelphone, camphone, cafax, 
+      carecaddress, cacomments, tcustomer_idcustomer
+      )
+    values (#{idcusapp,jdbcType=INTEGER}, #{cacontacts,jdbcType=VARCHAR}, #{capositions,jdbcType=INTEGER}, 
+      #{catelphone,jdbcType=VARCHAR}, #{camphone,jdbcType=VARCHAR}, #{cafax,jdbcType=VARCHAR}, 
+      #{carecaddress,jdbcType=VARCHAR}, #{cacomments,jdbcType=VARCHAR}, #{tcustomerIdcustomer,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.morder.model.Tcustomerappend" >
+    insert into tcustomerappend
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="idcusapp != null" >
+        idcusapp,
+      </if>
+      <if test="cacontacts != null" >
+        cacontacts,
+      </if>
+      <if test="capositions != null" >
+        capositions,
+      </if>
+      <if test="catelphone != null" >
+        catelphone,
+      </if>
+      <if test="camphone != null" >
+        camphone,
+      </if>
+      <if test="cafax != null" >
+        cafax,
+      </if>
+      <if test="carecaddress != null" >
+        carecaddress,
+      </if>
+      <if test="cacomments != null" >
+        cacomments,
+      </if>
+      <if test="tcustomerIdcustomer != null" >
+        tcustomer_idcustomer,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="idcusapp != null" >
+        #{idcusapp,jdbcType=INTEGER},
+      </if>
+      <if test="cacontacts != null" >
+        #{cacontacts,jdbcType=VARCHAR},
+      </if>
+      <if test="capositions != null" >
+        #{capositions,jdbcType=INTEGER},
+      </if>
+      <if test="catelphone != null" >
+        #{catelphone,jdbcType=VARCHAR},
+      </if>
+      <if test="camphone != null" >
+        #{camphone,jdbcType=VARCHAR},
+      </if>
+      <if test="cafax != null" >
+        #{cafax,jdbcType=VARCHAR},
+      </if>
+      <if test="carecaddress != null" >
+        #{carecaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="cacomments != null" >
+        #{cacomments,jdbcType=VARCHAR},
+      </if>
+      <if test="tcustomerIdcustomer != null" >
+        #{tcustomerIdcustomer,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.morder.model.Tcustomerappend" >
+    update tcustomerappend
+    <set >
+      <if test="cacontacts != null" >
+        cacontacts = #{cacontacts,jdbcType=VARCHAR},
+      </if>
+      <if test="capositions != null" >
+        capositions = #{capositions,jdbcType=INTEGER},
+      </if>
+      <if test="catelphone != null" >
+        catelphone = #{catelphone,jdbcType=VARCHAR},
+      </if>
+      <if test="camphone != null" >
+        camphone = #{camphone,jdbcType=VARCHAR},
+      </if>
+      <if test="cafax != null" >
+        cafax = #{cafax,jdbcType=VARCHAR},
+      </if>
+      <if test="carecaddress != null" >
+        carecaddress = #{carecaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="cacomments != null" >
+        cacomments = #{cacomments,jdbcType=VARCHAR},
+      </if>
+      <if test="tcustomerIdcustomer != null" >
+        tcustomer_idcustomer = #{tcustomerIdcustomer,jdbcType=INTEGER},
+      </if>
+    </set>
+    where idcusapp = #{idcusapp,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.morder.model.Tcustomerappend" >
+    update tcustomerappend
+    set cacontacts = #{cacontacts,jdbcType=VARCHAR},
+      capositions = #{capositions,jdbcType=INTEGER},
+      catelphone = #{catelphone,jdbcType=VARCHAR},
+      camphone = #{camphone,jdbcType=VARCHAR},
+      cafax = #{cafax,jdbcType=VARCHAR},
+      carecaddress = #{carecaddress,jdbcType=VARCHAR},
+      cacomments = #{cacomments,jdbcType=VARCHAR},
+      tcustomer_idcustomer = #{tcustomerIdcustomer,jdbcType=INTEGER}
+    where idcusapp = #{idcusapp,jdbcType=INTEGER}
+  </update>
+</mapper>

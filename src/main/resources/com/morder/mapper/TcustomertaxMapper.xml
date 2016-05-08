@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.morder.mapper.TcustomertaxMapper" >
+  <resultMap id="BaseResultMap" type="com.morder.model.Tcustomertax" >
+    <id column="idtcustax" property="idtcustax" jdbcType="INTEGER" />
+    <result column="tctcompname" property="tctcompname" jdbcType="VARCHAR" />
+    <result column="tcbillingaddr" property="tcbillingaddr" jdbcType="VARCHAR" />
+    <result column="tcbillingnum" property="tcbillingnum" jdbcType="VARCHAR" />
+    <result column="tcbankname" property="tcbankname" jdbcType="VARCHAR" />
+    <result column="tcbankaccount" property="tcbankaccount" jdbcType="VARCHAR" />
+    <result column="tcustomer_idcustomer" property="tcustomerIdcustomer" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    idtcustax, tctcompname, tcbillingaddr, tcbillingnum, tcbankname, tcbankaccount, tcustomer_idcustomer
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tcustomertax
+    where idtcustax = #{idtcustax,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tcustomertax
+    where idtcustax = #{idtcustax,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.morder.model.Tcustomertax" >
+    insert into tcustomertax (idtcustax, tctcompname, tcbillingaddr, 
+      tcbillingnum, tcbankname, tcbankaccount, 
+      tcustomer_idcustomer)
+    values (#{idtcustax,jdbcType=INTEGER}, #{tctcompname,jdbcType=VARCHAR}, #{tcbillingaddr,jdbcType=VARCHAR}, 
+      #{tcbillingnum,jdbcType=VARCHAR}, #{tcbankname,jdbcType=VARCHAR}, #{tcbankaccount,jdbcType=VARCHAR}, 
+      #{tcustomerIdcustomer,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.morder.model.Tcustomertax" >
+    insert into tcustomertax
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="idtcustax != null" >
+        idtcustax,
+      </if>
+      <if test="tctcompname != null" >
+        tctcompname,
+      </if>
+      <if test="tcbillingaddr != null" >
+        tcbillingaddr,
+      </if>
+      <if test="tcbillingnum != null" >
+        tcbillingnum,
+      </if>
+      <if test="tcbankname != null" >
+        tcbankname,
+      </if>
+      <if test="tcbankaccount != null" >
+        tcbankaccount,
+      </if>
+      <if test="tcustomerIdcustomer != null" >
+        tcustomer_idcustomer,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="idtcustax != null" >
+        #{idtcustax,jdbcType=INTEGER},
+      </if>
+      <if test="tctcompname != null" >
+        #{tctcompname,jdbcType=VARCHAR},
+      </if>
+      <if test="tcbillingaddr != null" >
+        #{tcbillingaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="tcbillingnum != null" >
+        #{tcbillingnum,jdbcType=VARCHAR},
+      </if>
+      <if test="tcbankname != null" >
+        #{tcbankname,jdbcType=VARCHAR},
+      </if>
+      <if test="tcbankaccount != null" >
+        #{tcbankaccount,jdbcType=VARCHAR},
+      </if>
+      <if test="tcustomerIdcustomer != null" >
+        #{tcustomerIdcustomer,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.morder.model.Tcustomertax" >
+    update tcustomertax
+    <set >
+      <if test="tctcompname != null" >
+        tctcompname = #{tctcompname,jdbcType=VARCHAR},
+      </if>
+      <if test="tcbillingaddr != null" >
+        tcbillingaddr = #{tcbillingaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="tcbillingnum != null" >
+        tcbillingnum = #{tcbillingnum,jdbcType=VARCHAR},
+      </if>
+      <if test="tcbankname != null" >
+        tcbankname = #{tcbankname,jdbcType=VARCHAR},
+      </if>
+      <if test="tcbankaccount != null" >
+        tcbankaccount = #{tcbankaccount,jdbcType=VARCHAR},
+      </if>
+      <if test="tcustomerIdcustomer != null" >
+        tcustomer_idcustomer = #{tcustomerIdcustomer,jdbcType=INTEGER},
+      </if>
+    </set>
+    where idtcustax = #{idtcustax,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.morder.model.Tcustomertax" >
+    update tcustomertax
+    set tctcompname = #{tctcompname,jdbcType=VARCHAR},
+      tcbillingaddr = #{tcbillingaddr,jdbcType=VARCHAR},
+      tcbillingnum = #{tcbillingnum,jdbcType=VARCHAR},
+      tcbankname = #{tcbankname,jdbcType=VARCHAR},
+      tcbankaccount = #{tcbankaccount,jdbcType=VARCHAR},
+      tcustomer_idcustomer = #{tcustomerIdcustomer,jdbcType=INTEGER}
+    where idtcustax = #{idtcustax,jdbcType=INTEGER}
+  </update>
+</mapper>

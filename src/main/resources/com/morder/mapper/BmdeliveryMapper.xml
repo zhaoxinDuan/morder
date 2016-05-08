@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.morder.mapper.BmdeliveryMapper" >
+  <resultMap id="BaseResultMap" type="com.morder.model.Bmdelivery" >
+    <id column="idbmdelivery" property="idbmdelivery" jdbcType="INTEGER" />
+    <result column="bmdreccompany" property="bmdreccompany" jdbcType="VARCHAR" />
+    <result column="bmdeliverynum" property="bmdeliverynum" jdbcType="VARCHAR" />
+    <result column="bmdeliverydate" property="bmdeliverydate" jdbcType="DATE" />
+    <result column="bmdeliveryuser" property="bmdeliveryuser" jdbcType="VARCHAR" />
+    <result column="bmdeliveryuserid" property="bmdeliveryuserid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    idbmdelivery, bmdreccompany, bmdeliverynum, bmdeliverydate, bmdeliveryuser, bmdeliveryuserid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from bmdelivery
+    where idbmdelivery = #{idbmdelivery,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from bmdelivery
+    where idbmdelivery = #{idbmdelivery,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.morder.model.Bmdelivery" >
+    insert into bmdelivery (idbmdelivery, bmdreccompany, bmdeliverynum, 
+      bmdeliverydate, bmdeliveryuser, bmdeliveryuserid
+      )
+    values (#{idbmdelivery,jdbcType=INTEGER}, #{bmdreccompany,jdbcType=VARCHAR}, #{bmdeliverynum,jdbcType=VARCHAR}, 
+      #{bmdeliverydate,jdbcType=DATE}, #{bmdeliveryuser,jdbcType=VARCHAR}, #{bmdeliveryuserid,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.morder.model.Bmdelivery" >
+    insert into bmdelivery
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="idbmdelivery != null" >
+        idbmdelivery,
+      </if>
+      <if test="bmdreccompany != null" >
+        bmdreccompany,
+      </if>
+      <if test="bmdeliverynum != null" >
+        bmdeliverynum,
+      </if>
+      <if test="bmdeliverydate != null" >
+        bmdeliverydate,
+      </if>
+      <if test="bmdeliveryuser != null" >
+        bmdeliveryuser,
+      </if>
+      <if test="bmdeliveryuserid != null" >
+        bmdeliveryuserid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="idbmdelivery != null" >
+        #{idbmdelivery,jdbcType=INTEGER},
+      </if>
+      <if test="bmdreccompany != null" >
+        #{bmdreccompany,jdbcType=VARCHAR},
+      </if>
+      <if test="bmdeliverynum != null" >
+        #{bmdeliverynum,jdbcType=VARCHAR},
+      </if>
+      <if test="bmdeliverydate != null" >
+        #{bmdeliverydate,jdbcType=DATE},
+      </if>
+      <if test="bmdeliveryuser != null" >
+        #{bmdeliveryuser,jdbcType=VARCHAR},
+      </if>
+      <if test="bmdeliveryuserid != null" >
+        #{bmdeliveryuserid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.morder.model.Bmdelivery" >
+    update bmdelivery
+    <set >
+      <if test="bmdreccompany != null" >
+        bmdreccompany = #{bmdreccompany,jdbcType=VARCHAR},
+      </if>
+      <if test="bmdeliverynum != null" >
+        bmdeliverynum = #{bmdeliverynum,jdbcType=VARCHAR},
+      </if>
+      <if test="bmdeliverydate != null" >
+        bmdeliverydate = #{bmdeliverydate,jdbcType=DATE},
+      </if>
+      <if test="bmdeliveryuser != null" >
+        bmdeliveryuser = #{bmdeliveryuser,jdbcType=VARCHAR},
+      </if>
+      <if test="bmdeliveryuserid != null" >
+        bmdeliveryuserid = #{bmdeliveryuserid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where idbmdelivery = #{idbmdelivery,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.morder.model.Bmdelivery" >
+    update bmdelivery
+    set bmdreccompany = #{bmdreccompany,jdbcType=VARCHAR},
+      bmdeliverynum = #{bmdeliverynum,jdbcType=VARCHAR},
+      bmdeliverydate = #{bmdeliverydate,jdbcType=DATE},
+      bmdeliveryuser = #{bmdeliveryuser,jdbcType=VARCHAR},
+      bmdeliveryuserid = #{bmdeliveryuserid,jdbcType=INTEGER}
+    where idbmdelivery = #{idbmdelivery,jdbcType=INTEGER}
+  </update>
+</mapper>

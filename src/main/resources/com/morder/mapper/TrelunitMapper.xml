@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.morder.mapper.TrelunitMapper" >
+  <resultMap id="BaseResultMap" type="com.morder.model.Trelunit" >
+    <result column="tuser_iduser" property="tuserIduser" jdbcType="INTEGER" />
+    <result column="tunits_idunit" property="tunitsIdunit" jdbcType="INTEGER" />
+  </resultMap>
+  <insert id="insert" parameterType="com.morder.model.Trelunit" >
+    insert into trelunit (tuser_iduser, tunits_idunit)
+    values (#{tuserIduser,jdbcType=INTEGER}, #{tunitsIdunit,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.morder.model.Trelunit" >
+    insert into trelunit
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tuserIduser != null" >
+        tuser_iduser,
+      </if>
+      <if test="tunitsIdunit != null" >
+        tunits_idunit,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tuserIduser != null" >
+        #{tuserIduser,jdbcType=INTEGER},
+      </if>
+      <if test="tunitsIdunit != null" >
+        #{tunitsIdunit,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

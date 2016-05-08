@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.morder.mapper.TcustomerMapper" >
+  <resultMap id="BaseResultMap" type="com.morder.model.Tcustomer" >
+    <id column="idcustomer" property="idcustomer" jdbcType="INTEGER" />
+    <result column="cname" property="cname" jdbcType="VARCHAR" />
+    <result column="caddress" property="caddress" jdbcType="VARCHAR" />
+    <result column="csettype" property="csettype" jdbcType="INTEGER" />
+    <result column="cofficername" property="cofficername" jdbcType="VARCHAR" />
+    <result column="cofficeruid" property="cofficeruid" jdbcType="INTEGER" />
+    <result column="comments" property="comments" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    idcustomer, cname, caddress, csettype, cofficername, cofficeruid, comments
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tcustomer
+    where idcustomer = #{idcustomer,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tcustomer
+    where idcustomer = #{idcustomer,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.morder.model.Tcustomer" >
+    insert into tcustomer (idcustomer, cname, caddress, 
+      csettype, cofficername, cofficeruid, 
+      comments)
+    values (#{idcustomer,jdbcType=INTEGER}, #{cname,jdbcType=VARCHAR}, #{caddress,jdbcType=VARCHAR}, 
+      #{csettype,jdbcType=INTEGER}, #{cofficername,jdbcType=VARCHAR}, #{cofficeruid,jdbcType=INTEGER}, 
+      #{comments,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.morder.model.Tcustomer" >
+    insert into tcustomer
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="idcustomer != null" >
+        idcustomer,
+      </if>
+      <if test="cname != null" >
+        cname,
+      </if>
+      <if test="caddress != null" >
+        caddress,
+      </if>
+      <if test="csettype != null" >
+        csettype,
+      </if>
+      <if test="cofficername != null" >
+        cofficername,
+      </if>
+      <if test="cofficeruid != null" >
+        cofficeruid,
+      </if>
+      <if test="comments != null" >
+        comments,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="idcustomer != null" >
+        #{idcustomer,jdbcType=INTEGER},
+      </if>
+      <if test="cname != null" >
+        #{cname,jdbcType=VARCHAR},
+      </if>
+      <if test="caddress != null" >
+        #{caddress,jdbcType=VARCHAR},
+      </if>
+      <if test="csettype != null" >
+        #{csettype,jdbcType=INTEGER},
+      </if>
+      <if test="cofficername != null" >
+        #{cofficername,jdbcType=VARCHAR},
+      </if>
+      <if test="cofficeruid != null" >
+        #{cofficeruid,jdbcType=INTEGER},
+      </if>
+      <if test="comments != null" >
+        #{comments,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.morder.model.Tcustomer" >
+    update tcustomer
+    <set >
+      <if test="cname != null" >
+        cname = #{cname,jdbcType=VARCHAR},
+      </if>
+      <if test="caddress != null" >
+        caddress = #{caddress,jdbcType=VARCHAR},
+      </if>
+      <if test="csettype != null" >
+        csettype = #{csettype,jdbcType=INTEGER},
+      </if>
+      <if test="cofficername != null" >
+        cofficername = #{cofficername,jdbcType=VARCHAR},
+      </if>
+      <if test="cofficeruid != null" >
+        cofficeruid = #{cofficeruid,jdbcType=INTEGER},
+      </if>
+      <if test="comments != null" >
+        comments = #{comments,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where idcustomer = #{idcustomer,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.morder.model.Tcustomer" >
+    update tcustomer
+    set cname = #{cname,jdbcType=VARCHAR},
+      caddress = #{caddress,jdbcType=VARCHAR},
+      csettype = #{csettype,jdbcType=INTEGER},
+      cofficername = #{cofficername,jdbcType=VARCHAR},
+      cofficeruid = #{cofficeruid,jdbcType=INTEGER},
+      comments = #{comments,jdbcType=VARCHAR}
+    where idcustomer = #{idcustomer,jdbcType=INTEGER}
+  </update>
+</mapper>
