@@ -1,7 +1,7 @@
 package com.morder.security;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,7 +14,7 @@ import java.util.List;
  * Created by amis on 2016/3/15.
  */
 public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
-    private static Log logger = LogFactory.getLog(UserDetailsService.class);
+    private static Logger logger = LoggerFactory.getLogger(UserDetailsService.class);
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 //        if(orgUM==null){

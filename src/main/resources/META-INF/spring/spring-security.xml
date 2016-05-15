@@ -9,26 +9,26 @@
 	<http security="none" pattern="/resources/**" />
 	<http security="none" pattern="/**/*.jsp" />
 
-	<http auto-config='true' access-decision-manager-ref="accessDecisionManager" access-denied-page="/login"
+	<http auto-config='true' access-decision-manager-ref="accessDecisionManager" access-denied-page="/login.jsp"
 		use-expressions="true">
 		<logout logout-url="/logout.do" invalidate-session="true"
-			logout-success-url="/dpp/defIndex" />
+			logout-success-url="/login.jsp" />
 
 
-		<form-login login-page="/login" authentication-failure-url="/login?error=1"
+		<form-login login-page="/login" authentication-failure-url="/login.jsp?error=1"
 			login-processing-url="/j_security_check.do" password-parameter="j_password"
 			username-parameter="j_username" />
 
 
-		<intercept-url pattern="/**/*.do" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/**/*.htmls" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/**/*.htm" access="hasRole('ROLE_ADMIN')" />
 
 		<session-management session-fixation-protection="changeSessionId">
 			<concurrency-control max-sessions="1"
-				expired-url="/access/sameLogin.do" />
+				expired-url="/access/sameLogin.htmls" />
 		</session-management>
 
-		<remember-me key="aicdpp#FD637E6D9C0F1A5A67082AF56CE32485"
+		<remember-me key="morder#FD637E6D9C0F1A5A67082AF56CE32485"
 			remember-me-parameter="remember-me" />
 	</http>
 
@@ -48,6 +48,7 @@
 	<beans:bean id="authorizationListener"
 		class="org.springframework.security.access.event.LoggerListener" />
 
+	<beans:bean id="userService" class="com.morder.security.UserDetailsService" />
 	<!-- 认证管理器，使用自定义的UserDetailsService，并对密码采用md5加密 -->
 	<authentication-manager>
 		<authentication-provider user-service-ref="userService">
@@ -59,7 +60,7 @@
 
 
 
-	<beans:bean id="userService" class="com.morder.security.UserDetailsService" />
+
 
 	<beans:bean id="accessDecisionManager"
 		class="org.springframework.security.access.vote.AffirmativeBased">
@@ -73,4 +74,18 @@
 		</beans:property>
 	</beans:bean>
 
+
+	<!-- CSRF protection. Here we only include the CsrfFilter instead of all
+        of Spring Security. See http://docs.spring.io/spring-security/site/docs/3.2.x/reference/htmlsingle/#csrf
+        for more information on Spring Security's CSRF protection -->
+	<beans:bean id="csrfFilter" class="org.springframework.security.web.csrf.CsrfFilter">
+		<beans:constructor-arg>
+			<beans:bean
+					class="org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository" />
+		</beans:constructor-arg>
+	</beans:bean>
+	<!-- Provides automatic CSRF token inclusion when using Spring MVC Form
+        tags or Thymeleaf. -->
+	<beans:bean id="requestDataValueProcessor"
+				class="org.springframework.security.web.servlet.support.csrf.CsrfRequestDataValueProcessor" />
 </beans:beans>

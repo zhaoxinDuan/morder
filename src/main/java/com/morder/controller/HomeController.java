@@ -3,8 +3,6 @@ package com.morder.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.Map;
-
 /**
  * Created by amis on 16-5-8.
  */
@@ -12,17 +10,11 @@ import java.util.Map;
 @RequestMapping("/home")
 public class HomeController {
 
-    @RequestMapping("/index.htmls")
-    public String index() throws Exception {
-        return "/home/login";
-    }
-    @RequestMapping("/login.htmls")
-    public String login(String username, String password) throws Exception {
-        return "";
+    @RequestMapping("/main.do")
+    public String mainPage() throws Exception {
+        return "/home/main";
     }
 
-    public String logout() throws Exception {
-        return "";
-    }
+
 
 }
