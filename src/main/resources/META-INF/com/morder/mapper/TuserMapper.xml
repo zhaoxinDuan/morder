@@ -125,4 +125,10 @@
       uisdel = #{uisdel,jdbcType=INTEGER}
     where iduser = #{iduser,jdbcType=INTEGER}
   </update>
+
+  <select id="findAllUsersByPage" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from tuser
+  </select>
 </mapper>

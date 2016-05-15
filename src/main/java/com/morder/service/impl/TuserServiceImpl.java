@@ -3,10 +3,13 @@ package com.morder.service.impl;
 import com.morder.mapper.TuserMapper;
 import com.morder.model.Tuser;
 import com.morder.service.TuserService;
+import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Created by amis on 16-5-15.
@@ -44,4 +47,11 @@ public class TuserServiceImpl implements TuserService {
     public Tuser selectByPrimaryKey(Integer iduser) {
         return this.tuserMapper.selectByPrimaryKey(iduser);
     }
+
+    public List findAllUsers(Integer start, Integer limit) {
+        RowBounds rowBounds = new RowBounds(start,limit);
+        return this.tuserMapper.findAllUsersByPage(rowBounds);
+    }
+
+
 }
