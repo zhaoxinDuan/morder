@@ -2,6 +2,7 @@ package com.morder.security;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,13 +30,11 @@ public class UserDetailsService implements org.springframework.security.core.use
         //为了测试方便，用户就写死了，真实环境可以查询数据库
 //        AICUser aicUser = orgUM.login(username);
         String userlongid = username;
-//        Md5PasswordEncoder encode = new Md5PasswordEncoder();
-        String password = null;
-//        try {
-//            password = encode.encodePassword(PasswordVerify.DecodePassword(aicUser==null?"":aicUser.getPassword()), null);
-//        } catch (CryptException e) {
-//            e.printStackTrace();
-//        }
+        Md5PasswordEncoder encode = new Md5PasswordEncoder();
+        String password = "123456";
+
+        password = encode.encodePassword(password, null);
+
         return new User(userlongid, password, true, true,
                 true, true, authorities);
     }

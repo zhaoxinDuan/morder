@@ -8,4 +8,6 @@
 
        <!--自动扫描含有@Service将其注入为bean -->
        <context:component-scan base-package="com.morder.service" />
+       <!--自动扫描含有@Component将其注入为bean -->
+       <context:component-scan base-package="com.morder.component" />
 </beans>

@@ -1,0 +1,189 @@
+@charset "GBK";
+
+/*全局类*/
+*{vertical-align: middle;margin: 0;padding: 0;}
+body{overflow-x:hidden;overflow-y:scroll;height:100%;font:12px verdana,Arial,SimHei,sans-serif;color:#333;background-color: #fff;}
+ul li{list-style: none;}
+/*全局类*/
+
+/*框架类*/
+.indHead{position:absolute;top:0;left:0;width:100%;height:80px;background-color: #fff;z-index: 1;}/*顶部*/
+.logo{height: 50px;width: 400px;float: left;margin: 15px 0 0 15px;}/*使用时根据logo大小在页面重写width属性*/
+.func{height:30px;float: right;position: relative;top:100%;margin:-30px 30px 0 0;}/*功能图标区域*/
+.funcIco{width: 18px;height: 18px;float: left;margin: 6px 4px 0 6px;}/*功能图标*/
+.funcText{height: 18px;float: left;margin: 6px 10px 0 0;}/*功能名称*/
+.funcText a{font: 12px/18px SimHei;font-weight:bold;color:#3f8aca;text-decoration: none;}
+.funcText a:hover{text-decoration: underline;}
+.indContent{position:absolute;top:86px;right:0;bottom:0;left:0;overflow:hidden;width:100%;_height:100%;background-color: #fff;z-index: 2;}/*框架主体部分，包含功能菜单、工作区*/
+.removeHead{top:0;}/*移除头部，必须在indContent基础上使用*/
+.cLeftHead{position:absolute;top:0;left:0;bottom:0;width:206px;height:26px;margin:2px;background-color:#3f8aca;font:14px/26px verdana,SimHei; color:#fff;overflow:hidden;text-align: center;font-weight: bold;}/*功能菜单标题*/
+.cLeft{position:absolute;top:30px;left:0;bottom:0;overflow:auto;width:210px;_height:100%;}/*功能菜单栏*/
+#arrowH{position:absolute;left:210px;height:100%;width:6px;cursor:pointer;background-color: #3f8aca;margin: 0;z-index:3;}/*水平伸缩栏*/
+.arrowHD,.arrowHA{width:6px;height:24px;position:absolute;top:50%;margin-top:-3px;}/*水平伸缩箭头*/
+#arrowV{position:absolute;top:80px;height:6px;width:100%;cursor:pointer;background-color: #3f8aca;margin: 0;z-index:3;}/*垂直伸缩栏*/
+.arrowVW,.arrowVS{width:24px;height:6px;position:absolute;left:50%;margin-left:-3px;}/*水平伸缩箭头*/
+.cRight{position:absolute;_position:static;top:0;right:0;bottom:0;left:218px;overflow:hidden;_height:100%;_margin-left:218px;background-color: #ffffff;z-index:3;}/*工作区*/
+/*框架类*/
+
+/*公共类*/
+/*1、布局类*/
+.ctrlContainer{width:98%;height:auto;margin-left:1%;float: left;}/*元素主容器*/
+.eleContainer{width:100%;height:auto;margin-top:10px;float: left;}/*元素容器*/
+.eleNoMarginTop{margin-top: 0;}/*元素容器顶部去除偏移,基于eleContainer*/
+.elePaddingBtm{padding-bottom: 10px;}/*元素容器底部内偏移,基于eleContainer*/
+.eleMarginLeft{margin-left: 2%;}/*元素容器左偏移，必须在wp046基础上使用*/
+.eleAlignL{text-align: left;}/*元素容器内部左对齐,基于eleContainer*/
+.eleAlignC{text-align: center;}/*元素容器内部中对齐,基于eleContainer*/
+.eleAlignR{text-align: right;}/*元素容器内部右对齐,基于eleContainer*/
+.eleBg{background-color: #3f8aca;}/*元素容器背景,基于eleContainer*/
+.eleBorder{border:solid 1px #adcedc;}/*元素容器边框,基于eleContainer*/
+.eleUnderline{border-bottom:solid 1px #3f8aca;}/*元素容器底边框,基于eleContainer*/
+.eleHide{display: none;}/*元素容器隐藏,基于eleContainer*/
+.eleSV{overflow-y: auto;}/*元素容器垂直滚动条,基于eleContainer*/
+.eleSH{overflow-x: auto;}/*元素容器水平滚动条,基于eleContainer*/
+.eleNSV{overflow-y: hidden;}/*元素容器去除垂直滚动条,基于eleContainer*/
+.eleNSH{overflow-x: hidden;}/*元素容器去除水平滚动条,基于eleContainer*/
+.whAuto{width: auto;height: auto;}/*自动宽高*/
+/*布局类结束*/
+
+/*2、宽度控制类*/
+.w020{width: 20px;}
+.w030{width: 30px;}
+.w040{width: 40px;}
+.w050{width: 50px;}
+.w080{width: 80px;}
+.w100{width: 100px;}
+.w120{width: 120px;}
+.w150{width: 150px;}
+.w200{width: 200px;}
+.w250{width: 250px;}
+.w300{width: 300px;}
+.w350{width: 350px;}
+.w400{width: 400px;}
+.w450{width: 450px;}
+.w500{width: 500px;}
+.w550{width: 550px;}
+.wp010{width: 10%;}
+.wp020{width: 20%;}
+.wp025{width: 25%;}
+.wp030{width: 30%;}
+.wp040{width: 40%;}
+.wp047{width: 47%;}
+.wp049{width: 49%;}
+.wp050{width: 50%;}
+.wp060{width: 60%;}
+.wp070{width: 70%;}
+.wp080{width: 80%;}
+.wp090{width: 90%;}
+.wp096{width: 96%;}
+.wp098{width: 98%;}
+.wp100{width: 100%;}
+.wAuto{width: auto;}
+/*宽度控制类结束*/
+
+/*3、高度控制类*/
+.h010{height: 10px;}
+.h020{height: 20px;}
+.h030{height: 30px;}
+.h040{height: 40px;}
+.h050{height: 50px;}
+.h060{height: 60px;}
+.h080{height: 80px;}
+.h100{height: 100px;}
+.h120{height: 120px;}
+.h150{height: 150px;}
+.h200{height: 200px;}
+.h250{height: 250px;}
+.h300{height: 300px;}
+.h350{height: 350px;}
+.h400{height: 400px;}
+.h450{height: 450px;}
+.h500{height: 500px;}
+.h550{height: 550px;}
+.h600{height: 600px;}
+.h650{height: 650px;}
+.h700{height: 700px;}
+.hp100{height:100%;}
+.hAuto{height: auto}
+/*高度控制类结束*/
+
+/*4、文本类*/
+.titleText{font-weight:bold;color:#3f8aca;}/*标题文本,基于eleContainer*/
+.textS10{font-size: 10px;}
+.textS12{font-size: 12px;}
+.textS14{font-size: 14px;}
+.textS16{font-size: 16px;}
+.textS18{font-size: 18px;}
+.textS20{font-size: 20px;}
+.textS22{font-size: 22px;}
+.textS24{font-size: 24px;}
+.textS26{font-size: 26px;}
+.textS28{font-size: 28px;}
+.impSpan{color:#ff0000;text-align: center;font-size: 14px;}/*必填字段标识*/
+/*文本类结束*/
+
+/*5、布局表格*/
+.layoutTable{width: 100%;background-color:#adcedc;word-break:break-all;word-wrap:break-word;white-space:normal;}
+.layoutTable td{text-align: left;}
+.layoutTable th,.layoutTable td{height:28px;padding:2px;color:#444;background-color: #ffffff;font-weight:normal;}
+.layoutTable th,.layoutTableHead td{text-align: center;}
+.layoutTableHead th{text-align: left;font-weight:bold;color:#fff;text-indent:3px;}
+.layoutTableHead th,.layoutTableHead td{height:24px;background-color: #3f8aca;}
+.layoutTable th,.layoutTable td,.layoutTableHead th,.layoutTableHead td{font-size:14px;}
+/*布局表格结束*/
+
+/*6、表单类*/
+/*文本框*/
+.textInput{display:inline-block;white-space:nowrap;border:1px solid #ccc;font-size: 12px;line-height:20px;height:20px;}
+.textInputReadonly{background-color:#eee;}
+/*文本域*/
+.textArea{border:1px solid #ddd;padding:2px;height: 40px;margin:6px 0;}
+/*文件上传*/
+.fileBox{position:relative;display:inline-block;width:auto;}
+.fileBtn{height:22px; width:70px;background-color:#FFF; border:1px solid #CDCDCD;text-align: center;}
+.fileControls{ position:absolute;top:0;left: 0;height:22px; filter:alpha(opacity:0);opacity:0;width:280px;padding: 0;}
+/*a标签*/
+a.link{font-size:12px;color:#444;}
+a.link:hover{color: #3f8aca;}
+/*按钮*/
+.commonBtn{background-color:#3f8aca;border:0;border-radius: 2px;padding:6px 10px;color:#fff;text-align: center;cursor: pointer;}
+/*表单类结束*/
+/*公用类结束*/
+
+/*error*/
+.errorBlk{position:relative;width: 520px;height: auto;left: 50%;margin-left: -260px;}
+.error{width: 520px;height:320px;margin: 0;float: left;}
+/*error结束*/
+
+/*theftLinks*/
+.theftLinksBlk{position:relative;width: 550px;height: auto;left: 50%;margin-left: -275px;}
+.theftLinks{width: 550px;height:400px;margin: 0;float: left;}
+/*theftLinks结束*/
+#chartMenu
+{
+    font-family: Arial;
+    border: 5px solid #dedede;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    padding:5px;
+    height: 100px;
+    width: 150px;
+    position:absolute;
+    z-index:9999;
+    background-color:#dedede;
+}
+#chartMenu a, a:link,a:active,a:visited
+{
+    font-size:15px;
+    color:#000;
+    text-decoration:none;
+}
+#chartMenu a:hover
+{
+    color:blue;
+}
+
+
+
+
+

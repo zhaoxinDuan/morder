@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>饼图</title>
+<script type="text/javascript" src="../jquery-1.10.1.js"></script>
+<script type="text/javascript" src="../highcharts.js"></script>
+<!--<script src="http://code.highcharts.com/modules/exporting.js"></script>-->
+<script type="text/javascript">
+	var title = "";
+	var dataser = [
+		{name:'娱乐场所', y:32, sliced: true, selected: true}, ['烟花爆竹', 47],['矿山开采', 47],['民用爆破', 15],['危险化学', 23],['成品油', 37],['城市新建燃气', 56],['互联网上网服务', 76],['宾馆旅业', 88],['酒吧', 78],['桑拿按摩业', 87],['影剧院', 67],['3000平米以上超市', 34]
+	];
+	//娱乐场所、烟花爆竹、矿山开采、民用爆破、危险化学、成品油、城市新建燃气、互联网上网服务、[一定规模公共聚集场所]宾馆旅业、酒吧、桑拿按摩业、影剧院、3000平米以上超市
+	//安全生产许可、危险化学品经营许可
+
+	$(function () {
+		$('#container').highcharts({
+			chart: {
+				plotBackgroundColor: null,
+				plotBorderWidth: null,
+				plotShadow: true
+			},
+			title: {
+				text: title
+			},
+			tooltip: {
+				pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+			},
+			legend: {
+				align: 'right',
+				verticalAlign: 'middle',
+				layout: 'vertical'
+			},
+			plotOptions: {
+				pie: {
+					allowPointSelect: true,
+					cursor: 'pointer',
+					showInLegend: true,
+					dataLabels: {
+						enabled: true,
+						distance: -50,
+						color: 'white',
+						//color: '#000000',
+						//connectorColor: '#000000',
+						format: '{point.percentage:.1f} %'
+					}
+				}
+			},
+			series: [{
+				type: 'pie',
+				name: '占比',
+				/*data: [
+					['Firefox',   45.0],
+					['IE',       26.8],
+					{
+						name: 'Chrome',
+						y: 12.8,
+						sliced: true,
+						selected: true
+					},
+					['Safari',    8.5],
+					['Opera',     6.2],
+					['Others',   0.7]
+				]*/
+				data : dataser
+			}]
+		});
+	})
+</script>
+</head>
+
+<body>
+<div id="container" style="min-width: 400px; height: 400px; margin: 0 auto; width:500px; height:300px"></div>
+
+</body>
+</html>

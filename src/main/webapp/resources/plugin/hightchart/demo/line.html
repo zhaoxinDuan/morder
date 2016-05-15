@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>线图</title>
+<script type="text/javascript" src="../jquery-1.10.1.js"></script>
+<script type="text/javascript" src="../highcharts.js"></script>
+<!--<script src="http://code.highcharts.com/modules/exporting.js"></script>-->
+<script type="text/javascript">
+	var dataser = [
+		{name: "已检查数", data: [164, 103, 156, 190, 250, 254], dataLabels: {enabled: true}}
+		/*{name: "发现问题数", data: [33, 26, 42, 32, 52, 35], dataLabels: {enabled: true}}*/
+	];
+	
+	var category = ['一月','二月','三月','四月','五月','六月'];
+
+	$(function () {
+        $('#container').highcharts({
+            chart: {
+                type: 'line',
+                marginRight: 13
+            },
+            title: {
+                text: ''
+            },
+            subtitle: {
+                text: ''
+            },
+            xAxis: {
+                categories: category,
+                labels: {
+                        rotation: -45,
+                        align: 'right',
+                        style: {font: 'normal 13px 宋体'}
+               	}
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: ''
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                valueSuffix: ''
+            },
+            
+            /*series: [{
+                name: '已审批',
+                data: [54, 67, 56, 89, 76, 90],
+                dataLabels:{enabled: true}
+            }]*/
+			series: dataser
+        });
+    });
+    
+
+</script>
+
+</head>
+
+<body>
+<div id="container" style="min-width: 400px; height: 400px; margin: 0 auto; width:500px; height:300px;"></div>
+</body>
+</html>

@@ -1,0 +1,122 @@
+.tableIDQM td{text-align: left;}/*input向右偏移*/
+.headTitle{font-family: verdana, Arial,'微软雅黑', height:35px;text-align:center;line-height:30px;font-size: 15px;}
+.queryName{font-family: verdana, Arial,'微软雅黑', sans-serif;font-size:14px;color:#333;width: auto;padding: 10px;margin-top: 5px;margin-bottom: 10px;}/*控制查询字体*/
+.case-searchbox{overflow: hidden;width: 30px;}/*查询的输入框*/
+.checkbox-width{width: 80px;}/*box长度*/
+.title_bgc{background-color: #daeef5;}/*headTitle的背景色*/
+.usualDivStylebutton{width:100%;margin: 10px 0 0 0;text-align:center;float:left;}/*常用自适应DIV样式，默认距离上标签10px偏移量，使用时在页面重写margin属性*【查询】以及其它按钮居中样式*/
+.usualDivStyleSave{width:100%;margin: 10px 0 0 0;text-align:right;}/*常用自适应DIV样式，默认距离上标签10px偏移量，使用时在页面重写margin属性*【保存】钮居右样式*/
+.usualDivStyleBack{width:100%;margin: 10px 0 0 0;text-align:right;}/*常用自适应DIV样式，默认距离上标签10px偏移量，使用时在页面重写margin属性*【返回】钮居右样式*/
+.wordTitle{font-family: verdana, Arial,'微软雅黑', sans-serif;font-size:14px;color:#333;margin-top:10px;}/*控制字体：“下一步”发送流程字体*/
+
+/*hbj*/
+.tableDiag{width: 100%;padding: 0;margin: 0;border: none;background-color: #adcedc;}
+.tableDiag th{height:30px;font-family: verdana, Arial,'黑体', sans-serif;font-size:12px;color:#777;text-align: center;background-color: #fdfdfd;}
+.tableDiag td{height:30px;font-family: verdana, Arial,'黑体', sans-serif;font-size:12px;color:#777;text-align: center;background-color: #ffffff;}
+/*hbj*/
+
+.auditBlk{width: 32%;height:30px;float:left;margin-left:1%;overflow: hidden;line-height: 30px;}
+.auditIco{width: 16px;height: 16px;float: left;margin:7px 5px 0 0;}
+.auditBlk a{font-family: Helvetica Neue,Microsoft Yahei,Hiragino Sans GB,WenQuanYi Micro Hei,sans-serif;font-size:12px;color: #777;text-decoration: none;}
+.auditBlk a:hover{color:#e61c64;text-decoration: underline;}
+a.link{font-family: Helvetica Neue,Microsoft Yahei,Hiragino Sans GB,WenQuanYi Micro Hei,sans-serif;font-size:12px;color:#444;}
+a.link:hover{color: #e61c64;}
+.textAreaAll{border:1px solid #adcedc;padding:2px;height: 30px;margin:6px 0;}/*通用textArea*/
+.textArea{border:1px solid #adcedc;padding:2px;height: 60px;margin:6px 0;}/*案由不备注专用textArea*/
+/*定性处罚*/
+.tablePunish{width: 100%;padding: 0;margin: 0;border: none;background-color: #eeeeee;}
+.tablePunish th{height:30px;font-family: Helvetica Neue,Microsoft Yahei,Hiragino Sans GB,WenQuanYi Micro Hei,sans-serif;font-size:12px;color:#777;text-align: center;background-color: #fdfdfd;}
+.tablePunish td{height:30px;font-family: Helvetica Neue,Microsoft Yahei,Hiragino Sans GB,WenQuanYi Micro Hei,sans-serif;padding:2px;font-size:12px;color:#777;text-align: left;background-color: #ffffff;}
+/*定性处罚*/
+
+.fileBlk{width: 32%;height:30px;float:left;margin-left:1%;overflow: hidden;line-height: 30px;}
+.fileIco{width: 16px;height: 16px;float: left;margin:7px 5px 0 0;}
+.fileBlk a{font-family: Helvetica Neue,Microsoft Yahei,Hiragino Sans GB,WenQuanYi Micro Hei,sans-serif;font-size:12px;color: #777;text-decoration: none;}
+.fileBlk a:hover{color:#e61c64;text-decoration: underline;}
+
+/*2014/05/21*/
+.chooseBlk{width:180px;height:330px;margin: 10px 10px 0 0;float:left;border: solid 1px #ddd;overflow: auto;}
+/*edit by xust 2014-06-12*/
+.chooseBlkTitle{width:100%;height: 29px;float: left;border-bottom: solid 1px #ddd;line-height:29px;background-color: #e61c64;text-align: left;overflow: hidden;color: #fff;}
+/*edit by xust 2014-06-12*/
+.chooseBlkList{width:100%;height:300px;float:left;overflow: auto;}
+.chooseBlkLi{width: 100%;height:20px;margin-top: 5px;text-align: left;cursor: pointer;-moz-user-select:none;line-height: 20px;font-family: Helvetica Neue,Microsoft Yahei,Hiragino Sans GB,WenQuanYi Micro Hei,sans-serif;font-size: 14px;overflow: hidden;}
+.chooseBlkLiCli{width: 100%;height:20px;margin-top: 5px;text-align: left;cursor: pointer;-moz-user-select:none;line-height: 20px;color:#0190d4;font-family: Helvetica Neue,Microsoft Yahei,Hiragino Sans GB,WenQuanYi Micro Hei,sans-serif;font-size: 14px;overflow: hidden;}
+.icoFloder{width: 18px;height: 15px;float: left;margin:2px 3px 0 0;}
+/*2014/05/21*/
+
+/*2014/05/24*/
+.processBlk{position: relative;width: 100px;height: 80px;float: left;background-color: #fff;}
+.processPointBox{position:absolute;width: 40px;height: 40px;border-radius: 50%;overflow: hidden;left: 0;top:0;z-index: 2;}
+.processPointBoxUn{position:absolute;width: 39px;height: 39px;border-radius: 50%;overflow: hidden;left: 0;top:0;z-index: 2;border: dotted 1px #e61c64;}
+.processPoint{position: absolute;width:0;height: 100%;background-color: #e61c64;top: 0;left: 0;}
+.processLine{position: absolute;width:0;height: 6px;background-color:#e61c64;z-index: 1;top:17px;left: 20px;}
+.processAuditor{position: absolute;width: 80%;height: 20px;top:40px;overflow: hidden;line-height: 20px;font-family: Helvetica Neue,Microsoft Yahei,Hiragino Sans GB,WenQuanYi Micro Hei,sans-serif;font-size: 12px;}
+.processState{position: absolute;width: 40px;height: 32px;overflow: hidden;line-height: 14px;top:4px;font-family: Helvetica Neue,Microsoft Yahei,Hiragino Sans GB,WenQuanYi Micro Hei,sans-serif;font-size: 12px;z-index: 3;text-align: center;}
+/*2014/05/24*/
+
+/*2014/05/26*/
+.aphaB{position: absolute;width: 100%;height: 100%;z-index: 10;display: none;}
+.loading1{position: absolute;width: 32px;height: 32px;left: 50%;top: 50%;margin: -16px 0 0 -16px;}
+.loading2{position: absolute;width: 156px;height: 95px;left: 50%;top: 50%;margin: -78px 0 0 -47px;}
+/*2014/05/26*/
+
+/*2014/05/28*/
+.hsUl{width:98%;height: auto;margin-left: 1%;margin-top: 10px;margin-bottom: 10px;}
+.hsUl li{width:100%;border-bottom: 1px dotted #eeeeee;margin:5px 0;height: 50px;}
+.hsUl_con{width:100%;float:left;font:12px/15px verdana;color:#333;text-align:left;height: 20px;overflow: hidden;}
+.hsUl_ts{width:100%;float:left;margin: 10px 0 0 0;font:12px/15px verdana;color:#777;text-align: right;height: 20px;overflow: hidden;}
+.error_blk{position:absolute;width: 520px;height: auto;left: 50%;margin-left: -260px;}
+.error_ico{width: 520px;height:320px;margin: 0;float: left;}
+.fucking_ico{width: 520px;height:320px;margin: 0;float: left;}
+
+/*待办通用样式*/
+.toDoListTable{width:100%;background-color: #f0f0f0;}
+
+.toDoListTable_head td{background-color:#3C8AC2;font: 14px/16px verdana;font-weight:bold;color:#fff;text-align: center;height: 30px;}
+.toDoListTable_head td a{text-decoration: none;font: 12px/16px verdana;color:#fff;font-weight:bold;}
+.toDoListTable_head td a:hover{text-decoration: underline;}
+
+.toDoListTable_row_a td{background-color:#ffffff;font: 12px/16px verdana;color:#777;text-align: center;height:30px;}
+.toDoListTable_row_a td a{font: 12px/16px verdana;color:#777;}
+.toDoListTable_row_a td a:hover{color:#166ad1;}
+
+.toDoListTable_row_b td{background-color:#f7f7f7;font: 12px/16px verdana;color:#777;text-align: center;height:30px;}
+.toDoListTable_row_b td a{font: 12px/16px verdana;color:#777;}
+.toDoListTable_row_b td a:hover{color:#166ad1;}
+/*2014/05/28*/
+
+/*案件流程图2*/
+.processTreeNode{height: 18px;white-space: nowrap;}
+.processTreeHit{display:inline-block;height: 18px;width: 18px;vertical-align: top;}
+.hIndent{width: 90px;overflow: hidden;margin: 0;padding: 0;}
+.hDot{width: 14px;height: 14px;background-color:#3f8aca;border-radius: 50%;-moz-border-radius: 50%;-webkit-border-radius: 50%;margin: 2px;}
+.hTitle{width:162px;vertical-align: top;overflow: hidden;text-align: left;}
+.hTitle a{display:inline-block;padding:0 2px;background-color:#ffffff;color:#777;font-family: Helvetica Neue,Microsoft Yahei,Hiragino Sans GB,WenQuanYi Micro Hei,sans-serif;font-size: 12px;text-align: left;text-decoration: none;vertical-align: middle;line-height: 18px;}
+.hTitle a:hover{color:#3f8aca;text-decoration: underline;}
+/*案件流程图2*/
+
+.datagrid-cell a{
+    color:#444;
+}
+.datagrid-cell a:hover{
+    color:#e61c64;
+}
+
+/*login*/
+.loginPageBody{font-family: Helvetica Neue,Microsoft Yahei,Hiragino Sans GB,WenQuanYi Micro Hei,sans-serif;font-size: 14px;color: #383838;overflow: hidden;margin: 0;padding: 0;}
+.imageBlk{position:absolute;width:40%;height:100%;}
+.bgBlk{position: absolute;width: 100%;height:100%;margin: 0;float: left;}
+.loginBlk{position: absolute;width:60%;height: 100%;left: 40%; background-color: #fff;}
+.loginLogo{position: relative;width: 190px;height: 27px;margin-top: 17%;margin-left: 70px;}
+.loginTit{position: relative;width: auto;height: 26px;margin-top: 20px;margin-left: 70px;font-size:16px;line-height: 26px;color:#999;text-align: left;}
+.loginCtrl{position: relative;width: 350px;min-height:350px;height:auto;margin-left: 70px;}
+.mid_ctrl{width:100%;float:left;margin-top:20px;}
+.mid_ctrl div{margin-top:10px;float:left;}
+.inputText{border:solid 1px #dddddd;width:300px;padding:7px; outline:none;font-family: Helvetica Neue,Microsoft Yahei,Hiragino Sans GB,WenQuanYi Micro Hei,sans-serif;font-size: 14px;text-indent:5px;color:#999;display:inline-block;}
+.inputText:focus{border:solid 1px #1398FF;box-shadow:0 0 5px rgba(0,192,255,0.4);color:#383838;}
+a.login{font-size:14px;text-decoration:none;color: #999;}
+a.login:hover{text-decoration: underline;}
+.loginBtn{background-color:#0190d4;border:0;border-radius: 2px;color:#fff;font-family: Helvetica Neue,Microsoft Yahei,Hiragino Sans GB,WenQuanYi Micro Hei,sans-serif;text-align: center;cursor: pointer;padding: 0 10px;}
+.loginingBtn{background-color:#dddddd;border:0;border-radius: 2px;color:#777777;font-family: Helvetica Neue,Microsoft Yahei,Hiragino Sans GB,WenQuanYi Micro Hei,sans-serif;text-align: center;cursor: pointer;padding: 0 10px;}
+/*login*/

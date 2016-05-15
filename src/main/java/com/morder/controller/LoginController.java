@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/")
-public class LoginController {
+public class LoginController extends BaseController{
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
     @RequestMapping("/login.do")
     public String login(String error, Model model) {
         logger.info("login");
         model.addAttribute("error", error);
-        return "/home/main";
+        return "/index";
     }
 }

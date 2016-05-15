@@ -1,0 +1,55 @@
+/*框架style，禁止改动*/
+.arrowH_a{background: url(frame/arrowH.png) 0 0;}
+.arrowH_d{background: url(frame/arrowH.png) -6px 0;}
+.arrowV_w{background: url(frame/arrowV.png) 0 0;}
+.arrowV_s{background: url(frame/arrowV.png) 0 -6px;}
+.ico_info{background:url(frame/ico.png) 0 0;}
+.ico_help{background:url(frame/ico.png) -18px 0;}
+.ico_user{background:url(frame/ico.png) -36px 0;}
+.ico_printer{background:url(frame/ico.png) -54px 0;}
+.ico_ch{background:url(frame/ico.png) -72px 0;}
+.ico_en{background:url(frame/ico.png) -90px 0;}
+.logo{background: url(frame/logo.png) no-repeat;}
+.fucking_ico{background: url(frame/fucking.jpg) no-repeat;}
+/*框架style，禁止改动*/
+
+/*main*/
+.fileIco{background: url(main/file.png) no-repeat;}
+.auditIco{background: url(main/audit.png) no-repeat;}
+.icoFloder{background: url(main/folder.png) no-repeat;}
+.aphaB{background: url(main/aphaB.png) repeat;}
+.groupIco{background: url(main/group.png) no-repeat;}
+.necessaryIco{background: url(main/necessary.png) no-repeat;}
+.processStart{background: url(main/processStart.png) no-repeat;}
+.processEnd{background: url(main/processEnd.png) no-repeat;}
+/*main*/
+
+/*tree*/
+.l_tb_b{background: url(main/treeLineB.png) 0 0;}
+.l_trb_b{background: url(main/treeLineB.png) 0 -18px;}
+.l_lb_b{background: url(main/treeLineB.png) 0 -36px;}
+.l_tr_b{background: url(main/treeLineB.png) 0 -54px;}
+.l_lr_b{background: url(main/treeLineB.png) 0 -72px repeat-x;}
+.l_rb_b{background: url(main/treeLineB.png) 0 -90px;}
+.l_lrb_b{background: url(main/treeLineB.png) 0 -108px;}
+
+.l_tb_g{background: url(main/treeLineG.png) 0 0;}
+.l_trb_g{background: url(main/treeLineG.png) 0 -18px;}
+.l_lb_g{background: url(main/treeLineG.png) 0 -36px;}
+.l_tr_g{background: url(main/treeLineG.png) 0 -54px;}
+.l_lr_g{background: url(main/treeLineG.png) 0 -72px repeat-x;}
+.l_rb_g{background: url(main/treeLineG.png) 0 -90px;}
+.l_lrb_g{background: url(main/treeLineG.png) 0 -108px;}
+
+.l_trb_bg_tb{background: url(main/treeLineBG.png) 0 0;}
+.l_trb_bg_tr{background: url(main/treeLineBG.png) 0 -18px;}
+.l_lrb_bg_lr{background: url(main/treeLineBG.png) 0 -36px;}
+.l_lrb_bg_lb{background: url(main/treeLineBG.png) 0 -54px;}
+.l_rb_bg_b{background: url(main/treeLineBG.png) 0 -72px repeat-x;}
+.l_rb_bg_r{background: url(main/treeLineBG.png) 0 -90px;}
+
+.l_title_b{background: url(main/titleHitBgB.png);}
+.l_title_g{background: url(main/titleHitBgG.png);}
+/*tree*/
+
+.loginLogo{background: url(main/loginLogo.png);}

@@ -1,0 +1,23 @@
+/*系统logo*/
+.logo{background: url(frame/logo.png) no-repeat left;}
+/*框架伸缩操作图标*/
+.arrowHA{background: url(frame/arrowH.png) 0 0;}
+.arrowHD{background: url(frame/arrowH.png) -6px 0;}
+.arrowVW{background: url(frame/arrowV.png) 0 0;}
+.arrowVS{background: url(frame/arrowV.png) 0 -6px;}
+/*盗链、错误页面*/
+.error{background: url(frame/error.jpg) no-repeat;}
+.theftLinks{background: url(frame/theftLinks.png) no-repeat center center;}
+/*框架操作图标*/
+.icoInfo{background:url(frame/ico.png) 0 0;}
+.icoHelp{background:url(frame/ico.png) -18px 0;}
+.icoUser{background:url(frame/ico.png) -36px 0;}
+.icoPrinter{background:url(frame/ico.png) -54px 0;}
+/*预览图右上角操作图标*/
+.icoDelete{background: url(frame/delIcon.png) no-repeat;}
+.icoSearch{background: url(frame/checkIco.png) no-repeat;}
+/*左列表右详情类页面*/
+.icoLi{background:url(frame/liIco.png) no-repeat;}
+.icoLiCh{background:url(frame/liIcoCh.png) no-repeat;}
+/*选项ul*/
+.icoLiFolder{background: url(frame/folder.png) no-repeat;}

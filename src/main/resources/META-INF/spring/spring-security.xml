@@ -15,12 +15,13 @@
 			logout-success-url="/login.jsp" />
 
 
-		<form-login login-page="/login" authentication-failure-url="/login.jsp?error=1"
-			login-processing-url="/j_security_check.do" password-parameter="j_password"
+		<form-login login-page="/login.jsp" authentication-failure-url="/login.jsp?error=1"
+			login-processing-url="/j_security_check.do" password-parameter="j_password" always-use-default-target="false"
+			default-target-url="/login.do"
 			username-parameter="j_username" />
 
 
-		<intercept-url pattern="/**/*.htmls" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/**/*.do" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/**/*.htm" access="hasRole('ROLE_ADMIN')" />
 
 		<session-management session-fixation-protection="changeSessionId">
@@ -28,8 +29,7 @@
 				expired-url="/access/sameLogin.htmls" />
 		</session-management>
 
-		<remember-me key="morder#FD637E6D9C0F1A5A67082AF56CE32485"
-			remember-me-parameter="remember-me" />
+		<remember-me key="morder#FD637E6D9C0F1A5A67082AF56CE32485" user-service-ref="userService" remember-me-parameter="remember-me" />
 	</http>
 
 	<!-- 启用表达式 为了后面的投票器做准备 -->

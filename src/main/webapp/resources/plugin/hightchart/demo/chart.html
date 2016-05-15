@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>柱状图</title>
+<script type="text/javascript" src="../jquery-1.10.1.js"></script>
+<script type="text/javascript" src="../highcharts.js"></script>
+<!--<script src="http://code.highcharts.com/highcharts.js"></script>-->
+<!--<script src="http://code.highcharts.com/modules/exporting.js"></script>-->
+<script type="text/javascript">
+	var dataser = [
+		{name: '主体总数', data: [223, 156, 145, 147, 254, 159, 231, 342, 258, 146], dataLabels:{enabled: true}},
+		{name: '年报2', data: [34, 12, 44, 65, 67, 34, 67, 55, 32, 58], dataLabels:{enabled: true}}
+		];
+		
+	var category = ['大良分局','容桂分局','伦教分局','北滘分局','陈村分局','乐从分局','勒流分局','龙江分局','杏坛分局','均安分局'];
+
+	var chart;
+	$(function () {
+        	chart = new Highcharts.Chart({
+                chart: {
+                    renderTo: 'container',          //放置图表的容器
+                    defaultSeriesType: 'column',    //图表类型line, spline, area, areaspline, column, bar, pie , scatter
+                    zoomType: 'x',                  //放大
+                    inverted: false                  //左右显示，默认上下正向
+            },
+            title: {
+                text: ''	//标题
+            },
+            subtitle: {
+                text: ''	//副标题
+            },
+            xAxis: {
+                categories: category,
+				labels: {
+                        rotation: -45,	//x轴显示倾斜度
+                        align: 'right',
+                        style: {font: 'normal 13px 宋体'}
+               	}
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: ''	//y轴标题
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            /*series: [{
+				//color:'#f00',   //柱形图颜色统一设为红色
+                //name: dataser.name,
+				name: "年报",
+                data: [{'color':'#F6BD0F','y':49.9}, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1],
+				//data: dataser.data,
+				dataLabels: {
+					enabled: true,    //默认是false，即默认不显示数值
+					color: '#666',    //字体颜色
+					align: 'center'   //居柱子中间
+			   }
+    
+            }]*/
+			series: dataser 
+        });
+    });
+    
+
+</script>
+
+</head>
+
+<body>
+<div id="container" style="min-width: 400px; height: 400px; margin: 0 auto; width:500px; height:300px;"></div>
+</body>
+</html>

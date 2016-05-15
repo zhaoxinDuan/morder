@@ -67,5 +67,12 @@
     set unitname = #{unitname,jdbcType=VARCHAR},
       pidunit = #{pidunit,jdbcType=VARCHAR}
     where idunit = #{idunit,jdbcType=INTEGER}
+
   </update>
+  <select id="findAllUnits" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from tunits
+  </select>
+
 </mapper>

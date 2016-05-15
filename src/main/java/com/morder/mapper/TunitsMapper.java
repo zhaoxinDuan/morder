@@ -2,6 +2,8 @@ package com.morder.mapper;
 
 import com.morder.model.Tunits;
 
+import java.util.List;
+
 public interface TunitsMapper {
     int deleteByPrimaryKey(Integer idunit);
 
@@ -14,4 +16,6 @@ public interface TunitsMapper {
     int updateByPrimaryKeySelective(Tunits record);
 
     int updateByPrimaryKey(Tunits record);
+
+    List<Tunits> findAllUnits();
 }
