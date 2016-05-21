@@ -1,6 +1,7 @@
 package com.morder.mapper;
 
 import com.morder.model.Tuser;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
 import java.util.List;
@@ -19,4 +20,10 @@ public interface TuserMapper {
     int updateByPrimaryKey(Tuser record);
 
     List findAllUsersByPage(RowBounds rowBounds);
+
+    List findAllUnitUsersByPage(RowBounds rowBounds,@Param("idunit")Integer idunit);
+
+    int userUpdateStatus(@Param("iduser")Integer iduser,@Param("uisdel")Integer uisdel);
+
+    int userUpdatePwd(@Param("iduser")Integer iduser,@Param("upwd")Integer upwd);
 }

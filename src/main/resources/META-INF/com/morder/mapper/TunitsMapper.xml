@@ -19,13 +19,13 @@
     delete from tunits
     where idunit = #{idunit,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.morder.model.Tunits" >
+  <insert id="insert" parameterType="com.morder.model.Tunits" useGeneratedKeys="true" keyProperty="idunit">
     insert into tunits (idunit, unitname, pidunit
       )
     values (#{idunit,jdbcType=INTEGER}, #{unitname,jdbcType=VARCHAR}, #{pidunit,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.morder.model.Tunits" >
+  <insert id="insertSelective" parameterType="com.morder.model.Tunits" useGeneratedKeys="true" keyProperty="idunit">
     insert into tunits
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="idunit != null" >

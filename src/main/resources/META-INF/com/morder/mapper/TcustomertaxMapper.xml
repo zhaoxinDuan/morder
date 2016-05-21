@@ -23,7 +23,7 @@
     delete from tcustomertax
     where idtcustax = #{idtcustax,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.morder.model.Tcustomertax" >
+  <insert id="insert" parameterType="com.morder.model.Tcustomertax" useGeneratedKeys="true" keyProperty="idtcustax">
     insert into tcustomertax (idtcustax, tctcompname, tcbillingaddr, 
       tcbillingnum, tcbankname, tcbankaccount, 
       tcustomer_idcustomer)
@@ -31,7 +31,7 @@
       #{tcbillingnum,jdbcType=VARCHAR}, #{tcbankname,jdbcType=VARCHAR}, #{tcbankaccount,jdbcType=VARCHAR}, 
       #{tcustomerIdcustomer,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.morder.model.Tcustomertax" >
+  <insert id="insertSelective" parameterType="com.morder.model.Tcustomertax" useGeneratedKeys="true" keyProperty="idtcustax">
     insert into tcustomertax
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="idtcustax != null" >

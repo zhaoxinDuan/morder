@@ -21,13 +21,13 @@
     delete from tlogs
     where tlogsid = #{tlogsid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.morder.model.Tlogs" >
+  <insert id="insert" parameterType="com.morder.model.Tlogs" useGeneratedKeys="true" keyProperty="tlogsid">
     insert into tlogs (tlogsid, tltime, tltype, 
       iduser, idbmorder)
     values (#{tlogsid,jdbcType=INTEGER}, #{tltime,jdbcType=TIMESTAMP}, #{tltype,jdbcType=INTEGER}, 
       #{iduser,jdbcType=INTEGER}, #{idbmorder,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.morder.model.Tlogs" >
+  <insert id="insertSelective" parameterType="com.morder.model.Tlogs" useGeneratedKeys="true" keyProperty="tlogsid">
     insert into tlogs
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="tlogsid != null" >

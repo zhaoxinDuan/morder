@@ -8,7 +8,7 @@
 
 </head>
 <body>
-
+<jsp:include page="./userlist.jsp"/>
 
 <jsp:include page="./../../footer.jsp"></jsp:include>
 </body>

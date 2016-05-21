@@ -3,7 +3,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 
-<div class="indContent removeHeadi">
+<div class="indContent removeHeadi" style="top:0px">
     <div class="cLeftHead">机构列表</div>
     <div class="cLeft">
         <div class="eleContainer" style="margin-top:0pt;">
@@ -51,7 +51,7 @@
             idFiled: "id",
             formatter: function (node) {
                 var s = node.text;
-                    s = '<a href="<c:url value="/sys/unitindex.do"/>?idunit=' + node.id + '&t=' + new Date().getTime() + '" target="uFrame">' + s + '</a>';
+                s = '<a href="<c:url value="/sys/userindex.do"/>?idunit=' + node.id + '&t=' + new Date().getTime() + '" target="uFrame">' + s + '</a>';
                 return s;
             },
             animate: true,

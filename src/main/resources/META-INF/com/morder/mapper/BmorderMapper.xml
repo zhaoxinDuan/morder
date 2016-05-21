@@ -28,7 +28,7 @@
     delete from bmorder
     where idbmorder = #{idbmorder,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.morder.model.Bmorder" >
+  <insert id="insert" parameterType="com.morder.model.Bmorder" useGeneratedKeys="true" keyProperty="idbmorder">
     insert into bmorder (idbmorder, bmcusname, bmordernum, 
       bmbillingdate, bmdeliverydate, bmpaymethod, 
       bmcurrencytyoe, bmaddcosts, bmorderamount, 
@@ -38,7 +38,7 @@
       #{bmcurrencytyoe,jdbcType=INTEGER}, #{bmaddcosts,jdbcType=DECIMAL}, #{bmorderamount,jdbcType=DECIMAL}, 
       #{bmcomments,jdbcType=VARCHAR}, #{bmdeliveryIdbmdelivery,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.morder.model.Bmorder" >
+  <insert id="insertSelective" parameterType="com.morder.model.Bmorder" useGeneratedKeys="true" keyProperty="idbmorder">
     insert into bmorder
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="idbmorder != null" >

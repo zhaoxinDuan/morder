@@ -23,7 +23,7 @@
     delete from tcustomer
     where idcustomer = #{idcustomer,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.morder.model.Tcustomer" >
+  <insert id="insert" parameterType="com.morder.model.Tcustomer" useGeneratedKeys="true" keyProperty="idcustomer">
     insert into tcustomer (idcustomer, cname, caddress, 
       csettype, cofficername, cofficeruid, 
       comments)
@@ -31,7 +31,7 @@
       #{csettype,jdbcType=INTEGER}, #{cofficername,jdbcType=VARCHAR}, #{cofficeruid,jdbcType=INTEGER}, 
       #{comments,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.morder.model.Tcustomer" >
+  <insert id="insertSelective" parameterType="com.morder.model.Tcustomer" useGeneratedKeys="true" keyProperty="idcustomer">
     insert into tcustomer
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="idcustomer != null" >

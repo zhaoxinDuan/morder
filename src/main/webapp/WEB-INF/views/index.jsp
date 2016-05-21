@@ -43,7 +43,7 @@
                     <a href="<c:url value="/sys/unitindex.do"/>" target="cFrame">客户关系管理</a>
                 </li>
                 <li>
-                    <a href="<c:url value="/sys/unitindex.do"/>" target="cFrame">部门人员管理</a>
+                    <a href="<c:url value="/sys/unitindex.do"/>" target="cFrame">人员管理</a>
                 </li>
 
             </ul>

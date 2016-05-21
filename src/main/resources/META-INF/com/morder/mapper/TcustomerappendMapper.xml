@@ -26,7 +26,7 @@
     delete from tcustomerappend
     where idcusapp = #{idcusapp,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.morder.model.Tcustomerappend" >
+  <insert id="insert" parameterType="com.morder.model.Tcustomerappend" useGeneratedKeys="true" keyProperty="idcusapp">
     insert into tcustomerappend (idcusapp, cacontacts, capositions, 
       catelphone, camphone, cafax, 
       carecaddress, cacomments, tcustomer_idcustomer
@@ -36,7 +36,7 @@
       #{carecaddress,jdbcType=VARCHAR}, #{cacomments,jdbcType=VARCHAR}, #{tcustomerIdcustomer,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.morder.model.Tcustomerappend" >
+  <insert id="insertSelective" parameterType="com.morder.model.Tcustomerappend" useGeneratedKeys="true" keyProperty="idcusapp">
     insert into tcustomerappend
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="idcusapp != null" >

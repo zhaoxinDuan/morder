@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.morder.mapper.TuserMapper" >
-  <resultMap id="BaseResultMap" type="com.morder.model.Tuser" >
-    <id column="iduser" property="iduser" jdbcType="INTEGER" />
-    <result column="uname" property="uname" jdbcType="VARCHAR" />
-    <result column="uemail" property="uemail" jdbcType="VARCHAR" />
-    <result column="upwd" property="upwd" jdbcType="VARCHAR" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="umphone" property="umphone" jdbcType="VARCHAR" />
-    <result column="urealname" property="urealname" jdbcType="VARCHAR" />
-    <result column="uisdel" property="uisdel" jdbcType="INTEGER" />
-  </resultMap>
-  <sql id="Base_Column_List" >
+<mapper namespace="com.morder.mapper.TuserMapper">
+    <resultMap id="BaseResultMap" type="com.morder.model.Tuser">
+        <id column="iduser" property="iduser" jdbcType="INTEGER"/>
+        <result column="uname" property="uname" jdbcType="VARCHAR"/>
+        <result column="uemail" property="uemail" jdbcType="VARCHAR"/>
+        <result column="upwd" property="upwd" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="umphone" property="umphone" jdbcType="VARCHAR"/>
+        <result column="urealname" property="urealname" jdbcType="VARCHAR"/>
+        <result column="uisdel" property="uisdel" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     iduser, uname, uemail, upwd, create_time, umphone, urealname, uisdel
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from tuser
-    where iduser = #{iduser,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from tuser
+        where iduser = #{iduser,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tuser
     where iduser = #{iduser,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.morder.model.Tuser" >
+    <insert id="insert" parameterType="com.morder.model.Tuser" useGeneratedKeys="true" keyProperty="iduser">
     insert into tuser (iduser, uname, uemail, 
       upwd, create_time, umphone, 
       urealname, uisdel)
@@ -32,89 +32,89 @@
       #{upwd,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{umphone,jdbcType=VARCHAR}, 
       #{urealname,jdbcType=VARCHAR}, #{uisdel,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.morder.model.Tuser" >
-    insert into tuser
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="iduser != null" >
-        iduser,
-      </if>
-      <if test="uname != null" >
-        uname,
-      </if>
-      <if test="uemail != null" >
-        uemail,
-      </if>
-      <if test="upwd != null" >
-        upwd,
-      </if>
-      <if test="createTime != null" >
-        create_time,
-      </if>
-      <if test="umphone != null" >
-        umphone,
-      </if>
-      <if test="urealname != null" >
-        urealname,
-      </if>
-      <if test="uisdel != null" >
-        uisdel,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="iduser != null" >
-        #{iduser,jdbcType=INTEGER},
-      </if>
-      <if test="uname != null" >
-        #{uname,jdbcType=VARCHAR},
-      </if>
-      <if test="uemail != null" >
-        #{uemail,jdbcType=VARCHAR},
-      </if>
-      <if test="upwd != null" >
-        #{upwd,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="umphone != null" >
-        #{umphone,jdbcType=VARCHAR},
-      </if>
-      <if test="urealname != null" >
-        #{urealname,jdbcType=VARCHAR},
-      </if>
-      <if test="uisdel != null" >
-        #{uisdel,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.morder.model.Tuser" >
-    update tuser
-    <set >
-      <if test="uname != null" >
-        uname = #{uname,jdbcType=VARCHAR},
-      </if>
-      <if test="uemail != null" >
-        uemail = #{uemail,jdbcType=VARCHAR},
-      </if>
-      <if test="upwd != null" >
-        upwd = #{upwd,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="umphone != null" >
-        umphone = #{umphone,jdbcType=VARCHAR},
-      </if>
-      <if test="urealname != null" >
-        urealname = #{urealname,jdbcType=VARCHAR},
-      </if>
-      <if test="uisdel != null" >
-        uisdel = #{uisdel,jdbcType=INTEGER},
-      </if>
-    </set>
-    where iduser = #{iduser,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.morder.model.Tuser" >
+    <insert id="insertSelective" parameterType="com.morder.model.Tuser" useGeneratedKeys="true" keyProperty="iduser">
+        insert into tuser
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="iduser != null">
+                iduser,
+            </if>
+            <if test="uname != null">
+                uname,
+            </if>
+            <if test="uemail != null">
+                uemail,
+            </if>
+            <if test="upwd != null">
+                upwd,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="umphone != null">
+                umphone,
+            </if>
+            <if test="urealname != null">
+                urealname,
+            </if>
+            <if test="uisdel != null">
+                uisdel,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="iduser != null">
+                #{iduser,jdbcType=INTEGER},
+            </if>
+            <if test="uname != null">
+                #{uname,jdbcType=VARCHAR},
+            </if>
+            <if test="uemail != null">
+                #{uemail,jdbcType=VARCHAR},
+            </if>
+            <if test="upwd != null">
+                #{upwd,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="umphone != null">
+                #{umphone,jdbcType=VARCHAR},
+            </if>
+            <if test="urealname != null">
+                #{urealname,jdbcType=VARCHAR},
+            </if>
+            <if test="uisdel != null">
+                #{uisdel,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.morder.model.Tuser">
+        update tuser
+        <set>
+            <if test="uname != null">
+                uname = #{uname,jdbcType=VARCHAR},
+            </if>
+            <if test="uemail != null">
+                uemail = #{uemail,jdbcType=VARCHAR},
+            </if>
+            <if test="upwd != null">
+                upwd = #{upwd,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="umphone != null">
+                umphone = #{umphone,jdbcType=VARCHAR},
+            </if>
+            <if test="urealname != null">
+                urealname = #{urealname,jdbcType=VARCHAR},
+            </if>
+            <if test="uisdel != null">
+                uisdel = #{uisdel,jdbcType=INTEGER},
+            </if>
+        </set>
+        where iduser = #{iduser,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.morder.model.Tuser">
     update tuser
     set uname = #{uname,jdbcType=VARCHAR},
       uemail = #{uemail,jdbcType=VARCHAR},
@@ -126,9 +126,27 @@
     where iduser = #{iduser,jdbcType=INTEGER}
   </update>
 
-  <select id="findAllUsersByPage" resultMap="BaseResultMap" >
-    select
-    <include refid="Base_Column_List" />
-    from tuser
-  </select>
+    <select id="findAllUsersByPage" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tuser
+    </select>
+
+    <select id="findAllUnitUsersByPage" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tuser left join trelunit b on iduser = b.tuser_iduser where b.tunits_idunit=#{idunit}
+    </select>
+
+    <update id="userUpdateStatus">
+    update tuser
+    set  uisdel = #{uisdel,jdbcType=INTEGER}
+    where iduser = #{iduser,jdbcType=INTEGER}
+  </update>
+
+    <update id="userUpdatePwd">
+    update tuser
+    set upwd = #{upwd,jdbcType=VARCHAR}
+    where iduser = #{iduser,jdbcType=INTEGER}
+  </update>
 </mapper>
