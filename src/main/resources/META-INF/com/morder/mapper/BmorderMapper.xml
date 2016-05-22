@@ -1,153 +1,175 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.morder.mapper.BmorderMapper" >
-  <resultMap id="BaseResultMap" type="com.morder.model.Bmorder" >
-    <id column="idbmorder" property="idbmorder" jdbcType="INTEGER" />
-    <result column="bmcusname" property="bmcusname" jdbcType="VARCHAR" />
-    <result column="bmordernum" property="bmordernum" jdbcType="VARCHAR" />
-    <result column="bmbillingdate" property="bmbillingdate" jdbcType="DATE" />
-    <result column="bmdeliverydate" property="bmdeliverydate" jdbcType="DATE" />
-    <result column="bmpaymethod" property="bmpaymethod" jdbcType="VARCHAR" />
-    <result column="bmcurrencytyoe" property="bmcurrencytyoe" jdbcType="INTEGER" />
-    <result column="bmaddcosts" property="bmaddcosts" jdbcType="DECIMAL" />
-    <result column="bmorderamount" property="bmorderamount" jdbcType="DECIMAL" />
-    <result column="bmcomments" property="bmcomments" jdbcType="VARCHAR" />
-    <result column="bmdelivery_idbmdelivery" property="bmdeliveryIdbmdelivery" jdbcType="INTEGER" />
-  </resultMap>
-  <sql id="Base_Column_List" >
+<mapper namespace="com.morder.mapper.BmorderMapper">
+    <resultMap id="BaseResultMap" type="com.morder.model.Bmorder">
+        <id column="idbmorder" property="idbmorder" jdbcType="INTEGER"/>
+        <result column="bmcusname" property="bmcusname" jdbcType="VARCHAR"/>
+        <result column="bmordernum" property="bmordernum" jdbcType="VARCHAR"/>
+        <result column="bmbillingdate" property="bmbillingdate" jdbcType="DATE"/>
+        <result column="bmdeliverydate" property="bmdeliverydate" jdbcType="DATE"/>
+        <result column="bmpaymethod" property="bmpaymethod" jdbcType="VARCHAR"/>
+        <result column="bmcurrencytyoe" property="bmcurrencytyoe" jdbcType="INTEGER"/>
+        <result column="bmaddcosts" property="bmaddcosts" jdbcType="DECIMAL"/>
+        <result column="bmorderamount" property="bmorderamount" jdbcType="DECIMAL"/>
+        <result column="bmcomments" property="bmcomments" jdbcType="VARCHAR"/>
+        <result column="bmdelivery_idbmdelivery" property="bmdeliveryIdbmdelivery" jdbcType="INTEGER"/>
+        <result column="tuser_iduser" property="tuserIduser" jdbcType="INTEGER"/>
+        <result column="tcustomer_idcustomer" property="tcustomerIdcustomer" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     idbmorder, bmcusname, bmordernum, bmbillingdate, bmdeliverydate, bmpaymethod, bmcurrencytyoe, 
-    bmaddcosts, bmorderamount, bmcomments, bmdelivery_idbmdelivery
+    bmaddcosts, bmorderamount, bmcomments, bmdelivery_idbmdelivery,tuser_iduser,tcustomer_idcustomer
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from bmorder
-    where idbmorder = #{idbmorder,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from bmorder
+        where idbmorder = #{idbmorder,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from bmorder
     where idbmorder = #{idbmorder,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.morder.model.Bmorder" useGeneratedKeys="true" keyProperty="idbmorder">
+    <insert id="insert" parameterType="com.morder.model.Bmorder" useGeneratedKeys="true" keyProperty="idbmorder">
     insert into bmorder (idbmorder, bmcusname, bmordernum, 
       bmbillingdate, bmdeliverydate, bmpaymethod, 
       bmcurrencytyoe, bmaddcosts, bmorderamount, 
-      bmcomments, bmdelivery_idbmdelivery)
+      bmcomments, bmdelivery_idbmdelivery,tuser_iduser,tcustomer_idcustomer)
     values (#{idbmorder,jdbcType=INTEGER}, #{bmcusname,jdbcType=VARCHAR}, #{bmordernum,jdbcType=VARCHAR}, 
       #{bmbillingdate,jdbcType=DATE}, #{bmdeliverydate,jdbcType=DATE}, #{bmpaymethod,jdbcType=VARCHAR}, 
       #{bmcurrencytyoe,jdbcType=INTEGER}, #{bmaddcosts,jdbcType=DECIMAL}, #{bmorderamount,jdbcType=DECIMAL}, 
-      #{bmcomments,jdbcType=VARCHAR}, #{bmdeliveryIdbmdelivery,jdbcType=INTEGER})
+      #{bmcomments,jdbcType=VARCHAR}, #{bmdeliveryIdbmdelivery,jdbcType=INTEGER}, #{tuserIduser,jdbcType=INTEGER},
+      #{tcustomerIdcustomer,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.morder.model.Bmorder" useGeneratedKeys="true" keyProperty="idbmorder">
-    insert into bmorder
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="idbmorder != null" >
-        idbmorder,
-      </if>
-      <if test="bmcusname != null" >
-        bmcusname,
-      </if>
-      <if test="bmordernum != null" >
-        bmordernum,
-      </if>
-      <if test="bmbillingdate != null" >
-        bmbillingdate,
-      </if>
-      <if test="bmdeliverydate != null" >
-        bmdeliverydate,
-      </if>
-      <if test="bmpaymethod != null" >
-        bmpaymethod,
-      </if>
-      <if test="bmcurrencytyoe != null" >
-        bmcurrencytyoe,
-      </if>
-      <if test="bmaddcosts != null" >
-        bmaddcosts,
-      </if>
-      <if test="bmorderamount != null" >
-        bmorderamount,
-      </if>
-      <if test="bmcomments != null" >
-        bmcomments,
-      </if>
-      <if test="bmdeliveryIdbmdelivery != null" >
-        bmdelivery_idbmdelivery,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="idbmorder != null" >
-        #{idbmorder,jdbcType=INTEGER},
-      </if>
-      <if test="bmcusname != null" >
-        #{bmcusname,jdbcType=VARCHAR},
-      </if>
-      <if test="bmordernum != null" >
-        #{bmordernum,jdbcType=VARCHAR},
-      </if>
-      <if test="bmbillingdate != null" >
-        #{bmbillingdate,jdbcType=DATE},
-      </if>
-      <if test="bmdeliverydate != null" >
-        #{bmdeliverydate,jdbcType=DATE},
-      </if>
-      <if test="bmpaymethod != null" >
-        #{bmpaymethod,jdbcType=VARCHAR},
-      </if>
-      <if test="bmcurrencytyoe != null" >
-        #{bmcurrencytyoe,jdbcType=INTEGER},
-      </if>
-      <if test="bmaddcosts != null" >
-        #{bmaddcosts,jdbcType=DECIMAL},
-      </if>
-      <if test="bmorderamount != null" >
-        #{bmorderamount,jdbcType=DECIMAL},
-      </if>
-      <if test="bmcomments != null" >
-        #{bmcomments,jdbcType=VARCHAR},
-      </if>
-      <if test="bmdeliveryIdbmdelivery != null" >
-        #{bmdeliveryIdbmdelivery,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.morder.model.Bmorder" >
-    update bmorder
-    <set >
-      <if test="bmcusname != null" >
-        bmcusname = #{bmcusname,jdbcType=VARCHAR},
-      </if>
-      <if test="bmordernum != null" >
-        bmordernum = #{bmordernum,jdbcType=VARCHAR},
-      </if>
-      <if test="bmbillingdate != null" >
-        bmbillingdate = #{bmbillingdate,jdbcType=DATE},
-      </if>
-      <if test="bmdeliverydate != null" >
-        bmdeliverydate = #{bmdeliverydate,jdbcType=DATE},
-      </if>
-      <if test="bmpaymethod != null" >
-        bmpaymethod = #{bmpaymethod,jdbcType=VARCHAR},
-      </if>
-      <if test="bmcurrencytyoe != null" >
-        bmcurrencytyoe = #{bmcurrencytyoe,jdbcType=INTEGER},
-      </if>
-      <if test="bmaddcosts != null" >
-        bmaddcosts = #{bmaddcosts,jdbcType=DECIMAL},
-      </if>
-      <if test="bmorderamount != null" >
-        bmorderamount = #{bmorderamount,jdbcType=DECIMAL},
-      </if>
-      <if test="bmcomments != null" >
-        bmcomments = #{bmcomments,jdbcType=VARCHAR},
-      </if>
-      <if test="bmdeliveryIdbmdelivery != null" >
-        bmdelivery_idbmdelivery = #{bmdeliveryIdbmdelivery,jdbcType=INTEGER},
-      </if>
-    </set>
-    where idbmorder = #{idbmorder,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.morder.model.Bmorder" >
+    <insert id="insertSelective" parameterType="com.morder.model.Bmorder" useGeneratedKeys="true"
+            keyProperty="idbmorder">
+        insert into bmorder
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="idbmorder != null">
+                idbmorder,
+            </if>
+            <if test="bmcusname != null">
+                bmcusname,
+            </if>
+            <if test="bmordernum != null">
+                bmordernum,
+            </if>
+            <if test="bmbillingdate != null">
+                bmbillingdate,
+            </if>
+            <if test="bmdeliverydate != null">
+                bmdeliverydate,
+            </if>
+            <if test="bmpaymethod != null">
+                bmpaymethod,
+            </if>
+            <if test="bmcurrencytyoe != null">
+                bmcurrencytyoe,
+            </if>
+            <if test="bmaddcosts != null">
+                bmaddcosts,
+            </if>
+            <if test="bmorderamount != null">
+                bmorderamount,
+            </if>
+            <if test="bmcomments != null">
+                bmcomments,
+            </if>
+            <if test="bmdeliveryIdbmdelivery != null">
+                bmdelivery_idbmdelivery,
+            </if>
+            <if test="tuserIduser != null">
+                tuser_iduser,
+            </if>
+            <if test="tcustomerIdcustomer != null">
+                tcustomer_idcustomer,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="idbmorder != null">
+                #{idbmorder,jdbcType=INTEGER},
+            </if>
+            <if test="bmcusname != null">
+                #{bmcusname,jdbcType=VARCHAR},
+            </if>
+            <if test="bmordernum != null">
+                #{bmordernum,jdbcType=VARCHAR},
+            </if>
+            <if test="bmbillingdate != null">
+                #{bmbillingdate,jdbcType=DATE},
+            </if>
+            <if test="bmdeliverydate != null">
+                #{bmdeliverydate,jdbcType=DATE},
+            </if>
+            <if test="bmpaymethod != null">
+                #{bmpaymethod,jdbcType=VARCHAR},
+            </if>
+            <if test="bmcurrencytyoe != null">
+                #{bmcurrencytyoe,jdbcType=INTEGER},
+            </if>
+            <if test="bmaddcosts != null">
+                #{bmaddcosts,jdbcType=DECIMAL},
+            </if>
+            <if test="bmorderamount != null">
+                #{bmorderamount,jdbcType=DECIMAL},
+            </if>
+            <if test="bmcomments != null">
+                #{bmcomments,jdbcType=VARCHAR},
+            </if>
+            <if test="bmdeliveryIdbmdelivery != null">
+                #{bmdeliveryIdbmdelivery,jdbcType=INTEGER},
+            </if>
+            <if test="tuserIduser != null">
+                #{tuser_Iduser,jdbcType=INTEGER},
+            </if>
+            <if test="tcustomerIdcustomer != null">
+                #{tcustomer_idcustomer,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.morder.model.Bmorder">
+        update bmorder
+        <set>
+            <if test="bmcusname != null">
+                bmcusname = #{bmcusname,jdbcType=VARCHAR},
+            </if>
+            <if test="bmordernum != null">
+                bmordernum = #{bmordernum,jdbcType=VARCHAR},
+            </if>
+            <if test="bmbillingdate != null">
+                bmbillingdate = #{bmbillingdate,jdbcType=DATE},
+            </if>
+            <if test="bmdeliverydate != null">
+                bmdeliverydate = #{bmdeliverydate,jdbcType=DATE},
+            </if>
+            <if test="bmpaymethod != null">
+                bmpaymethod = #{bmpaymethod,jdbcType=VARCHAR},
+            </if>
+            <if test="bmcurrencytyoe != null">
+                bmcurrencytyoe = #{bmcurrencytyoe,jdbcType=INTEGER},
+            </if>
+            <if test="bmaddcosts != null">
+                bmaddcosts = #{bmaddcosts,jdbcType=DECIMAL},
+            </if>
+            <if test="bmorderamount != null">
+                bmorderamount = #{bmorderamount,jdbcType=DECIMAL},
+            </if>
+            <if test="bmcomments != null">
+                bmcomments = #{bmcomments,jdbcType=VARCHAR},
+            </if>
+            <if test="bmdeliveryIdbmdelivery != null">
+                bmdelivery_idbmdelivery = #{bmdeliveryIdbmdelivery,jdbcType=INTEGER},
+            </if>
+            <if test="tuserIduser != null">
+                tuser_iduser = #{tuserIduser,jdbcType=INTEGER},
+            </if>
+            <if test="tcustomerIdcustomer != null">
+                tcustomer_idcustomer = #{tcustomerIdcustomer,jdbcType=INTEGER},
+            </if>
+        </set>
+        where idbmorder = #{idbmorder,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.morder.model.Bmorder">
     update bmorder
     set bmcusname = #{bmcusname,jdbcType=VARCHAR},
       bmordernum = #{bmordernum,jdbcType=VARCHAR},
@@ -158,7 +180,15 @@
       bmaddcosts = #{bmaddcosts,jdbcType=DECIMAL},
       bmorderamount = #{bmorderamount,jdbcType=DECIMAL},
       bmcomments = #{bmcomments,jdbcType=VARCHAR},
-      bmdelivery_idbmdelivery = #{bmdeliveryIdbmdelivery,jdbcType=INTEGER}
+      bmdelivery_idbmdelivery = #{bmdeliveryIdbmdelivery,jdbcType=INTEGER},
+      tuser_iduser = #{tuserIduser,jdbcType=INTEGER},
+      tcustomer_idcustomer = #{tcustomerIdcustomer,jdbcType=INTEGER}
     where idbmorder = #{idbmorder,jdbcType=INTEGER}
   </update>
+
+    <select id="findAllBmordersByPage" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from bmorder
+    </select>
 </mapper>
