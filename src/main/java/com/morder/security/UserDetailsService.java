@@ -1,7 +1,10 @@
 package com.morder.security;
 
+import com.morder.mapper.TuserMapper;
+import com.morder.model.Tuser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -17,10 +20,9 @@ import java.util.List;
 public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
     private static Logger logger = LoggerFactory.getLogger(UserDetailsService.class);
 
+    @Autowired
+    private TuserMapper tuserMapper;
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        if(orgUM==null){
-//            orgUM = (OrgUM)SpringContextUtil.getBean("orgUMImpl");
-//        }
         // TODO Auto-generated method stub
         logger.info("UserDetailsService loadUserByUsername");
         List<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
@@ -28,14 +30,14 @@ public class UserDetailsService implements org.springframework.security.core.use
         authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
 
         //为了测试方便，用户就写死了，真实环境可以查询数据库
-//        AICUser aicUser = orgUM.login(username);
         String userlongid = username;
-        Md5PasswordEncoder encode = new Md5PasswordEncoder();
-        String password = "123456";
+//        Md5PasswordEncoder encode = new Md5PasswordEncoder();
+//        String password = "";
+        Tuser tuser = tuserMapper.selectByUname(username);
 
-        password = encode.encodePassword(password, null);
+//        password = encode.encodePassword(password, null);
 
-        return new User(userlongid, password, true, true,
+        return new User(userlongid, tuser.getUpwd(), true, true,
                 true, true, authorities);
     }
 }

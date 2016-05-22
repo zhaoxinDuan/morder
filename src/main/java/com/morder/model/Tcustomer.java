@@ -15,6 +15,14 @@ public class Tcustomer {
 
     private String comments;
 
+    private Integer tcustomerappendIdcusapp;
+
+    private Integer tcustomertaxIdtcustax;
+
+    private Tcustomerappend tcustomerappend;
+
+    private Tcustomertax tcustomertax;
+
     public Integer getIdcustomer() {
         return idcustomer;
     }
@@ -69,5 +77,37 @@ public class Tcustomer {
 
     public void setComments(String comments) {
         this.comments = comments == null ? null : comments.trim();
+    }
+
+    public Integer getTcustomerappendIdcusapp() {
+        return tcustomerappendIdcusapp;
+    }
+
+    public void setTcustomerappendIdcusapp(Integer tcustomerappendIdcusapp) {
+        this.tcustomerappendIdcusapp = tcustomerappendIdcusapp;
+    }
+
+    public Integer getTcustomertaxIdtcustax() {
+        return tcustomertaxIdtcustax;
+    }
+
+    public void setTcustomertaxIdtcustax(Integer tcustomertaxIdtcustax) {
+        this.tcustomertaxIdtcustax = tcustomertaxIdtcustax;
+    }
+
+    public Tcustomerappend getTcustomerappend() {
+        return tcustomerappend;
+    }
+
+    public void setTcustomerappend(Tcustomerappend tcustomerappend) {
+        this.tcustomerappend = tcustomerappend;
+    }
+
+    public Tcustomertax getTcustomertax() {
+        return tcustomertax;
+    }
+
+    public void setTcustomertax(Tcustomertax tcustomertax) {
+        this.tcustomertax = tcustomertax;
     }
 }

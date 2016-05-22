@@ -17,7 +17,6 @@ public class Tcustomerappend {
 
     private String cacomments;
 
-    private Integer tcustomerIdcustomer;
 
     public Integer getIdcusapp() {
         return idcusapp;
@@ -83,11 +82,4 @@ public class Tcustomerappend {
         this.cacomments = cacomments == null ? null : cacomments.trim();
     }
 
-    public Integer getTcustomerIdcustomer() {
-        return tcustomerIdcustomer;
-    }
-
-    public void setTcustomerIdcustomer(Integer tcustomerIdcustomer) {
-        this.tcustomerIdcustomer = tcustomerIdcustomer;
-    }
 }

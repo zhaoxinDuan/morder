@@ -10,11 +10,9 @@
     <result column="cafax" property="cafax" jdbcType="VARCHAR" />
     <result column="carecaddress" property="carecaddress" jdbcType="VARCHAR" />
     <result column="cacomments" property="cacomments" jdbcType="VARCHAR" />
-    <result column="tcustomer_idcustomer" property="tcustomerIdcustomer" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    idcusapp, cacontacts, capositions, catelphone, camphone, cafax, carecaddress, cacomments, 
-    tcustomer_idcustomer
+    idcusapp, cacontacts, capositions, catelphone, camphone, cafax, carecaddress, cacomments
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -29,11 +27,11 @@
   <insert id="insert" parameterType="com.morder.model.Tcustomerappend" useGeneratedKeys="true" keyProperty="idcusapp">
     insert into tcustomerappend (idcusapp, cacontacts, capositions, 
       catelphone, camphone, cafax, 
-      carecaddress, cacomments, tcustomer_idcustomer
+      carecaddress, cacomments
       )
     values (#{idcusapp,jdbcType=INTEGER}, #{cacontacts,jdbcType=VARCHAR}, #{capositions,jdbcType=INTEGER}, 
       #{catelphone,jdbcType=VARCHAR}, #{camphone,jdbcType=VARCHAR}, #{cafax,jdbcType=VARCHAR}, 
-      #{carecaddress,jdbcType=VARCHAR}, #{cacomments,jdbcType=VARCHAR}, #{tcustomerIdcustomer,jdbcType=INTEGER}
+      #{carecaddress,jdbcType=VARCHAR}, #{cacomments,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.morder.model.Tcustomerappend" useGeneratedKeys="true" keyProperty="idcusapp">
@@ -63,9 +61,6 @@
       <if test="cacomments != null" >
         cacomments,
       </if>
-      <if test="tcustomerIdcustomer != null" >
-        tcustomer_idcustomer,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="idcusapp != null" >
@@ -91,9 +86,6 @@
       </if>
       <if test="cacomments != null" >
         #{cacomments,jdbcType=VARCHAR},
-      </if>
-      <if test="tcustomerIdcustomer != null" >
-        #{tcustomerIdcustomer,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -121,9 +113,6 @@
       <if test="cacomments != null" >
         cacomments = #{cacomments,jdbcType=VARCHAR},
       </if>
-      <if test="tcustomerIdcustomer != null" >
-        tcustomer_idcustomer = #{tcustomerIdcustomer,jdbcType=INTEGER},
-      </if>
     </set>
     where idcusapp = #{idcusapp,jdbcType=INTEGER}
   </update>
@@ -135,8 +124,7 @@
       camphone = #{camphone,jdbcType=VARCHAR},
       cafax = #{cafax,jdbcType=VARCHAR},
       carecaddress = #{carecaddress,jdbcType=VARCHAR},
-      cacomments = #{cacomments,jdbcType=VARCHAR},
-      tcustomer_idcustomer = #{tcustomerIdcustomer,jdbcType=INTEGER}
+      cacomments = #{cacomments,jdbcType=VARCHAR}
     where idcusapp = #{idcusapp,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -31,7 +31,7 @@
         <div class="eleContainer" style="margin-top:0;">
             <ul class="easyui-tree">
                 <li>
-                    <a href="<c:url value="/sys/unitindex.do"/>" target="cFrame">直接下单</a>
+                    <a href="<c:url value="/home/bm/bmindex.do"/>" target="cFrame">直接下单</a>
                 </li>
                 <li>
                     <a href="<c:url value="/sys/unitindex.do"/>" target="cFrame">跟单列表</a>
@@ -40,7 +40,7 @@
                     <a href="<c:url value="/sys/unitindex.do"/>" target="cFrame">订单明细</a>
                 </li>
                 <li>
-                    <a href="<c:url value="/sys/unitindex.do"/>" target="cFrame">客户关系管理</a>
+                    <a href="<c:url value="/home/cus/cusindex.do"/>" target="cFrame">客户关系管理</a>
                 </li>
                 <li>
                     <a href="<c:url value="/sys/unitindex.do"/>" target="cFrame">人员管理</a>

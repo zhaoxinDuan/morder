@@ -21,9 +21,13 @@ public interface TuserMapper {
 
     List findAllUsersByPage(RowBounds rowBounds);
 
+    List findAllUsersNoLimit();
+
     List findAllUnitUsersByPage(RowBounds rowBounds,@Param("idunit")Integer idunit);
 
     int userUpdateStatus(@Param("iduser")Integer iduser,@Param("uisdel")Integer uisdel);
 
     int userUpdatePwd(@Param("iduser")Integer iduser,@Param("upwd")Integer upwd);
+
+    Tuser selectByUname(@Param("uname")String uname);
 }

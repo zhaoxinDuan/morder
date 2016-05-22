@@ -25,6 +25,10 @@ public class Bmorder {
 
     private Integer bmdeliveryIdbmdelivery;
 
+    private Integer tuserIduser;
+
+    private Integer tcustomerIdcustomer;
+
     public Integer getIdbmorder() {
         return idbmorder;
     }
@@ -111,5 +115,21 @@ public class Bmorder {
 
     public void setBmdeliveryIdbmdelivery(Integer bmdeliveryIdbmdelivery) {
         this.bmdeliveryIdbmdelivery = bmdeliveryIdbmdelivery;
+    }
+
+    public Integer getTuserIduser() {
+        return tuserIduser;
+    }
+
+    public void setTuserIduser(Integer tuserIduser) {
+        this.tuserIduser = tuserIduser;
+    }
+
+    public Integer getTcustomerIdcustomer() {
+        return tcustomerIdcustomer;
+    }
+
+    public void setTcustomerIdcustomer(Integer tcustomerIdcustomer) {
+        this.tcustomerIdcustomer = tcustomerIdcustomer;
     }
 }

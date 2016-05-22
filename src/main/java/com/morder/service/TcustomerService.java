@@ -2,6 +2,8 @@ package com.morder.service;
 
 import com.morder.model.Tcustomer;
 
+import java.util.List;
+
 /**
  * Created by amis on 16-5-15.
  */
@@ -10,7 +12,9 @@ public interface TcustomerService {
 
     Integer saveSelective(Tcustomer record);
 
-    Integer deleteByPrimaryKey(Integer idcustomer);
+    void deleteByPrimaryKey(Integer idcustomer,Integer idcusapp,Integer idtcustax);
 
     Tcustomer selectByPrimaryKey(Integer idcustomer);
+
+    List findAllCustomers(Integer start,Integer limit);
 }

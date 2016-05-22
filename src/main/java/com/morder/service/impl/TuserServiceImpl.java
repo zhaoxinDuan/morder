@@ -79,6 +79,10 @@ public class TuserServiceImpl implements TuserService {
         return this.tuserMapper.findAllUsersByPage(rowBounds);
     }
 
+    public List findAllUsersNoLimit() {
+        return this.tuserMapper.findAllUsersNoLimit();
+    }
+
     public List findAllUnitUsers(Integer start, Integer limit, Integer idunit) {
         return this.tuserMapper.findAllUnitUsersByPage(new RowBounds(start,limit),idunit);
     }
@@ -87,5 +91,7 @@ public class TuserServiceImpl implements TuserService {
         return this.tuserMapper.userUpdateStatus(iduser, uisdel);
     }
 
-
+    public Tuser selectByUname(String uname) {
+        return this.tuserMapper.selectByUname(uname);
+    }
 }

@@ -13,7 +13,6 @@ public class Tcustomertax {
 
     private String tcbankaccount;
 
-    private Integer tcustomerIdcustomer;
 
     public Integer getIdtcustax() {
         return idtcustax;
@@ -63,11 +62,4 @@ public class Tcustomertax {
         this.tcbankaccount = tcbankaccount == null ? null : tcbankaccount.trim();
     }
 
-    public Integer getTcustomerIdcustomer() {
-        return tcustomerIdcustomer;
-    }
-
-    public void setTcustomerIdcustomer(Integer tcustomerIdcustomer) {
-        this.tcustomerIdcustomer = tcustomerIdcustomer;
-    }
 }

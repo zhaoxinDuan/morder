@@ -132,6 +132,12 @@
         from tuser
     </select>
 
+    <select id="findAllUsersNoLimit" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tuser
+    </select>
+
     <select id="findAllUnitUsersByPage" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -149,4 +155,11 @@
     set upwd = #{upwd,jdbcType=VARCHAR}
     where iduser = #{iduser,jdbcType=INTEGER}
   </update>
+    <select id="selectByUname" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tuser
+        where uname = #{uname,jdbcType=VARCHAR}
+    </select>
+
 </mapper>

@@ -1,6 +1,9 @@
 package com.morder.mapper;
 
 import com.morder.model.Bmorder;
+import org.apache.ibatis.session.RowBounds;
+
+import java.util.List;
 
 public interface BmorderMapper {
     int deleteByPrimaryKey(Integer idbmorder);
@@ -14,4 +17,6 @@ public interface BmorderMapper {
     int updateByPrimaryKeySelective(Bmorder record);
 
     int updateByPrimaryKey(Bmorder record);
+
+    List findAllBmordersByPage(RowBounds rowBounds);
 }

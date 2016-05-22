@@ -8,10 +8,9 @@
     <result column="tcbillingnum" property="tcbillingnum" jdbcType="VARCHAR" />
     <result column="tcbankname" property="tcbankname" jdbcType="VARCHAR" />
     <result column="tcbankaccount" property="tcbankaccount" jdbcType="VARCHAR" />
-    <result column="tcustomer_idcustomer" property="tcustomerIdcustomer" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    idtcustax, tctcompname, tcbillingaddr, tcbillingnum, tcbankname, tcbankaccount, tcustomer_idcustomer
+    idtcustax, tctcompname, tcbillingaddr, tcbillingnum, tcbankname, tcbankaccount
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -25,11 +24,9 @@
   </delete>
   <insert id="insert" parameterType="com.morder.model.Tcustomertax" useGeneratedKeys="true" keyProperty="idtcustax">
     insert into tcustomertax (idtcustax, tctcompname, tcbillingaddr, 
-      tcbillingnum, tcbankname, tcbankaccount, 
-      tcustomer_idcustomer)
+      tcbillingnum, tcbankname, tcbankaccount)
     values (#{idtcustax,jdbcType=INTEGER}, #{tctcompname,jdbcType=VARCHAR}, #{tcbillingaddr,jdbcType=VARCHAR}, 
-      #{tcbillingnum,jdbcType=VARCHAR}, #{tcbankname,jdbcType=VARCHAR}, #{tcbankaccount,jdbcType=VARCHAR}, 
-      #{tcustomerIdcustomer,jdbcType=INTEGER})
+      #{tcbillingnum,jdbcType=VARCHAR}, #{tcbankname,jdbcType=VARCHAR}, #{tcbankaccount,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.morder.model.Tcustomertax" useGeneratedKeys="true" keyProperty="idtcustax">
     insert into tcustomertax
@@ -52,9 +49,6 @@
       <if test="tcbankaccount != null" >
         tcbankaccount,
       </if>
-      <if test="tcustomerIdcustomer != null" >
-        tcustomer_idcustomer,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="idtcustax != null" >
@@ -74,9 +68,6 @@
       </if>
       <if test="tcbankaccount != null" >
         #{tcbankaccount,jdbcType=VARCHAR},
-      </if>
-      <if test="tcustomerIdcustomer != null" >
-        #{tcustomerIdcustomer,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -98,9 +89,6 @@
       <if test="tcbankaccount != null" >
         tcbankaccount = #{tcbankaccount,jdbcType=VARCHAR},
       </if>
-      <if test="tcustomerIdcustomer != null" >
-        tcustomer_idcustomer = #{tcustomerIdcustomer,jdbcType=INTEGER},
-      </if>
     </set>
     where idtcustax = #{idtcustax,jdbcType=INTEGER}
   </update>
@@ -110,8 +98,7 @@
       tcbillingaddr = #{tcbillingaddr,jdbcType=VARCHAR},
       tcbillingnum = #{tcbillingnum,jdbcType=VARCHAR},
       tcbankname = #{tcbankname,jdbcType=VARCHAR},
-      tcbankaccount = #{tcbankaccount,jdbcType=VARCHAR},
-      tcustomer_idcustomer = #{tcustomerIdcustomer,jdbcType=INTEGER}
+      tcbankaccount = #{tcbankaccount,jdbcType=VARCHAR}
     where idtcustax = #{idtcustax,jdbcType=INTEGER}
   </update>
 </mapper>

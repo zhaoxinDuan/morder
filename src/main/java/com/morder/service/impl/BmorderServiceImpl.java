@@ -3,10 +3,13 @@ package com.morder.service.impl;
 import com.morder.mapper.BmorderMapper;
 import com.morder.model.Bmorder;
 import com.morder.service.BmorderService;
+import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Created by amis on 16-5-15.
@@ -43,5 +46,10 @@ public class BmorderServiceImpl implements BmorderService {
 
     public Bmorder selectByPrimaryKey(Integer idbmorder) {
         return this.bmorderMapper.selectByPrimaryKey(idbmorder);
+    }
+
+    public List findAllBmorders(Integer start, Integer limit) {
+        RowBounds rowBounds = new RowBounds(start, limit);
+        return this.bmorderMapper.findAllBmordersByPage(rowBounds);
     }
 }

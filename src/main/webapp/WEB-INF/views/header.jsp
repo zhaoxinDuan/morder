@@ -23,6 +23,7 @@
 <script src="<c:url value="/resources/plugin/jquery-easyui-1.4.2/jquery.easyui.min.js"/>"></script>
 <script src="<c:url value="/resources/plugin/jquery-easyui-1.4.2/locale/easyui-lang-zh_CN.js"/>"></script>
 <script src="<c:url value="/resources/js/common.js"/>"></script>
+<script src="<c:url value="/resources/js/json2.js"/>"></script>
 <script src="<c:url value="/resources/js/telescopic.js"/>"></script>
 <style type="text/css">
   html, body {
