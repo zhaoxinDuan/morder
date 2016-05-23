@@ -112,6 +112,8 @@
             $.messager.progress({
                 text: '请求正在提交中，请稍候...'
             });
+            $(this).val("登录中");
+            $(this).attr("disabled",true);
 
             $.ajax({
                 type: "POST",
@@ -123,11 +125,15 @@
                     if (msg.success) {
                         location.href = "<c:url value="/sys/indexPage.do"/>";
                     } else {
+                        $('#loginBtn').val("登录");
+                        $('#loginBtn').attr("disabled",false)
                         $(".error").remove();
                         $("#subForm").prepend("<div class='error'><font color='red'>用户名密码错误</font></div>");
                     }
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    $('#loginBtn').val("登录");
+                    $('#loginBtn').attr("disabled",false)
                     $.messager.progress('close');
                     $.messager.alert('操作失败', '读取超时，请检查网络连接！' + textStatus + "," + errorThrown, 'error');
                 }

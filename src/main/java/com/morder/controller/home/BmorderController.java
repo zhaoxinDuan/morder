@@ -35,9 +35,9 @@ public class BmorderController extends BaseController {
 
     @RequestMapping("/bmindex.do")
     public String cusindex(ModelMap modelMap) throws Exception {
-//        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        Tuser tUser = this.tuserService.selectByUname(user.getUsername());
-//        modelMap.put("tUser",tUser);
+        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Tuser tUser = this.tuserService.selectByUname(user.getUsername());
+        modelMap.put("tUser",tUser);
         return "/home/bm/bmindex";
     }
 
