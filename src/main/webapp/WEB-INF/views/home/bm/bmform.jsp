@@ -6,9 +6,7 @@
     <div class="eleContainer titleText textS16">
         直接下单
     </div>
-    <div class="eleContainer elePaddingBtm">
-        <table id="bmitemlist"></table>
-    </div>
+
     <div class="eleContainer elePaddingBtm">
         <form id="subform">
             <table class="layoutTable" cellspacing="1" cellpadding="0" border="0">
