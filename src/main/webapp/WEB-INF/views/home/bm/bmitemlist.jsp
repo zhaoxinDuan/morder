@@ -13,6 +13,7 @@
         <div class="eleContainer elePaddingBtm">
             <form id="subform">
                 <input type="hidden" name="bmorderIdbmorder" id="bmorderIdbmorder">
+                <input type="hidden" name="idbmitem" id="idbmitem">
                 <table class="layoutTable" cellspacing="1" cellpadding="0" border="0">
 
                     <tr>
@@ -21,12 +22,12 @@
                             <select id="bmiprotype" name="bmiprotype" class="easyui-combobox"
                                     data-options="editable:false "
                                     style="width:200px;">
-                                <option>--------</option>
+
                                 <option value="0">锁线</option>
                                 <option value="1">无线</option>
-                                <option value="1">成品折页</option>
-                                <option value="1">无线</option>
-                                <option value="1">无线</option>
+                                <option value="2">成品折页</option>
+                                <option value="3">书本折页</option>
+                                <option value="4" selected>骑订</option>
                             </select>
                         </td>
                     </tr>
@@ -61,8 +62,12 @@
                     <tr>
                         <th>是否含税</th>
                         <td style="text-align:left;">
-                            <input type="text" name="bmiistax" id="bmiistax" class="textInput textbox-width"
-                                   style="resize:none;width:96%;height:20px">
+                            <select id="bmiistax" name="bmiistax" class="easyui-combobox"
+                                    data-options="editable:false "
+                                    style="width:200px;">
+                                <option value="0" selected>含税</option>
+                                <option value="1">不含税</option>
+                            </select>
                         </td>
                     </tr>
                     <tr>
@@ -87,10 +92,6 @@
 
 
 <script type="text/javascript">
-    function openDetailAndFillValues(record) {
-        $('#bmitemDialog').dialog('open');
-
-    }
 
     $(document).ready(function () {
         var url = '<c:url value="/home/cus/findAllCustomers.do?_csrf=${_csrf.token}"/>&t=' + new Date().getTime();
@@ -107,61 +108,59 @@
                     loadFilter: pagerFilter,
                     columns: [[
                         {
-                            field: 'cname', title: '客户名称', width: 50
-                        },
-                        {
-                            field: 'tcustomerappendIdcusapp',
-                            title: '联系人',
-                            width: 50,
+                            field: 'bmiprotype', title: '产品类型', width: 50,
                             formatter: function (value, row, index) {
-                                if (row.tcustomerappend && row.tcustomerappend) {
-                                    return row.tcustomerappend.cacontacts + "    " + row.tcustomerappend.camphone;
+                                var str = "";
+                                if(value==0) {
+                                    str = "锁线";
+                                }else if(value==1) {
+                                    str = "无线";
+                                }else if(value==2) {
+                                    str = "成品折页";
+                                }else if(value==3) {
+                                    str = "书本折页";
+                                }else if(value==4) {
+                                    str = "骑订";
                                 }
-
+                                return str;
                             }
                         },
-                        {field: 'caddress', title: '客户地址', width: 50},
                         {
-                            field: 'csettype', title: '客户类型', width: 50,
+                            field: 'bmiproname',
+                            title: '产品名称',
+                            width: 50
+                        },
+                        {field: 'bmiprice', title: '单价', width: 50},
+                        {field: 'bminum', title: '数量', width: 50},
+                        {field: 'bmiamount', title: '金额', width: 50},
+                        {
+                            field: 'bmiistax', title: '是否含税', width: 50,
                             formatter: function (value, row, index) {
-                                if (value == 1) {
-                                    return "个人客户";
+                                if (value == 0) {
+                                    return "含税";
                                 } else {
-                                    return "公司客户";
+                                    return "不含税";
                                 }
                             }
                         },
-                        {field: 'cofficername', title: '负责人', width: 50},
-                        {field: 'comments', title: '备注', width: 50}
+                        {field: 'bmioutternum', title: '外发编号', width: 50},
+                        {field: 'bmorderitemcol', title: '产品规格', width: 50}
 
                     ]],
                     toolbar: [{
                         text: '添加',
                         iconCls: 'icon-add',
                         handler: function () {
-                            $(".dialog-button").show();
-                            $('input').attr("readonly",false);
+
                             $('#bmitemDialog').dialog('open');
-                            $("#idcustomer").val('');
-                            $("#tcustomerappendIdcusapp").val('');
-                            $("#idcusapp").val('');
-                            $("#tcustomertaxIdtcustax").val('');
-                            $("#idtcustax").val('');
-                            $("#cname").val('');
-                            $("#caddress").val('');
-                            $("#comments").val('');
 
-                            $("#tctcompname").val('');
-                            $("#tcbillingaddr").val('');
-                            $("#tcbillingnum").val('');
-                            $("#tcbankname").val('');
-                            $("#tcbankaccount").val('');
+                            $("#bmiproname").val('');
+                            $("#bmiprice").val('');
+                            $("#bminum").val('');
+                            $("#bmiamount").val('');
+                            $("#bmioutternum").val('');
+                            $("#bmorderitemcol").val('');
 
-                            $("#cacontacts").val('');
-                            $("#catelphone").val('');
-                            $("#camphone").val('');
-                            $("#cafax").val('');
-                            $("#carecaddress").val('');
                         }
                     }, '-', {
                         text: '编辑',
@@ -173,7 +172,15 @@
                             if (record == null) {
                                 $.messager.alert('提示', '请选择某行数据再进行编辑。', 'info');
                             } else {
-                                openDetailAndFillValues(record);
+                                $("#idbmitem").val(record.idbmitem);
+                                $("#bmiproname").val(record.bmiproname);
+                                $("#bmiprice").val(record.bmiprice);
+                                $("#bminum").val(record.bminum);
+                                $("#bmiamount").val(record.bmiamount);
+                                $("#bmioutternum").val(record.bmioutternum);
+                                $("#bmorderitemcol").val(record.bmorderitemcol);
+                                $("#bmiprotype").combobox("setValue", record.bmiprotype);
+                                $("#bmiistax").combobox("setValue", record.bmiistax);
                             }
                         }
                     }, '-', {
@@ -189,9 +196,7 @@
                                     url: '<c:url value="/home/cus/delCusById.do?_csrf=${_csrf.token}"/>&t=' + new Date().getTime(),
                                     dataType: "json",
                                     data: {
-                                        idcustomer: record.idcustomer,
-                                        idcusapp: record.tcustomerappendIdcusapp,
-                                        idtcustax: record.tcustomertaxIdtcustax
+                                        idbmitem: record.idbmitem,
                                     },
                                     beforeSend: function () {
                                         $.messager.progress({
@@ -237,12 +242,9 @@
                 text: '提交',
                 iconCls: 'icon-ok',
                 handler: function () {
-                    if (isEmpty('cname', '客户名称'))return;
-                    var uid =trimEasyUIValue("cofficeruid","easyui-combobox");
-                    var uname =$("#cofficername").val();
-                    if((uid==null||nid=="")||(uname==null||uname=="")){
-                        $.messager.alert('请选择负责人', '请从下拉框重选择负责人，不要自己输入！', 'info');
-                    }
+                    if (isEmpty('bmiproname', '产品名称'))return;
+
+
                     var data = $("#subform").serializeArray();
                     $.ajax({
                         type: "POST",
@@ -280,26 +282,6 @@
             ]
         });
 
-        $('#cofficeruid').combobox({
-            panelHeight: 'auto',
-            editable: true,
-            required: "true",
-            valueField: 'iduser',
-            textField: 'uname',
-            url: '<c:url value="/home/findAllUsersNoLimit.do?_csrf=${_csrf.token}"/>',
-            filter: function (q, row) {
-                var opts = $(this).combobox('options');
-                return row[opts.textField].indexOf(q) >= 0;//这里改成>=即可在任意地方匹配
-            },
-            onLoadSuccess: function (msg) {
-                $('#cofficeruid').combobox("setValue", "${tUser.iduser}");
-                $("#cofficername").val("${tUser.uname}");
-
-            },
-            onChange: function (newValue, oldValue) {
-                $("#cofficername").val($('#cofficeruid').combobox('getText'));
-            }
-        });
     })
 
 </script>
