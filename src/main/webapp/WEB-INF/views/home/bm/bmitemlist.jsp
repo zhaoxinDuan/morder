@@ -2,9 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<div class="ctrlContainer" id="fieldDefDiv">
+<div class="ctrlContainer" id="bmitemlistDiv">
     <div class="eleContainer titleText textS16">
-        客户列表
+        产品列表
     </div>
     <div class="eleContainer elePaddingBtm">
         <table id="bmitemlist"></table>
@@ -41,21 +41,19 @@
                     <tr>
                         <th>单价</th>
                         <td style="text-align:left;">
-                            <input type="text" name="bmiprice" id="bmiprice" class="textInput textbox-width"
-                                   style="resize:none;width:96%;height:20px">
+                            <input type="text" name="bmiprice" id="bmiprice" style="resize:none;width:96%;height:20px">
                         </td>
                     </tr>
                     <tr>
                         <th>数量</th>
                         <td style="text-align:left;">
-                            <input type="text" name="bminum" id="bminum" class="textInput textbox-width"
-                                   style="resize:none;width:96%;height:20px">
+                            <input type="text" name="bminum" id="bminum" style="resize:none;width:96%;height:20px">
                         </td>
                     </tr>
                     <tr>
                         <th>金额</th>
                         <td style="text-align:left;">
-                            <input type="text" name="bmiamount" id="bmiamount" class="textInput textbox-width"
+                            <input type="text" name="bmiamount" id="bmiamount" readonly class="textInput textbox-width"
                                    style="resize:none;width:96%;height:20px">
                         </td>
                     </tr>
@@ -71,13 +69,13 @@
                         </td>
                     </tr>
                     <tr>
-                        <th>bmioutternum</th>
+                        <th>外发编号</th>
                         <td style="text-align:left;">
                             <input type="text" name="bmioutternum" id="bmioutternum" class="textInput textbox-width"
                                    style="resize:none;width:96%;height:20px">
                         </td>
                     <tr>
-                        <th>bmorderitemcol</th>
+                        <th>产品规格</th>
                         <td style="text-align:left;">
                             <input type="text" name="bmorderitemcol" id="bmorderitemcol" class="textInput textbox-width"
                                    style="resize:none;width:96%;height:20px">
@@ -94,9 +92,38 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        var url = '<c:url value="/home/cus/findAllCustomers.do?_csrf=${_csrf.token}"/>&t=' + new Date().getTime();
+
+
+        $("#bmiprice").numberbox({
+            precision: "2",
+            max: "99999999.99",
+            size: "10",
+            maxlength: "10",
+            onChange: function (newValue, oldValue) {
+                var bminum = $("#bminum").val();
+                if (judgeNumber(bminum)) {
+                    $("#bmiamount").val((parseFloat(newValue)*parseFloat(bminum)).toFixed(2));
+                } else if (!judgeNumber(bminum)) {
+                    $("#bmiamount").val(newValue);
+                }
+            }
+        });
+
+        $("#bminum").numberbox({
+            max: "9999999999",
+            size: "10",
+            maxlength: "10",
+            onChange: function (newValue, oldValue) {
+                var bmiprice = $("#bmiprice").val();
+                if (judgeNumber(bmiprice)) {
+                    $("#bmiamount").val((parseFloat(newValue)*parseFloat(bmiprice)).toFixed(2));
+                } else if (!judgeNumber(bmiamount_tmp)) {
+                    $("#bmiamount").val(newValue);
+                }
+            }
+        });
+
         $('#bmitemlist').datagrid({
-                    url: url,
                     title: '字段定义列表',
                     pagination: true,
                     fitColumns: true,
@@ -154,9 +181,13 @@
 
                             $('#bmitemDialog').dialog('open');
 
+                            $("#idbmitem").val('');
+                            $("#bmorderIdbmorder").val($("#idbmorder").val());
                             $("#bmiproname").val('');
-                            $("#bmiprice").val('');
-                            $("#bminum").val('');
+//                            $("#bmiprice").val('');
+                            $('#bmiprice').numberbox('setValue', 0);
+                            $('#bminum').numberbox('setValue', 1);
+//                            $("#bminum").val('');
                             $("#bmiamount").val('');
                             $("#bmioutternum").val('');
                             $("#bmorderitemcol").val('');
@@ -166,12 +197,13 @@
                         text: '编辑',
                         iconCls: 'icon-edit',
                         handler: function () {
-                            $(".dialog-button").show();
-                            $('input').attr("readonly",false);
                             var record = $('#bmitemlist').datagrid('getSelected');
                             if (record == null) {
                                 $.messager.alert('提示', '请选择某行数据再进行编辑。', 'info');
                             } else {
+                                $('#bmitemDialog').dialog('open');
+                                $("#bmorderIdbmorder").val($("#idbmorder").val());
+
                                 $("#idbmitem").val(record.idbmitem);
                                 $("#bmiproname").val(record.bmiproname);
                                 $("#bmiprice").val(record.bmiprice);
@@ -193,7 +225,7 @@
                             } else {
                                 $.ajax({
                                     type: "POST",
-                                    url: '<c:url value="/home/cus/delCusById.do?_csrf=${_csrf.token}"/>&t=' + new Date().getTime(),
+                                    url: '<c:url value="/home/bm/delBmorderItemById.do?_csrf=${_csrf.token}"/>&t=' + new Date().getTime(),
                                     dataType: "json",
                                     data: {
                                         idbmitem: record.idbmitem,
@@ -235,7 +267,7 @@
             maximizable: true,
             cache: false,
             width: 600,
-            height: 550,
+            height: 380,
             title: "用户定义",
             closed: true,
             buttons: [{
@@ -243,12 +275,12 @@
                 iconCls: 'icon-ok',
                 handler: function () {
                     if (isEmpty('bmiproname', '产品名称'))return;
-
+                    if (isEmpty('bmorderIdbmorder', '订单错误'))return;
 
                     var data = $("#subform").serializeArray();
                     $.ajax({
                         type: "POST",
-                        url: '<c:url value="/home/cus/saveCusInfo.do?_csrf=${_csrf.token}"/>&t=' + new Date().getTime(),
+                        url: '<c:url value="/home/bm/saveMorderItemInfo.do?_csrf=${_csrf.token}"/>&t=' + new Date().getTime(),
                         dataType: "json",
                         data: data,
                         beforeSend: function () {
@@ -261,7 +293,10 @@
                             if (msg.success == true) {
                                 $.messager.alert('操作成功', '保存成功', 'info');
                                 $('#bmitemlist').datagrid('reload');
+                                $("#bmorderamount").val((parseFloat($("#bmiamount").val()) + parseFloat($("#bmorderamount").val())).toFixed(2));
                                 $('#bmitemDialog').dialog('close');
+
+
                             } else {
                                 $.messager.alert('操作失败', '保存失败！', 'error');
                             }
