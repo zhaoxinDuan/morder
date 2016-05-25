@@ -17,4 +17,6 @@ public interface TcustomerService {
     Tcustomer selectByPrimaryKey(Integer idcustomer);
 
     List findAllCustomers(Integer start,Integer limit);
+
+    List findAllCustomersNolimit();
 }

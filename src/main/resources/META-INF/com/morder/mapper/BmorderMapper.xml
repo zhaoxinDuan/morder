@@ -12,13 +12,15 @@
         <result column="bmaddcosts" property="bmaddcosts" jdbcType="DECIMAL"/>
         <result column="bmorderamount" property="bmorderamount" jdbcType="DECIMAL"/>
         <result column="bmcomments" property="bmcomments" jdbcType="VARCHAR"/>
+        <result column="bmstatus" property="bmstatus" jdbcType="INTEGER"/>
+        <result column="bmcreateuserid" property="bmcreateuserid" jdbcType="INTEGER"/>
         <result column="bmdelivery_idbmdelivery" property="bmdeliveryIdbmdelivery" jdbcType="INTEGER"/>
         <result column="tuser_iduser" property="tuserIduser" jdbcType="INTEGER"/>
         <result column="tcustomer_idcustomer" property="tcustomerIdcustomer" jdbcType="INTEGER"/>
     </resultMap>
     <sql id="Base_Column_List">
     idbmorder, bmcusname, bmordernum, bmbillingdate, bmdeliverydate, bmpaymethod, bmcurrencytyoe, 
-    bmaddcosts, bmorderamount, bmcomments, bmdelivery_idbmdelivery,tuser_iduser,tcustomer_idcustomer
+    bmaddcosts, bmorderamount, bmcomments,bmstatus,bmcreateuserid, bmdelivery_idbmdelivery,tuser_iduser,tcustomer_idcustomer
   </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
@@ -34,11 +36,11 @@
     insert into bmorder (idbmorder, bmcusname, bmordernum, 
       bmbillingdate, bmdeliverydate, bmpaymethod, 
       bmcurrencytyoe, bmaddcosts, bmorderamount, 
-      bmcomments, bmdelivery_idbmdelivery,tuser_iduser,tcustomer_idcustomer)
+      bmcomments,bmstatus, bmdelivery_idbmdelivery,tuser_iduser,tcustomer_idcustomer)
     values (#{idbmorder,jdbcType=INTEGER}, #{bmcusname,jdbcType=VARCHAR}, #{bmordernum,jdbcType=VARCHAR}, 
       #{bmbillingdate,jdbcType=DATE}, #{bmdeliverydate,jdbcType=DATE}, #{bmpaymethod,jdbcType=VARCHAR}, 
       #{bmcurrencytyoe,jdbcType=INTEGER}, #{bmaddcosts,jdbcType=DECIMAL}, #{bmorderamount,jdbcType=DECIMAL}, 
-      #{bmcomments,jdbcType=VARCHAR}, #{bmdeliveryIdbmdelivery,jdbcType=INTEGER}, #{tuserIduser,jdbcType=INTEGER},
+      #{bmcomments,jdbcType=VARCHAR}, #{bmstatus,jdbcType=INTEGER}, #{bmcreateuserid,jdbcType=INTEGER}, #{bmdeliveryIdbmdelivery,jdbcType=INTEGER}, #{tuserIduser,jdbcType=INTEGER},
       #{tcustomerIdcustomer,jdbcType=INTEGER})
   </insert>
     <insert id="insertSelective" parameterType="com.morder.model.Bmorder" useGeneratedKeys="true"
@@ -74,6 +76,12 @@
             </if>
             <if test="bmcomments != null">
                 bmcomments,
+            </if>
+            <if test="bmstatus != null">
+                bmstatus,
+            </if>
+            <if test="bmcreateuserid != null">
+                bmcreateuserid,
             </if>
             <if test="bmdeliveryIdbmdelivery != null">
                 bmdelivery_idbmdelivery,
@@ -116,14 +124,20 @@
             <if test="bmcomments != null">
                 #{bmcomments,jdbcType=VARCHAR},
             </if>
+            <if test="bmstatus != null">
+                #{bmstatus,jdbcType=INTEGER},
+            </if>
+            <if test="bmcreateuserid != null">
+                #{bmcreateuserid,jdbcType=INTEGER},
+            </if>
             <if test="bmdeliveryIdbmdelivery != null">
                 #{bmdeliveryIdbmdelivery,jdbcType=INTEGER},
             </if>
             <if test="tuserIduser != null">
-                #{tuser_Iduser,jdbcType=INTEGER},
+                #{tuserIduser,jdbcType=INTEGER},
             </if>
             <if test="tcustomerIdcustomer != null">
-                #{tcustomer_idcustomer,jdbcType=INTEGER},
+                #{tcustomerIdcustomer,jdbcType=INTEGER},
             </if>
         </trim>
     </insert>
@@ -157,6 +171,12 @@
             <if test="bmcomments != null">
                 bmcomments = #{bmcomments,jdbcType=VARCHAR},
             </if>
+            <if test="bmstatus != null">
+                bmstatus = #{bmstatus,jdbcType=INTEGER},
+            </if>
+            <if test="bmcreateuserid != null">
+                bmcreateuserid = #{bmcreateuserid,jdbcType=INTEGER},
+            </if>
             <if test="bmdeliveryIdbmdelivery != null">
                 bmdelivery_idbmdelivery = #{bmdeliveryIdbmdelivery,jdbcType=INTEGER},
             </if>
@@ -180,6 +200,8 @@
       bmaddcosts = #{bmaddcosts,jdbcType=DECIMAL},
       bmorderamount = #{bmorderamount,jdbcType=DECIMAL},
       bmcomments = #{bmcomments,jdbcType=VARCHAR},
+      bmstatus = #{bmstatus,jdbcType=INTEGER},
+      bmcreateuserid = #{bmcreateuserid,jdbcType=INTEGER},
       bmdelivery_idbmdelivery = #{bmdeliveryIdbmdelivery,jdbcType=INTEGER},
       tuser_iduser = #{tuserIduser,jdbcType=INTEGER},
       tcustomer_idcustomer = #{tcustomerIdcustomer,jdbcType=INTEGER}

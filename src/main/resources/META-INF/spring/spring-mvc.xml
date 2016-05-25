@@ -7,7 +7,10 @@
 
     <!-- 自动扫描controller包下的所有类，如果@Controller注入为bean -->
     <context:component-scan base-package="com.morder.controller"/>
-    <mvc:annotation-driven/>
+    <mvc:annotation-driven>
+
+    </mvc:annotation-driven>
+
     <!-- 避免IE执行AJAX时,返回JSON出现下载文件 -->
     <bean id="mappingJacksonHttpMessageConverter"
           class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
@@ -17,7 +20,8 @@
             </list>
         </property>
     </bean>
-
+    <bean id="conversionSerivce"
+          class="org.springframework.context.support.ConversionServiceFactoryBean"/>
 
     <!-- 启动Spring MVC的注解功能，完成请求和注解POJO的映射 -->
     <bean
@@ -29,14 +33,7 @@
             </list>
         </property>
     </bean>
-    <bean id="jacksonMessageConverter"
-          class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
-        <property name="supportedMediaTypes">
-            <list>
-                <value>text/html;charset=UTF-8</value>
-            </list>
-        </property>
-    </bean>
+
     <!--<bean id="defaultJsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>-->
     <!-- 对模型视图名称的解析，即在模型视图名称添加前后缀 -->
     <bean

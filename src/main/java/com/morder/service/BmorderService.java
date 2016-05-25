@@ -1,6 +1,7 @@
 package com.morder.service;
 
 import com.morder.model.Bmorder;
+import com.morder.model.Bmorderitem;
 
 import java.util.List;
 
@@ -19,5 +20,14 @@ public interface BmorderService {
 
     List findAllBmorders(Integer start,Integer limit);
 
+    Integer saveItemSelective(Bmorderitem record);
+
+    Bmorderitem selectItemByPrimaryKey(Integer idbmitem);
+
+    Integer deleteItemByPrimaryKey(Integer idbmitem);
+
+    List findItemsByIdbmorder(Integer idbmorder);
+
+    List findAllBmorderitems(Integer start,Integer limit);
 
 }

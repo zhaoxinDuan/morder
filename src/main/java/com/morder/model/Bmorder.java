@@ -1,5 +1,9 @@
 package com.morder.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
+
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class Bmorder {
@@ -9,19 +13,26 @@ public class Bmorder {
 
     private String bmordernum;
 
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date bmbillingdate;
 
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date bmdeliverydate;
 
     private String bmpaymethod;
 
     private Integer bmcurrencytyoe;
 
-    private Long bmaddcosts;
 
-    private Long bmorderamount;
+    private BigDecimal bmaddcosts;
+//    @NumberFormat(style= NumberFormat.Style.NUMBER, pattern="##.##")
+    private BigDecimal bmorderamount;
 
     private String bmcomments;
+
+    private Integer bmstatus;
+
+    private Integer bmcreateuserid;
 
     private Integer bmdeliveryIdbmdelivery;
 
@@ -85,19 +96,19 @@ public class Bmorder {
         this.bmcurrencytyoe = bmcurrencytyoe;
     }
 
-    public Long getBmaddcosts() {
+    public BigDecimal getBmaddcosts() {
         return bmaddcosts;
     }
 
-    public void setBmaddcosts(Long bmaddcosts) {
+    public void setBmaddcosts(BigDecimal bmaddcosts) {
         this.bmaddcosts = bmaddcosts;
     }
 
-    public Long getBmorderamount() {
+    public BigDecimal getBmorderamount() {
         return bmorderamount;
     }
 
-    public void setBmorderamount(Long bmorderamount) {
+    public void setBmorderamount(BigDecimal bmorderamount) {
         this.bmorderamount = bmorderamount;
     }
 
@@ -107,6 +118,22 @@ public class Bmorder {
 
     public void setBmcomments(String bmcomments) {
         this.bmcomments = bmcomments == null ? null : bmcomments.trim();
+    }
+
+    public Integer getBmstatus() {
+        return bmstatus;
+    }
+
+    public void setBmstatus(Integer bmstatus) {
+        this.bmstatus = bmstatus;
+    }
+
+    public Integer getBmcreateuserid() {
+        return bmcreateuserid;
+    }
+
+    public void setBmcreateuserid(Integer bmcreateuserid) {
+        this.bmcreateuserid = bmcreateuserid;
     }
 
     public Integer getBmdeliveryIdbmdelivery() {

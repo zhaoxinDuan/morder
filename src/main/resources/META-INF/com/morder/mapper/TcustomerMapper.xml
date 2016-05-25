@@ -144,4 +144,10 @@
     <include refid="Base_Column_List"/>
     from tcustomer
   </select>
+
+  <select id="findAllCustomersNolimit" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from tcustomer
+  </select>
 </mapper>

@@ -150,4 +150,15 @@
       bmorder_idbmorder = #{bmorderIdbmorder,jdbcType=INTEGER}
     where idbmitem = #{idbmitem,jdbcType=INTEGER}
   </update>
+
+  <select id="findItemsByIdbmorder" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from bmorderitem where bmorder_idbmorder= #{bmorderIdbmorder,jdbcType=INTEGER}
+  </select>
+  <select id="findAllBmorderitemsByPage" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from bmorderitem}
+  </select>
 </mapper>

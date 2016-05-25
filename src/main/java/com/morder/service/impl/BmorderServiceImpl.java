@@ -1,8 +1,11 @@
 package com.morder.service.impl;
 
 import com.morder.mapper.BmorderMapper;
+import com.morder.mapper.BmorderitemMapper;
 import com.morder.model.Bmorder;
+import com.morder.model.Bmorderitem;
 import com.morder.service.BmorderService;
+import com.morder.utils.OrderNumUtil;
 import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +22,8 @@ public class BmorderServiceImpl implements BmorderService {
     private static final Logger logger = LoggerFactory.getLogger(BmorderServiceImpl.class);
     @Autowired
     private BmorderMapper bmorderMapper;
+    @Autowired
+    private BmorderitemMapper bmorderitemMapper;
 
     public Integer save(Bmorder record) {
         Integer count = null;
@@ -34,6 +39,11 @@ public class BmorderServiceImpl implements BmorderService {
         Integer count = null;
         if(record.getIdbmorder()==null){
             count = this.bmorderMapper.insertSelective(record);
+            Bmorder bmorder = new Bmorder();
+            bmorder.setIdbmorder(record.getIdbmorder());
+            bmorder.setBmordernum(OrderNumUtil.createOrderNum(record.getIdbmorder()));
+            this.bmorderMapper.updateByPrimaryKeySelective(bmorder);
+            record.setBmordernum(bmorder.getBmordernum());
         }else{
             count = this.bmorderMapper.updateByPrimaryKeySelective(record);
         }
@@ -52,4 +62,32 @@ public class BmorderServiceImpl implements BmorderService {
         RowBounds rowBounds = new RowBounds(start, limit);
         return this.bmorderMapper.findAllBmordersByPage(rowBounds);
     }
+
+    public Integer saveItemSelective(Bmorderitem record) {
+        Integer count = null;
+        if(record.getIdbmitem()==null){
+            count = this.bmorderitemMapper.insertSelective(record);
+        }else{
+            count = this.bmorderitemMapper.updateByPrimaryKeySelective(record);
+        }
+        return count;
+    }
+
+    public Integer deleteItemByPrimaryKey(Integer idbmitem) {
+        return this.bmorderitemMapper.deleteByPrimaryKey(idbmitem);
+    }
+
+    public Bmorderitem selectItemByPrimaryKey(Integer idbmitem) {
+        return this.bmorderitemMapper.selectByPrimaryKey(idbmitem);
+    }
+
+    public List findItemsByIdbmorder(Integer idbmorder) {
+        return this.bmorderitemMapper.findItemsByIdbmorder(idbmorder);
+    }
+
+    public List findAllBmorderitems(Integer start, Integer limit) {
+        RowBounds rowBounds = new RowBounds(start, limit);
+        return this.bmorderitemMapper.findAllBmorderitemsByPage(rowBounds);
+    }
+
 }

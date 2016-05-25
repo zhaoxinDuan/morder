@@ -8,17 +8,21 @@
     </div>
 
     <div class="eleContainer elePaddingBtm">
-        <form id="subform">
+        <form id="morderform">
             <table class="layoutTable" cellspacing="1" cellpadding="0" border="0">
+
                 <tr>
                     <th>客户名称<span class="impSpan">*</span></th>
                     <td style="text-align:left;">
-                        <input type="text" name="cname" id="cname" class="textInput textbox-width"
-                               style="resize:none;width:96%;height:20px">
+                        <input type="hidden" id="idbmorder" name="idbmorder">
+                        <input type="hidden" id="bmcreateuserid" name="bmcreateuserid" value="${tUser.iduser}">
+                        <input id="tcustomerIdcustomer" name="tcustomerIdcustomer" class="easyui-combobox"
+                               data-options="editable:false "
+                               style="width:200px;"/>
                     </td>
-                    <th>订单编号<span class="impSpan">*</span></th>
+                    <th>订单编号</th>
                     <td style="text-align:left;">
-                        <input type="text" name="bmordernum" id="bmordernum" class="textInput textbox-width"
+                        <input type="text" name="bmordernum" id="bmordernum" readonly class="textInput textbox-width"
                                style="resize:none;width:96%;height:20px">
                     </td>
                 </tr>
@@ -32,7 +36,7 @@
                     </td>
                     <th>交货日期</th>
                     <td style="text-align:left;">
-                        <input type="text" name="bmdeliverydate" id="bmdeliverydate" class="textInput textbox-width"
+                        <input type="text" name="bmdeliverydate" id="bmdeliverydate" class="easyui-datebox"
                                style="resize:none;width:96%;height:20px">
                     </td>
                 </tr>
@@ -45,15 +49,17 @@
                     </td>
                     <th>额外费用</th>
                     <td style="text-align:left;">
-                        <input type="text" name="bmaddcosts" id="bmaddcosts" class="textInput textbox-width"
-                               style="resize:none;width:96%;height:20px">
+                        <input type="text" name="bmaddcosts" id="bmaddcosts">
                     </td>
                 </tr>
                 <tr>
                     <th>订单金额<span class="impSpan">*</span></th>
                     <td style="text-align:left;">
-                        <input type="text" name="bmorderamount" id="bmorderamount" class="textInput textbox-width"
+                        <input type="hidden" id="bmaddcosts_tmp" value="0">
+                        <input type="text" name="bmorderamount" id="bmorderamount" readonly value="0"
+                               class="textInput textbox-width"
                                style="resize:none;width:96%;height:20px">
+                        <input type="hidden" id="bmiamount_tmp" value="0">
                     </td>
                     <th>负责人<span class="impSpan">*</span></th>
                     <td style="text-align:left;" colspan="3">
@@ -74,7 +80,7 @@
                         <a data-options="iconCls:'icon-save'" href="javascript:void(0)" class="easyui-linkbutton"
                            id="savebmorder">保存</a>&nbsp;&nbsp;&nbsp;
                         <a data-options="iconCls:'icon-save'" href="javascript:void(0)" class="easyui-linkbutton"
-                           id="postbmorder">提交</a>
+                           id="postbmorder">完成订单</a>
                     </td>
                 </tr>
             </table>
@@ -84,14 +90,88 @@
 
 
 <script type="text/javascript">
+    function init() {
+        <c:if test="${bmorder!=null}">
+        <c:if test="${bmorder.idbmorder!=null}">
+        $("#idbmorder").val("${bmorder.idbmorder}");
+        </c:if>
+        <c:if test="${bmorder.bmordernum!=null}">
+        $("#bmordernum").val("${bmorder.bmordernum}");
+        </c:if>
+        <c:if test="${bmorder.bmbillingdate!=null}">
+        $("#bmbillingdate").val("${bmorder.bmbillingdate}");
+        </c:if>
+        <c:if test="${bmorder.bmdeliverydate!=null}">
+        $("#bmdeliverydate").val("${bmorder.bmdeliverydate}");
+        </c:if>
+        <c:if test="${bmorder.bmpaymethod!=null}">
+        $("#bmpaymethod").val("${bmorder.bmpaymethod}");
+        </c:if>
+        <c:if test="${bmorder.bmaddcosts!=null}">
+        $("#bmaddcosts").val("${bmorder.bmaddcosts}");
+        </c:if>
+        <c:if test="${bmorder.bmcomments!=null}">
+        $("#bmcomments").val("${bmorder.bmcomments}");
+        </c:if>
+        <c:if test="${bmorder.tuserIduser!=null}">
+        $('#tuserIduser').combobox("setValue", "${bmorder.tuserIduser}");
+        </c:if>
+        <c:if test="${bmorder.tcustomerIdcustomer!=null}">
+        $('#tcustomerIdcustomer').combobox("setValue", "${bmorder.tcustomerIdcustomer}");
+        </c:if>
 
+        </c:if>
+    }
+
+    function judgeNumber(s) {
+        if (!isNaN(s) && s != "" && s != null && s != "null") {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function saveMorder(ispost) {
+//        if (isEmptyEasyUI('bmbillingdate','开单日期'))return;
+        if (isEmptyEasyUI('tcustomerIdcustomer', '客户名称'))return;
+        var data = $("#morderform").serializeArray();
+        $.ajax({
+            type: "POST",
+            url: '<c:url value="/home/bm/saveMorderInfo.do?_csrf=${_csrf.token}"/>&ispost=' + ispost + '&t=' + new Date().getTime(),
+            dataType: "json",
+            data: data,
+            beforeSend: function () {
+                $.messager.progress({
+                    text: '请求正在提交中，请稍候...'
+                });
+            },
+            success: function (msg) {
+                $.messager.progress('close');
+                if (msg.success == true) {
+                    $('#idbmorder').val(msg.idbmorder);
+                    $('#bmordernum').val(msg.bmordernum);
+                    $.messager.alert('操作成功', '保存成功。', 'info');
+                    $("#bmitemlist").datagrid({url: '<c:url value="/home/bm/findItemsByIdbmorder.do?_csrf=${_csrf.token}"/>&idbmorder=' + msg.idbmorder + '&t=' + new Date().getTime()});
+
+                } else {
+                    $.messager.alert('操作失败', '操作失败！', 'error');
+                }
+            },
+            error: function (msg) {
+                $.messager.progress('close');
+                $.messager.alert('操作失败', '后台出现异常！' + msg, 'error');
+            }
+        })
+    }
     $(document).ready(function () {
-
+        $("#bmitemlistDiv").hide();
         $("#savebmorder").bind("click", function () {
+            $("#bmitemlistDiv").show();
+            saveMorder(false);
 
         });
         $("#postbmorder").bind("click", function () {
-
+            saveMorder(true);
         });
         $('#tuserIduser').combobox({
             panelHeight: 'auto',
@@ -113,6 +193,42 @@
             }
         });
 
+        $('#tcustomerIdcustomer').combobox({
+            panelHeight: 'auto',
+            editable: true,
+            required: "true",
+            valueField: 'idcustomer',
+            textField: 'cname',
+            url: '<c:url value="/home/cus/findAllCustomersNolimit.do?_csrf=${_csrf.token}"/>',
+            filter: function (q, row) {
+                var opts = $(this).combobox('options');
+                return row[opts.textField].indexOf(q) >= 0;//这里改成>=即可在任意地方匹配
+            },
+            onLoadSuccess: function (msg) {
+
+
+            },
+            onChange: function (newValue, oldValue) {
+
+            }
+        });
+
+        init();
+
+        $("#bmaddcosts").numberbox({
+            precision: "2",
+            max: "99999999.99",
+            size: "10",
+            maxlength: "10",
+            onChange: function (newValue, oldValue) {
+                var bmiamount_tmp = $("#bmiamount_tmp").val();
+                if (judgeNumber(bmiamount_tmp)) {
+                    $("#bmorderamount").val((parseFloat(newValue) + parseFloat(bmiamount_tmp)).toFixed(2));
+                } else if (!judgeNumber(bmiamount_tmp)) {
+                    $("#bmorderamount").val(newValue);
+                }
+            }
+        });
 
     })
 

@@ -49,6 +49,13 @@ public class TcustomerController extends BaseController {
         return this.tcustomerService.findAllCustomers((page - 1) * rows, rows);
     }
 
+    @RequestMapping("/findAllCustomersNolimit.do")
+    @ResponseBody
+    public List findAllCustomersNolimit() throws Exception {
+        return this.tcustomerService.findAllCustomersNolimit();
+    }
+
+
 
     @RequestMapping("/delCusById.do")
     @ResponseBody

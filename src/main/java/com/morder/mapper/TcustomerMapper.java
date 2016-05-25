@@ -19,4 +19,6 @@ public interface TcustomerMapper {
     int updateByPrimaryKey(Tcustomer record);
 
     List findAllCustomersByPage(RowBounds rowBounds);
+
+    List findAllCustomersNolimit();
 }

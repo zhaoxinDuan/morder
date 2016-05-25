@@ -72,5 +72,7 @@ public class TcustomerServiceImpl implements TcustomerService {
         return this.tcustomerMapper.findAllCustomersByPage(rowBounds);
     }
 
-
+    public List findAllCustomersNolimit() {
+        return this.tcustomerMapper.findAllCustomersNolimit();
+    }
 }

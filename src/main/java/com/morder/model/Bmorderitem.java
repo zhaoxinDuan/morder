@@ -1,5 +1,7 @@
 package com.morder.model;
 
+import java.math.BigDecimal;
+
 public class Bmorderitem {
     private Integer idbmitem;
 
@@ -7,11 +9,11 @@ public class Bmorderitem {
 
     private Integer bmiprotype;
 
-    private Long bmiprice;
+    private BigDecimal bmiprice;
 
     private Integer bminum;
 
-    private Long bmiamount;
+    private BigDecimal bmiamount;
 
     private Integer bmiistax;
 
@@ -45,11 +47,11 @@ public class Bmorderitem {
         this.bmiprotype = bmiprotype;
     }
 
-    public Long getBmiprice() {
+    public BigDecimal getBmiprice() {
         return bmiprice;
     }
 
-    public void setBmiprice(Long bmiprice) {
+    public void setBmiprice(BigDecimal bmiprice) {
         this.bmiprice = bmiprice;
     }
 
@@ -61,11 +63,11 @@ public class Bmorderitem {
         this.bminum = bminum;
     }
 
-    public Long getBmiamount() {
+    public BigDecimal getBmiamount() {
         return bmiamount;
     }
 
-    public void setBmiamount(Long bmiamount) {
+    public void setBmiamount(BigDecimal bmiamount) {
         this.bmiamount = bmiamount;
     }
 
