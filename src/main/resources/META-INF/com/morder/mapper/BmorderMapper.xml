@@ -209,8 +209,10 @@
   </update>
 
     <select id="findAllBmordersByPage" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from bmorder
+        select idbmorder,bmcusname,bmordernum,bmbillingdate,bmdeliverydate,bmpaymethod,bmcurrencytype,bmaddcosts
+,bmorderamount,bmcomments,bmstatus,bmcreateuserid,bmdelivery_idbmdelivery,tuser_iduser
+,tcustomer_idcustomer,b.uname as ownername,
+(SELECT  GROUP_CONCAT(bmiproname SEPARATOR ',') FROM bmorderitem where idbmorder=bmorder_idbmorder) as product
+ from bmorder a,tuser b where a.tuser_iduser = b.iduser
     </select>
 </mapper>
