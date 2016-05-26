@@ -34,7 +34,7 @@
                     <a href="<c:url value="/home/bm/bmindex.do"/>" target="cFrame">直接下单</a>
                 </li>
                 <li>
-                    <a href="<c:url value="/sys/unitindex.do"/>" target="cFrame">跟单列表</a>
+                    <a href="<c:url value="/home/bm/bmlist.do"/>" target="cFrame">跟单列表</a>
                 </li>
                 <li>
                     <a href="<c:url value="/sys/unitindex.do"/>" target="cFrame">订单明细</a>

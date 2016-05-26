@@ -8,7 +8,7 @@
         <result column="bmbillingdate" property="bmbillingdate" jdbcType="DATE"/>
         <result column="bmdeliverydate" property="bmdeliverydate" jdbcType="DATE"/>
         <result column="bmpaymethod" property="bmpaymethod" jdbcType="VARCHAR"/>
-        <result column="bmcurrencytyoe" property="bmcurrencytyoe" jdbcType="INTEGER"/>
+        <result column="bmcurrencytype" property="bmcurrencytype" jdbcType="INTEGER"/>
         <result column="bmaddcosts" property="bmaddcosts" jdbcType="DECIMAL"/>
         <result column="bmorderamount" property="bmorderamount" jdbcType="DECIMAL"/>
         <result column="bmcomments" property="bmcomments" jdbcType="VARCHAR"/>
@@ -19,7 +19,7 @@
         <result column="tcustomer_idcustomer" property="tcustomerIdcustomer" jdbcType="INTEGER"/>
     </resultMap>
     <sql id="Base_Column_List">
-    idbmorder, bmcusname, bmordernum, bmbillingdate, bmdeliverydate, bmpaymethod, bmcurrencytyoe, 
+    idbmorder, bmcusname, bmordernum, bmbillingdate, bmdeliverydate, bmpaymethod, bmcurrencytype, 
     bmaddcosts, bmorderamount, bmcomments,bmstatus,bmcreateuserid, bmdelivery_idbmdelivery,tuser_iduser,tcustomer_idcustomer
   </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
@@ -35,11 +35,11 @@
     <insert id="insert" parameterType="com.morder.model.Bmorder" useGeneratedKeys="true" keyProperty="idbmorder">
     insert into bmorder (idbmorder, bmcusname, bmordernum, 
       bmbillingdate, bmdeliverydate, bmpaymethod, 
-      bmcurrencytyoe, bmaddcosts, bmorderamount, 
+      bmcurrencytype, bmaddcosts, bmorderamount, 
       bmcomments,bmstatus, bmdelivery_idbmdelivery,tuser_iduser,tcustomer_idcustomer)
     values (#{idbmorder,jdbcType=INTEGER}, #{bmcusname,jdbcType=VARCHAR}, #{bmordernum,jdbcType=VARCHAR}, 
       #{bmbillingdate,jdbcType=DATE}, #{bmdeliverydate,jdbcType=DATE}, #{bmpaymethod,jdbcType=VARCHAR}, 
-      #{bmcurrencytyoe,jdbcType=INTEGER}, #{bmaddcosts,jdbcType=DECIMAL}, #{bmorderamount,jdbcType=DECIMAL}, 
+      #{bmcurrencytype,jdbcType=INTEGER}, #{bmaddcosts,jdbcType=DECIMAL}, #{bmorderamount,jdbcType=DECIMAL}, 
       #{bmcomments,jdbcType=VARCHAR}, #{bmstatus,jdbcType=INTEGER}, #{bmcreateuserid,jdbcType=INTEGER}, #{bmdeliveryIdbmdelivery,jdbcType=INTEGER}, #{tuserIduser,jdbcType=INTEGER},
       #{tcustomerIdcustomer,jdbcType=INTEGER})
   </insert>
@@ -65,8 +65,8 @@
             <if test="bmpaymethod != null">
                 bmpaymethod,
             </if>
-            <if test="bmcurrencytyoe != null">
-                bmcurrencytyoe,
+            <if test="bmcurrencytype != null">
+                bmcurrencytype,
             </if>
             <if test="bmaddcosts != null">
                 bmaddcosts,
@@ -112,8 +112,8 @@
             <if test="bmpaymethod != null">
                 #{bmpaymethod,jdbcType=VARCHAR},
             </if>
-            <if test="bmcurrencytyoe != null">
-                #{bmcurrencytyoe,jdbcType=INTEGER},
+            <if test="bmcurrencytype != null">
+                #{bmcurrencytype,jdbcType=INTEGER},
             </if>
             <if test="bmaddcosts != null">
                 #{bmaddcosts,jdbcType=DECIMAL},
@@ -159,8 +159,8 @@
             <if test="bmpaymethod != null">
                 bmpaymethod = #{bmpaymethod,jdbcType=VARCHAR},
             </if>
-            <if test="bmcurrencytyoe != null">
-                bmcurrencytyoe = #{bmcurrencytyoe,jdbcType=INTEGER},
+            <if test="bmcurrencytype != null">
+                bmcurrencytype = #{bmcurrencytype,jdbcType=INTEGER},
             </if>
             <if test="bmaddcosts != null">
                 bmaddcosts = #{bmaddcosts,jdbcType=DECIMAL},
@@ -196,7 +196,7 @@
       bmbillingdate = #{bmbillingdate,jdbcType=DATE},
       bmdeliverydate = #{bmdeliverydate,jdbcType=DATE},
       bmpaymethod = #{bmpaymethod,jdbcType=VARCHAR},
-      bmcurrencytyoe = #{bmcurrencytyoe,jdbcType=INTEGER},
+      bmcurrencytype = #{bmcurrencytype,jdbcType=INTEGER},
       bmaddcosts = #{bmaddcosts,jdbcType=DECIMAL},
       bmorderamount = #{bmorderamount,jdbcType=DECIMAL},
       bmcomments = #{bmcomments,jdbcType=VARCHAR},

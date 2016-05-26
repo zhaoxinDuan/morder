@@ -38,6 +38,13 @@ public class BmorderController extends BaseController {
     @Autowired
     private TcustomerService tcustomerService;
 
+    @RequestMapping("/bmlist.do")
+    public String bmlist() throws Exception {
+
+        return "/home/bm/bmlist";
+    }
+
+
     @RequestMapping("/bmindex.do")
     public String cusindex(ModelMap modelMap,Integer idbmorder) throws Exception {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

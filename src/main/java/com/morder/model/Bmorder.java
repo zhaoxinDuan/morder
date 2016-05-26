@@ -21,7 +21,7 @@ public class Bmorder {
 
     private String bmpaymethod;
 
-    private Integer bmcurrencytyoe;
+    private Integer bmcurrencytype;
 
 
     private BigDecimal bmaddcosts;
@@ -88,12 +88,12 @@ public class Bmorder {
         this.bmpaymethod = bmpaymethod == null ? null : bmpaymethod.trim();
     }
 
-    public Integer getBmcurrencytyoe() {
-        return bmcurrencytyoe;
+    public Integer getBmcurrencytype() {
+        return bmcurrencytype;
     }
 
-    public void setBmcurrencytyoe(Integer bmcurrencytyoe) {
-        this.bmcurrencytyoe = bmcurrencytyoe;
+    public void setBmcurrencytype(Integer bmcurrencytype) {
+        this.bmcurrencytype = bmcurrencytype;
     }
 
     public BigDecimal getBmaddcosts() {
