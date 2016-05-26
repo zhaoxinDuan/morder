@@ -102,7 +102,7 @@
             onChange: function (newValue, oldValue) {
                 var bminum = $("#bminum").val();
                 if (judgeNumber(bminum)) {
-                    $("#bmiamount").val((parseFloat(newValue)*parseFloat(bminum)).toFixed(2));
+                    $("#bmiamount").val((parseFloat(newValue) * parseFloat(bminum)).toFixed(2));
                 } else if (!judgeNumber(bminum)) {
                     $("#bmiamount").val(newValue);
                 }
@@ -116,7 +116,7 @@
             onChange: function (newValue, oldValue) {
                 var bmiprice = $("#bmiprice").val();
                 if (judgeNumber(bmiprice)) {
-                    $("#bmiamount").val((parseFloat(newValue)*parseFloat(bmiprice)).toFixed(2));
+                    $("#bmiamount").val((parseFloat(newValue) * parseFloat(bmiprice)).toFixed(2));
                 } else if (!judgeNumber(bmiamount_tmp)) {
                     $("#bmiamount").val(newValue);
                 }
@@ -124,6 +124,9 @@
         });
 
         $('#bmitemlist').datagrid({
+                    <c:if test="${bmorder!=null}">
+                    url: '<c:url value="/home/bm/findItemsByIdbmorder.do?_csrf=${_csrf.token}"/>&idbmorder=${bmorder.idbmorder}&t=' + new Date().getTime(),
+                    </c:if>
                     title: '字段定义列表',
                     pagination: true,
                     fitColumns: true,
@@ -132,21 +135,20 @@
                     pageList: [15, 30, 45],
                     collapsible: true,
                     rownumbers: true,
-                    loadFilter: pagerFilter,
                     columns: [[
                         {
                             field: 'bmiprotype', title: '产品类型', width: 50,
                             formatter: function (value, row, index) {
                                 var str = "";
-                                if(value==0) {
+                                if (value == 0) {
                                     str = "锁线";
-                                }else if(value==1) {
+                                } else if (value == 1) {
                                     str = "无线";
-                                }else if(value==2) {
+                                } else if (value == 2) {
                                     str = "成品折页";
-                                }else if(value==3) {
+                                } else if (value == 3) {
                                     str = "书本折页";
-                                }else if(value==4) {
+                                } else if (value == 4) {
                                     str = "骑订";
                                 }
                                 return str;

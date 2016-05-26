@@ -98,12 +98,7 @@
         <c:if test="${bmorder.bmordernum!=null}">
         $("#bmordernum").val("${bmorder.bmordernum}");
         </c:if>
-        <c:if test="${bmorder.bmbillingdate!=null}">
-        $("#bmbillingdate").val("${bmorder.bmbillingdate}");
-        </c:if>
-        <c:if test="${bmorder.bmdeliverydate!=null}">
-        $("#bmdeliverydate").val("${bmorder.bmdeliverydate}");
-        </c:if>
+
         <c:if test="${bmorder.bmpaymethod!=null}">
         $("#bmpaymethod").val("${bmorder.bmpaymethod}");
         </c:if>
@@ -112,6 +107,16 @@
         </c:if>
         <c:if test="${bmorder.bmcomments!=null}">
         $("#bmcomments").val("${bmorder.bmcomments}");
+        </c:if>
+
+
+        <c:if test="${bmorder.bmbillingdate!=null}">
+        <%--$("#bmbillingdate").val("${bmorder.bmbillingdate}");--%>
+        $('#bmbillingdate').datebox("setValue", "${bmorder.bmbillingdate}");
+        </c:if>
+        <c:if test="${bmorder.bmdeliverydate!=null}">
+        $('#bmdeliverydate').datebox("setValue", "${bmorder.bmdeliverydate}");
+        <%--$("#bmdeliverydate").val("${bmorder.bmdeliverydate}");--%>
         </c:if>
         <c:if test="${bmorder.tuserIduser!=null}">
         $('#tuserIduser').combobox("setValue", "${bmorder.tuserIduser}");
@@ -164,7 +169,9 @@
         })
     }
     $(document).ready(function () {
+        <c:if test="${bmorder==null}">
         $("#bmitemlistDiv").hide();
+        </c:if>
         $("#savebmorder").bind("click", function () {
             $("#bmitemlistDiv").show();
             saveMorder(false);

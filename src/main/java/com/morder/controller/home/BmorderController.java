@@ -62,7 +62,8 @@ public class BmorderController extends BaseController {
     @RequestMapping("/findAllBmorders.do")
     @ResponseBody
     public List findAllBmorders(Integer rows, Integer page) throws Exception {
-        return this.bmorderService.findAllBmorders((page - 1) * rows, rows);
+        List list = this.bmorderService.findAllBmorders((page - 1) * rows, rows);
+        return list;
     }
 
 
