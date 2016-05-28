@@ -10,8 +10,9 @@
 <body>
 
 <div class="ctrlContainer">
+
     <div class="eleContainer titleText textS16">
-        下单列表
+        处理中订单列表
     </div>
     <div class="eleContainer elePaddingBtm">
         <table id="bmlist"></table>
@@ -25,7 +26,7 @@
 
         $('#bmlist').datagrid({
                     url: '<c:url value="/home/bm/findAllBmorders.do?_csrf=${_csrf.token}"/>&t=' + new Date().getTime(),
-                    title: '下单列表',
+                    title: '处理中订单列表',
                     pagination: true,
                     fitColumns: true,
                     singleSelect: true,
@@ -34,17 +35,9 @@
                     collapsible: true,
                     rownumbers: true,
                     columns: [[
-//                        {field:'checked',formatter:function(value,row,index){
-//                            if(row.checked){
-//                                return '<input type="checkbox" name="DataGridCheckbox" checked="checked">';
-//                            }
-//                            else{
-//                                return '<input type="checkbox" name="DataGridCheckbox">';
-//                            }
-//                        }},
                         {field: 'bmcusname', title: '客户名称', width: 50},
                         {field: 'bmordernum', title: '订单编号', width: 50},
-                        {field: 'product', title: '产品', width: 200},
+                        {field: 'product', title: '产品', width: 125},
                         {field: 'bmorderamount', title: '订单金额', width: 50},
                         {
                             field: 'bmbillingdate', title: '开单日期', width: 50,
@@ -67,11 +60,27 @@
                                     str = "未提交订单";
                                 } else if (value == 1) {
                                     str = "已提交订单";
+                                } else if (value == 2) {
+                                    str = "已完成订单";
                                 }
                                 return str;
                             }
                         },
-                        {field: 'ownername', title: '负责人', width: 30, align: 'left'}
+                        {field: 'ownername', title: '负责人', width: 30},
+                        {
+                            field: 'operation', title: '操作', width: 50, align: 'left',
+                            formatter: function (value, row) {
+                                var idbmorder = row.idbmorder;
+                                var str = "";
+                                if(row.bmstatus==1){
+                                    str = '<a href="#"  onclick="updateMorder(' + idbmorder + ',2)" style="font-size: 12px;">完成订单</a>';
+                                }else if (row.bmstatus==0){
+                                    str = '<a href="#"  onclick="updateMorder(' + idbmorder + ',1)" style="font-size: 12px;">提交订单</a>';
+                                }
+                                return str;
+
+                            }
+                        }
                     ]],
                     toolbar: [{
                         text: '编辑',
@@ -81,7 +90,7 @@
                             if (record == null) {
                                 $.messager.alert('提示', '请选择某行数据再进行编辑。', 'info');
                             } else {
-                                window.location.href='<c:url value="/home/bm/bmindex.do?_csrf=${_csrf.token}"/>&idbmorder='+record.idbmorder+'&t=' + new Date().getTime();
+                                window.location.href = '<c:url value="/home/bm/bmindex.do?_csrf=${_csrf.token}"/>&idbmorder=' + record.idbmorder + '&t=' + new Date().getTime();
                             }
                         }
                     }, '-', {
@@ -92,32 +101,40 @@
                             if (record == null) {
                                 $.messager.alert('提示', '请选择某行数据再进行删除。', 'info');
                             } else {
-                                $.ajax({
-                                    type: "POST",
-                                    url: '<c:url value="/home/bm/delBmorderById.do?_csrf=${_csrf.token}"/>&t=' + new Date().getTime(),
-                                    dataType: "json",
-                                    data: {
-                                        idbmorder: record.idbmorder,
-                                    },
-                                    beforeSend: function () {
-                                        $.messager.progress({
-                                            text: '请求正在提交中，请稍候...'
-                                        });
-                                    },
-                                    success: function (msg) {
-                                        $.messager.progress('close');
-                                        if (msg.success == true) {
-                                            $.messager.alert('操作成功', '删除成功。', 'info');
-                                            $('#bmlist').datagrid('reload');
-                                        } else {
-                                            $.messager.alert('操作失败', '删除失败！', 'error');
+                                if (record.bmstatus == 2) {
+                                    $.messager.alert('提示', '已完成订单不能进行删除！', 'info');
+                                } else {
+                                    $.messager.confirm("操作提示", "您确定要执行删除操作吗？", function (data) {
+                                        if (data) {
+                                            $.ajax({
+                                                type: "POST",
+                                                url: '<c:url value="/home/bm/delBmorderById.do?_csrf=${_csrf.token}"/>&t=' + new Date().getTime(),
+                                                dataType: "json",
+                                                data: {
+                                                    idbmorder: record.idbmorder,
+                                                },
+                                                beforeSend: function () {
+                                                    $.messager.progress({
+                                                        text: '请求正在提交中，请稍候...'
+                                                    });
+                                                },
+                                                success: function (msg) {
+                                                    $.messager.progress('close');
+                                                    if (msg.success == true) {
+                                                        $.messager.alert('操作成功', '删除成功。', 'info');
+                                                        $('#bmlist').datagrid('reload');
+                                                    } else {
+                                                        $.messager.alert('操作失败', '删除失败！', 'error');
+                                                    }
+                                                },
+                                                error: function (msg) {
+                                                    $.messager.progress('close');
+                                                    $.messager.alert('操作失败', '后台出现异常！' + msg, 'error');
+                                                }
+                                            })
                                         }
-                                    },
-                                    error: function (msg) {
-                                        $.messager.progress('close');
-                                        $.messager.alert('操作失败', '后台出现异常！' + msg, 'error');
-                                    }
-                                })
+                                    })
+                                }
                             }
                         }
                     }],
@@ -131,6 +148,39 @@
         );
 
     })
+
+    function updateMorder(idbmorder,bmstatus) {
+        $.messager.confirm("操作提示", "您确定要操作该订单吗？", function (data) {
+            if (data) {
+                $.ajax({
+                    type: "POST",
+                    url: '<c:url value="/home/bm/updateMorder.do?_csrf=${_csrf.token}"/>&t=' + new Date().getTime(),
+                    dataType: "json",
+                    data: {
+                        idbmorder: idbmorder,bmstatus:bmstatus
+                    },
+                    beforeSend: function () {
+                        $.messager.progress({
+                            text: '请求正在提交中，请稍候...'
+                        });
+                    },
+                    success: function (msg) {
+                        $.messager.progress('close');
+                        if (msg.success == true) {
+                            $.messager.alert('操作成功', '操作成功。', 'info');
+                            $('#bmlist').datagrid('reload');
+                        } else {
+                            $.messager.alert('操作失败', '操作失败！', 'error');
+                        }
+                    },
+                    error: function (msg) {
+                        $.messager.progress('close');
+                        $.messager.alert('操作失败', '后台出现异常！' + msg, 'error');
+                    }
+                })
+            }
+        })
+    }
 
 </script>
 <jsp:include page="./../../footer.jsp"></jsp:include>

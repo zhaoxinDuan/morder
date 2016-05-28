@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -51,6 +52,7 @@ public class BmorderServiceImpl implements BmorderService {
     }
 
     public Integer deleteByPrimaryKey(Integer idbmorder) {
+        this.bmorderitemMapper.deleteItemsByIdbmorder(idbmorder);
         return this.bmorderMapper.deleteByPrimaryKey(idbmorder);
     }
 
@@ -63,8 +65,12 @@ public class BmorderServiceImpl implements BmorderService {
         return this.bmorderMapper.findAllBmordersByPage(rowBounds);
     }
 
-    public Integer saveItemSelective(Bmorderitem record) {
+    public Integer saveItemSelective(Bmorderitem record,BigDecimal changebmorderamount) {
         Integer count = null;
+        Bmorder bmorder = new Bmorder();
+        bmorder.setIdbmorder(record.getBmorderIdbmorder());
+        bmorder.setBmorderamount(changebmorderamount);
+        this.bmorderMapper.updateByPrimaryKeySelective(bmorder);
         if(record.getIdbmitem()==null){
             count = this.bmorderitemMapper.insertSelective(record);
         }else{
@@ -73,7 +79,8 @@ public class BmorderServiceImpl implements BmorderService {
         return count;
     }
 
-    public Integer deleteItemByPrimaryKey(Integer idbmitem) {
+    public Integer deleteItemByPrimaryKey(Integer idbmitem,Bmorder bmorder) {
+        this.bmorderMapper.updateByPrimaryKeySelective(bmorder);
         return this.bmorderitemMapper.deleteByPrimaryKey(idbmitem);
     }
 

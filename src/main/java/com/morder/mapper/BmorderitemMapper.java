@@ -20,5 +20,7 @@ public interface BmorderitemMapper {
 
     List findItemsByIdbmorder(Integer bmorderIdbmorder);
 
+    int deleteItemsByIdbmorder(Integer bmorderIdbmorder);
+
     List findAllBmorderitemsByPage(RowBounds rowBounds);
 }

@@ -8,7 +8,7 @@
 
 	<http security="none" pattern="/resources/**" />
 	<http security="none" pattern="/**/*.jsp" />
-	<http security="none" pattern="/sys/login.do" />
+	<http security="none" pattern="/login.do" />
 
 	<http auto-config='true' access-decision-manager-ref="accessDecisionManager" access-denied-page="/login.jsp"
 		use-expressions="true">

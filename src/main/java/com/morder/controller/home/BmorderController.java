@@ -19,6 +19,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,17 +45,23 @@ public class BmorderController extends BaseController {
         return "/home/bm/bmlist";
     }
 
+    @RequestMapping("/bmlistdetail.do")
+    public String bmlistdetail() throws Exception {
+
+        return "/home/bm/bmlistdetail";
+    }
+
 
     @RequestMapping("/bmindex.do")
-    public String cusindex(ModelMap modelMap,Integer idbmorder) throws Exception {
+    public String cusindex(ModelMap modelMap,Integer idbmorder,Integer iduser) throws Exception {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Tuser tUser = this.tuserService.selectByUname(user.getUsername());
+//        Tuser tUser = this.tuserService.selectByUname(user.getUsername());
         Bmorder bmorder = null;
         if(idbmorder!=null) {
             bmorder = bmorderService.selectByPrimaryKey(idbmorder);
         }
         modelMap.put("bmorder",bmorder);
-        modelMap.put("tUser", tUser);
+        modelMap.put("iduser", iduser);
         return "/home/bm/bmindex";
     }
 
@@ -72,6 +79,21 @@ public class BmorderController extends BaseController {
     public String delBmorderById(Integer idbmorder) throws Exception {
         try {
             this.bmorderService.deleteByPrimaryKey(idbmorder);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return JSONResultUtils.MSG_ERROR;
+        }
+        return JSONResultUtils.MSG_SUCCESS;
+    }
+
+    @RequestMapping("/updateMorder.do")
+    @ResponseBody
+    public String updateMorder(Integer idbmorder,Integer bmstatus) throws Exception {
+        Bmorder bmorder = new Bmorder();
+        bmorder.setIdbmorder(idbmorder);
+        bmorder.setBmstatus(2);
+        try {
+            this.bmorderService.saveSelective(bmorder);
         } catch (Exception e) {
             e.printStackTrace();
             return JSONResultUtils.MSG_ERROR;
@@ -109,7 +131,13 @@ public class BmorderController extends BaseController {
     @ResponseBody
     public String delBmorderItemById(Integer idbmitem) throws Exception {
         try {
-            this.bmorderService.deleteItemByPrimaryKey(idbmitem);
+            Bmorderitem bmorderitem = this.bmorderService.selectItemByPrimaryKey(idbmitem);
+            Bmorder bmorder = this.bmorderService.selectByPrimaryKey(bmorderitem.getBmorderIdbmorder());
+            BigDecimal bmorderamount = bmorder.getBmorderamount().subtract(bmorderitem.getBmiamount());
+            Bmorder bmorder1 = new Bmorder();
+            bmorder1.setIdbmorder(bmorder.getIdbmorder());
+            bmorder1.setBmorderamount(bmorderamount);
+            this.bmorderService.deleteItemByPrimaryKey(idbmitem, bmorder1);
         } catch (Exception e) {
             e.printStackTrace();
             return JSONResultUtils.MSG_ERROR;
@@ -120,15 +148,17 @@ public class BmorderController extends BaseController {
 
     @RequestMapping("/saveMorderItemInfo.do")
     @ResponseBody
-    public String saveMorderItemInfo(Bmorderitem record) throws Exception {
+    public String saveMorderItemInfo(Bmorderitem record,BigDecimal changebmorderamount) throws Exception {
         try {
-            this.bmorderService.saveItemSelective(record);
+            this.bmorderService.saveItemSelective(record, changebmorderamount);
         } catch (Exception e) {
             e.printStackTrace();
             return JSONResultUtils.MSG_ERROR;
         }
         return JSONResultUtils.MSG_SUCCESS;
     }
+
+
 
     @RequestMapping("/findAllBmorderItems.do")
     @ResponseBody

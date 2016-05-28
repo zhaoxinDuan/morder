@@ -118,13 +118,13 @@
 
             $.ajax({
                 type: "POST",
-                url: "<c:url value="/sys/login.do"/>?_csrf=${_csrf.token}&t=" + new Date().getTime(),
+                url: "<c:url value="/login.do"/>?_csrf=${_csrf.token}&t=" + new Date().getTime(),
                 data: {j_username: username, j_password: password},
                 dataType: "json",
                 success: function (msg) {
                     $.messager.progress('close');
                     if (msg.success) {
-                        location.href = "<c:url value="/sys/indexPage.do"/>";
+                        location.href = "<c:url value="/indexPage.do"/>";
                     } else {
                         $('#loginBtn').val("登录");
                         $('#loginBtn').attr("disabled",false)

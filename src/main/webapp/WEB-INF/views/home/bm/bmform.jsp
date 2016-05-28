@@ -15,7 +15,7 @@
                     <th>客户名称<span class="impSpan">*</span></th>
                     <td style="text-align:left;">
                         <input type="hidden" id="idbmorder" name="idbmorder">
-                        <input type="hidden" id="bmcreateuserid" name="bmcreateuserid" value="${tUser.iduser}">
+                        <input type="hidden" id="bmcreateuserid" name="bmcreateuserid" value="${iduser}">
                         <input id="tcustomerIdcustomer" name="tcustomerIdcustomer" class="easyui-combobox"
                                data-options="editable:false "
                                style="width:200px;"/>
@@ -49,17 +49,15 @@
                     </td>
                     <th>额外费用</th>
                     <td style="text-align:left;">
-                        <input type="text" name="bmaddcosts" id="bmaddcosts">
+                        <input type="text" name="bmaddcosts" id="bmaddcosts" value="0">
                     </td>
                 </tr>
                 <tr>
                     <th>订单金额<span class="impSpan">*</span></th>
                     <td style="text-align:left;">
-                        <input type="hidden" id="bmaddcosts_tmp" value="0">
                         <input type="text" name="bmorderamount" id="bmorderamount" readonly value="0"
                                class="textInput textbox-width"
                                style="resize:none;width:96%;height:20px">
-                        <input type="hidden" id="bmiamount_tmp" value="0">
                     </td>
                     <th>负责人<span class="impSpan">*</span></th>
                     <td style="text-align:left;" colspan="3">
@@ -108,7 +106,9 @@
         <c:if test="${bmorder.bmcomments!=null}">
         $("#bmcomments").val("${bmorder.bmcomments}");
         </c:if>
-
+        <c:if test="${bmorder.bmorderamount!=null}">
+        $("#bmorderamount").val("${bmorder.bmorderamount}");
+        </c:if>
 
         <c:if test="${bmorder.bmbillingdate!=null}">
         <%--$("#bmbillingdate").val("${bmorder.bmbillingdate}");--%>
@@ -156,7 +156,11 @@
                     $('#idbmorder').val(msg.idbmorder);
                     $('#bmordernum').val(msg.bmordernum);
                     $.messager.alert('操作成功', '保存成功。', 'info');
-                    $("#bmitemlist").datagrid({url: '<c:url value="/home/bm/findItemsByIdbmorder.do?_csrf=${_csrf.token}"/>&idbmorder=' + msg.idbmorder + '&t=' + new Date().getTime()});
+                    if(!ispost){
+                        $("#bmitemlist").datagrid({url: '<c:url value="/home/bm/findItemsByIdbmorder.do?_csrf=${_csrf.token}"/>&idbmorder=' + msg.idbmorder + '&t=' + new Date().getTime()});
+                    }else{
+                        window.location.href="<c:url value="/home/bm/bmlist.do"/>";
+                    }
 
                 } else {
                     $.messager.alert('操作失败', '操作失败！', 'error');
@@ -192,7 +196,7 @@
                 return row[opts.textField].indexOf(q) >= 0;//这里改成>=即可在任意地方匹配
             },
             onLoadSuccess: function (msg) {
-                $('#tuserIduser').combobox("setValue", "${tUser.iduser}");
+                $('#tuserIduser').combobox("setValue", "${iduser}");
 
             },
             onChange: function (newValue, oldValue) {
@@ -206,7 +210,7 @@
             required: "true",
             valueField: 'idcustomer',
             textField: 'cname',
-            url: '<c:url value="/home/cus/findAllCustomersNolimit.do?_csrf=${_csrf.token}"/>',
+            url: '<c:url value="/home/cus/findAllCustomersNolimit.do?_csrf=${_csrf.token}"/>&t='+new Date().getTime,
             filter: function (q, row) {
                 var opts = $(this).combobox('options');
                 return row[opts.textField].indexOf(q) >= 0;//这里改成>=即可在任意地方匹配
@@ -228,12 +232,15 @@
             size: "10",
             maxlength: "10",
             onChange: function (newValue, oldValue) {
-                var bmiamount_tmp = $("#bmiamount_tmp").val();
-                if (judgeNumber(bmiamount_tmp)) {
-                    $("#bmorderamount").val((parseFloat(newValue) + parseFloat(bmiamount_tmp)).toFixed(2));
-                } else if (!judgeNumber(bmiamount_tmp)) {
-                    $("#bmorderamount").val(newValue);
+                var bmorderamount = $("#bmorderamount").val();
+                var temp_bmorderamount = 0;
+                if (judgeNumber(bmorderamount)) {
+                    temp_bmorderamount = ((parseFloat(bmorderamount)-parseFloat(oldValue)+parseFloat(newValue)).toFixed(2));
+
+                } else {
+                    temp_bmorderamount = newValue;
                 }
+                $("#bmorderamount").val(temp_bmorderamount);
             }
         });
 

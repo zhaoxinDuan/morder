@@ -1,5 +1,6 @@
 package com.morder.controller;
 
+import com.morder.model.Tuser;
 import com.morder.service.TuserService;
 import com.morder.utils.JSONResultUtils;
 import org.slf4j.Logger;
@@ -10,8 +11,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -22,12 +25,14 @@ import javax.servlet.http.HttpSession;
  * Created by amis on 16-5-9.
  */
 @Controller
-@RequestMapping("/sys")
 public class LoginController extends BaseController{
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
     @Autowired
     private AuthenticationManager myAuthenticationManager;
+
+    @Autowired
+    private TuserService tuserService;
     @RequestMapping("/login.do")
     @ResponseBody
     public String login(String j_username,String j_password,String error, Model model,HttpServletRequest request) {
@@ -48,7 +53,10 @@ public class LoginController extends BaseController{
     }
 
     @RequestMapping("/indexPage.do")
-    public String indexPage(){
+    public String indexPage(ModelMap modelMap){
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Tuser tUser = this.tuserService.selectByUname(user.getUsername());
+        modelMap.put("tUser",tUser);
         return "/index";
     }
 

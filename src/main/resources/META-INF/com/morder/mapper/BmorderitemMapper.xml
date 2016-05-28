@@ -161,4 +161,9 @@
     <include refid="Base_Column_List"/>
     from bmorderitem}
   </select>
+  <delete id="deleteItemsByIdbmorder" parameterType="java.lang.Integer" >
+    delete from bmorderitem
+    where bmorder_idbmorder = #{bmorderIdbmorder,jdbcType=INTEGER}
+  </delete>
+
 </mapper>
