@@ -72,9 +72,9 @@
                             formatter: function (value, row) {
                                 var idbmorder = row.idbmorder;
                                 var str = "";
-                                if(row.bmstatus==1){
+                                if (row.bmstatus == 1) {
                                     str = '<a href="#"  onclick="updateMorder(' + idbmorder + ',2)" style="font-size: 12px;">完成订单</a>';
-                                }else if (row.bmstatus==0){
+                                } else if (row.bmstatus == 0) {
                                     str = '<a href="#"  onclick="updateMorder(' + idbmorder + ',1)" style="font-size: 12px;">提交订单</a>';
                                 }
                                 return str;
@@ -149,7 +149,7 @@
 
     })
 
-    function updateMorder(idbmorder,bmstatus) {
+    function updateMorder(idbmorder, bmstatus) {
         $.messager.confirm("操作提示", "您确定要操作该订单吗？", function (data) {
             if (data) {
                 $.ajax({
@@ -157,7 +157,7 @@
                     url: '<c:url value="/home/bm/updateMorder.do?_csrf=${_csrf.token}"/>&t=' + new Date().getTime(),
                     dataType: "json",
                     data: {
-                        idbmorder: idbmorder,bmstatus:bmstatus
+                        idbmorder: idbmorder, bmstatus: bmstatus
                     },
                     beforeSend: function () {
                         $.messager.progress({

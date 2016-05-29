@@ -6,6 +6,7 @@ import com.morder.model.Bmorderitem;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by amis on 16-5-15.
@@ -38,6 +39,7 @@ public interface BmorderService {
 
     PageInfo findAllBmorderitems(Integer start,Integer limit);
 
+    Map findAllBmordersByItemid(Integer idbmitem);
 
 
 }

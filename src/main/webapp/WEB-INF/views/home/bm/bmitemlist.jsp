@@ -76,10 +76,18 @@
                             <input type="text" name="bmioutternum" id="bmioutternum" class="textInput textbox-width"
                                    style="resize:none;width:200px;height:20px">
                         </td>
+                    </tr>
                     <tr>
                         <th>产品规格</th>
                         <td style="text-align:left;">
                             <input type="text" name="bmorderitemcol" id="bmorderitemcol" class="textInput textbox-width"
+                                   style="resize:none;width:200px;height:20px">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>包装要求</th>
+                        <td style="text-align:left;">
+                            <input type="text" name="bmipacreq" id="bmipacreq" class="textInput textbox-width"
                                    style="resize:none;width:200px;height:20px">
                         </td>
                     </tr>
@@ -186,7 +194,8 @@
                             }
                         },
                         {field: 'bmioutternum', title: '外发编号', width: 50},
-                        {field: 'bmorderitemcol', title: '产品规格', width: 50}
+                        {field: 'bmorderitemcol', title: '产品规格', width: 50},
+                        {field: 'bmipacreq', title: '包装要求', width: 50,algin:'left'}
 
                     ]],
                     toolbar: [{
@@ -204,6 +213,7 @@
                             $("#bmiamount").val('');
                             $("#bmioutternum").val('');
                             $("#bmorderitemcol").val('');
+                            $("#bmipacreq").val('');
 
                         }
                     }, '-', {
@@ -225,6 +235,7 @@
                                 $("#bmiamount").val(record.bmiamount);
                                 $("#bmioutternum").val(record.bmioutternum);
                                 $("#bmorderitemcol").val(record.bmorderitemcol);
+                                $("#bmipacreq").val(record.bmipacreq);
                                 $("#bmiprotype").combobox("setValue", record.bmiprotype);
                                 $("#bmiistax").combobox("setValue", record.bmiistax);
                             }

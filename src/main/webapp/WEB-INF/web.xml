@@ -78,6 +78,10 @@
         <servlet-name>rest</servlet-name>
         <url-pattern>*.htm</url-pattern>
     </servlet-mapping>
+    <mime-mapping>
+        <extension>xls</extension>
+        <mime-type>application/vnd.ms-excel</mime-type>
+    </mime-mapping>
 
     <!-- 配置session超时时间，单位分钟 -->
     <session-config>

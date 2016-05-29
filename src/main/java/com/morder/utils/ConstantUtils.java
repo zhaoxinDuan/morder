@@ -7,8 +7,8 @@ import java.util.Map;
  * Created by amis on 16-5-29.
  */
 public class ConstantUtils {
-    public static Map protypeMap = new HashMap();
-    public static Map statusMap = new HashMap();
+    public static Map<Integer,String> protypeMap = new HashMap<Integer,String>();
+    public static Map<Integer,String> statusMap = new HashMap<Integer,String>();
 
     static {
 

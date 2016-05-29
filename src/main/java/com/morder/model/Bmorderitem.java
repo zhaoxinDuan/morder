@@ -20,6 +20,7 @@ public class Bmorderitem {
     private String bmioutternum;
 
     private String bmorderitemcol;
+    private String bmipacreq;
 
     private Integer bmorderIdbmorder;
 
@@ -93,6 +94,14 @@ public class Bmorderitem {
 
     public void setBmorderitemcol(String bmorderitemcol) {
         this.bmorderitemcol = bmorderitemcol == null ? null : bmorderitemcol.trim();
+    }
+
+    public String getBmipacreq() {
+        return bmipacreq;
+    }
+
+    public void setBmipacreq(String bmipacreq) {
+        this.bmipacreq = bmipacreq;
     }
 
     public Integer getBmorderIdbmorder() {

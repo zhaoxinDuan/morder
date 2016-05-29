@@ -6,6 +6,7 @@ import org.apache.ibatis.session.RowBounds;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 public interface BmorderMapper {
     int deleteByPrimaryKey(Integer idbmorder);
@@ -24,6 +25,8 @@ public interface BmorderMapper {
     List findAllBmordersByPage();
 
     List findAllBmordersByDetails(@Param("filters")String fiters);
+
+    Map findAllBmordersByItemid(@Param("idbmitem")Integer idbmitem);
 
     BigDecimal selectSumBmorderamount(@Param("filters")String fiters);
 

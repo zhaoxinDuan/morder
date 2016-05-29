@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by amis on 16-5-15.
@@ -118,5 +119,7 @@ public class BmorderServiceImpl implements BmorderService {
         return page;
     }
 
-
+    public Map findAllBmordersByItemid(Integer idbmitem) {
+        return this.bmorderMapper.findAllBmordersByItemid(idbmitem);
+    }
 }

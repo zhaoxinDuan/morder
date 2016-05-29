@@ -1,8 +1,9 @@
-package com.morder.utils;
+package com.morder.component;
 
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.CellRangeAddress;
 import org.apache.poi.hssf.util.HSSFColor;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -12,34 +13,15 @@ import java.util.*;
 /**
  * Created by amis on 16-5-29.
  */
+@Component
 public class ExportExcel {
-
-    //显示的导出表的标题
-    private String title;
-    //导出表的列名
-    private String[] rowName;
-
-    private List<Object[]> dataList = new ArrayList<Object[]>();
-
-    private Map<String,Object> othermap = new HashMap<String, Object>();
-
-    private HttpServletResponse response;
-
-    //构造方法，传入要导出的数据
-    public ExportExcel(String title, String[] rowName, List<Object[]> dataList,Map<String,Object> othermap ,HttpServletResponse response) {
-        this.dataList = dataList;
-        this.rowName = rowName;
-        this.title = title;
-        this.othermap = othermap;
-        this.response = response;
-    }
-
 
 
     /*
-     * 导出数据
-     * */
-    public void export() throws Exception {
+         * 导出数据
+         * */
+    public void export(String title, String[] rowName, List<Object[]> dataList, Map<String, Object> othermap
+            , HttpServletResponse response) throws Exception {
         try {
             HSSFWorkbook workbook = new HSSFWorkbook();                     // 创建工作簿对象
             HSSFSheet sheet = workbook.createSheet(title);                  // 创建工作表
@@ -55,9 +37,6 @@ public class ExportExcel {
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, (rowName.length - 1)));
             cellTiltle.setCellStyle(columnTopStyle);
             cellTiltle.setCellValue(title);
-
-
-
 
 
             // 定义所需列数
@@ -81,7 +60,7 @@ public class ExportExcel {
                 obj = dataList.get(i);//遍历每个对象
                 row = sheet.createRow(i + 3);//创建所需的行数
                 for (int j = 0; j < obj.length; j++) {
-               //设置单元格的数据类型
+                    //设置单元格的数据类型
                     if (j == 0) {
                         cell = row.createCell(j, HSSFCell.CELL_TYPE_NUMERIC);
                         cell.setCellValue(i + 1);
@@ -96,26 +75,25 @@ public class ExportExcel {
                     cell.setCellStyle(style);                                   //设置单元格样式
                 }
             }
-            if(othermap!=null){
-                Iterator<Map.Entry<String,Object>> itmap = othermap.entrySet().iterator();
+            if (othermap != null) {
+                Iterator<Map.Entry<String, Object>> itmap = othermap.entrySet().iterator();
                 row = sheet.createRow(dataList.size() + 3);
-                Map.Entry<String,Object> entry = null;
+                Map.Entry<String, Object> entry = null;
                 int count = 0;
-                while (itmap.hasNext()){
+                while (itmap.hasNext()) {
                     entry = itmap.next();
                     cell = row.createCell(count, HSSFCell.CELL_TYPE_STRING);
                     cell.setCellValue(entry.getKey());
-                    cell = row.createCell(count+1, HSSFCell.CELL_TYPE_STRING);
+                    cell = row.createCell(count + 1, HSSFCell.CELL_TYPE_STRING);
                     cell.setCellValue(String.valueOf(entry.getValue()));
-                    count =count+2;
+                    count = count + 2;
                 }
             }
 
 
-
             //让列宽随着导出的列长自动适应
             for (int colNum = 0; colNum < columnNum; colNum++) {
-                int columnWidth = sheet.getColumnWidth(colNum) / 256+1;
+                int columnWidth = sheet.getColumnWidth(colNum) / 256 + 1;
                 for (int rowNum = 0; rowNum < sheet.getLastRowNum(); rowNum++) {
                     HSSFRow currentRow;
                     //当前行未被使用过
@@ -137,9 +115,9 @@ public class ExportExcel {
 
                 }
                 if (colNum == 0) {
-                    sheet.setColumnWidth(colNum, (columnWidth - 2) * 256+1);
+                    sheet.setColumnWidth(colNum, (columnWidth - 2) * 256 + 1);
                 } else {
-                    sheet.setColumnWidth(colNum, (columnWidth + 4) * 256+1);
+                    sheet.setColumnWidth(colNum, (columnWidth + 4) * 256 + 1);
                 }
             }
 

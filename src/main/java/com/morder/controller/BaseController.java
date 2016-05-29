@@ -8,11 +8,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.Properties;
 
 /**
  * Created by amis on 16-5-15.
  */
 public class BaseController {
+
+//    protected Properties properties = new Properties();
 
 
 

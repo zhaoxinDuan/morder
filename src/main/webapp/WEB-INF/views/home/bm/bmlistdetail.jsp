@@ -94,8 +94,9 @@
         产品数量：<span id="totalitems"></span>
         &nbsp;&nbsp;&nbsp;&nbsp;
         订单金额：<span id="totalamount"></span>
-        <span style="float: right"><a data-options="iconCls:'icon-redo'" href="javascript:void(0)" class="easyui-linkbutton"
-                 id="export_bmorder">导出execl</a></span>
+        <span style="float: right"><a data-options="iconCls:'icon-redo'" href="javascript:void(0)"
+                                      class="easyui-linkbutton"
+                                      id="export_bmorder">导出execl</a></span>
 
     </div>
 
@@ -106,27 +107,37 @@
 
 
 <script type="text/javascript">
+    function checkSHCheckBox(idbmitem,bmstatus){
+        if(bmstatus==2){
+            $.messager.alert('提示', '已完成订单不能再生成送货清单。', 'info');
+            $("#"+idbmitem).attr("checked",false);
+        }
 
+    }
     $(document).ready(function () {
+
 
         $('#bmlistdetail').datagrid({
                     url: '<c:url value="/home/bm/findAllBmordersByDetails.do?_csrf=${_csrf.token}"/>&t=' + new Date().getTime(),
                     title: '订单明细',
                     pagination: true,
-//                    fitColumns: true,
+                    fitColumns: true,
                     singleSelect: true,
                     pageSize: 15,
                     pageList: [15, 30, 45],
-//                    collapsible: true,
                     rownumbers: true,
-//                    view:groupview,
-//                    groupField:'idbmorder',
-//                    groupFormatter:function(value,rows){
-//                        return rows[0].bmordernum + ' - ' + rows.length + ' 项';
-//                    },
+
                     frozenColumns: [[
-                        {field: 'bmordernum', title: '订单编号', width: 90},
+                        {
+                            field: 'op11', title: '送货清单', width: 50,
+                            formatter: function (value, row, index) {
+                                return '<input type="checkbox" id="'+row.idbmitem+'" onclick="checkSHCheckBox('+row.idbmitem+','+row.bmstatus+')"  ' +
+                                        'name="op11"  value="'+row.idbmitem+'">';
+                            }
+                        },
+                        {field: 'bmordernum', title: '订单编号', width: 80},
                         {field: 'bmcusname', title: '客户名称', width: 90}
+
                     ]],
                     columns: [[
 
@@ -145,7 +156,7 @@
                         },
                         {field: 'bmorderitemcol', title: '产品规格', width: 90},
                         {field: 'bmiproname', title: '产品名称', width: 90},
-                        {field: 'bmpacreq', title: '包装要求', width: 90},
+                        {field: 'bmipacreq', title: '包装要求', width: 90},
                         {
                             field: 'bmiprotype', title: '产品类型', width: 90,
                             formatter: function (value, row, index) {
@@ -160,7 +171,7 @@
                                     str = "锁线胶装";
                                 } else if (value == 4) {
                                     str = "精装";
-                                }else if (value == 5) {
+                                } else if (value == 5) {
                                     str = "YO装";
                                 }
                                 return str;
@@ -188,6 +199,45 @@
                         },
                         {field: 'ownername', title: '负责人', width: 90}
                     ]],
+
+                    toolbar: [{
+                        text: '生成工程单',
+                        iconCls: 'icon-print',
+                        handler: function () {
+                            var record = $('#bmlistdetail').datagrid('getSelected');
+                            if (record == null) {
+                                $.messager.alert('提示', '请选择需要生成工程单的数据。', 'info');
+                            } else {
+                                openPostWindow('<c:url value="/home/execl/createptemplate.do?_csrf=${_csrf.token}"/>&t=' + new Date().getTime(),
+                                        "生成工程单", {
+                                            idbmitem: record.idbmitem, iduser:${iduser}
+                                        });
+
+                            }
+                        }
+                    }, '-',
+                        {
+                            text: '生产送货清单',
+                            iconCls: 'icon-print',
+                            handler: function () {
+                                var items = $("input[name='op11']:checked");
+                                var result = "";
+                                $.each(items, function (index, item) {
+
+                                    result = result + "|" + item.value;
+
+                                });
+                                if (result == "") {
+                                    $.messager.alert('提示', '请选择勾选需要生产的送货清单数据。', 'info');
+                                } else {
+                                    openPostWindow('<c:url value="/home/execl/createstemplate.do?_csrf=${_csrf.token}"/>&t=' + new Date().getTime(),
+                                            "生产送货清单", {
+                                                idbmitems: result, iduser:${iduser}
+                                            });
+
+                                }
+                            }
+                        }],
                     onLoadSuccess: function (data) {
                         $("#totalamount").html(data.othermap.totalamount);
                         $("#totalitems").html(data.othermap.totalitems);
@@ -242,14 +292,14 @@
         });
         $("#search_bmorder").bind("click", function () {
 
-            $('#bmlistdetail').datagrid('load',{
-                searchBmstatus:$("#searchBmstatus").combobox("getValue"),
-                searchTcustomerIdcustomer:$("#searchTcustomerIdcustomer").combobox("getValue"),
-                searchBmbillingdateFrom:$("#searchBmbillingdateFrom").datebox("getValue"),
-                searchBmbillingdateTo:$("#searchBmbillingdateTo").datebox("getValue"),
-                searchBmdeliverydateFrom:$("#searchBmdeliverydateFrom").datebox("getValue"),
-                searchBmdeliverydateTo:$("#searchBmdeliverydateTo").datebox("getValue"),
-                searchTuserIduser:$("#searchTuserIduser").combobox("getValue")
+            $('#bmlistdetail').datagrid('load', {
+                searchBmstatus: $("#searchBmstatus").combobox("getValue"),
+                searchTcustomerIdcustomer: $("#searchTcustomerIdcustomer").combobox("getValue"),
+                searchBmbillingdateFrom: $("#searchBmbillingdateFrom").datebox("getValue"),
+                searchBmbillingdateTo: $("#searchBmbillingdateTo").datebox("getValue"),
+                searchBmdeliverydateFrom: $("#searchBmdeliverydateFrom").datebox("getValue"),
+                searchBmdeliverydateTo: $("#searchBmdeliverydateTo").datebox("getValue"),
+                searchTuserIduser: $("#searchTuserIduser").combobox("getValue")
             });
 
         });
@@ -258,19 +308,17 @@
         });
 
         $("#export_bmorder").bind("click", function () {
-            var data = $("#search_morderform").serializeArray();
-            openPostWindow('<c:url value="/home/bm/exportBmlistDetail.do?_csrf=${_csrf.token}"/>&t=' + new Date().getTime(),"导出订单列表",{
-                searchBmstatus:$("#searchBmstatus").combobox("getValue"),
-                searchTcustomerIdcustomer:$("#searchTcustomerIdcustomer").combobox("getValue"),
-                searchBmbillingdateFrom:$("#searchBmbillingdateFrom").datebox("getValue"),
-                searchBmbillingdateTo:$("#searchBmbillingdateTo").datebox("getValue"),
-                searchBmdeliverydateFrom:$("#searchBmdeliverydateFrom").datebox("getValue"),
-                searchBmdeliverydateTo:$("#searchBmdeliverydateTo").datebox("getValue"),
-                searchTuserIduser:$("#searchTuserIduser").combobox("getValue")
+            openPostWindow('<c:url value="/home/execl/exportBmlistDetail.do?_csrf=${_csrf.token}"/>&t=' + new Date().getTime(), "导出订单列表", {
+                searchBmstatus: $("#searchBmstatus").combobox("getValue"),
+                searchTcustomerIdcustomer: $("#searchTcustomerIdcustomer").combobox("getValue"),
+                searchBmbillingdateFrom: $("#searchBmbillingdateFrom").datebox("getValue"),
+                searchBmbillingdateTo: $("#searchBmbillingdateTo").datebox("getValue"),
+                searchBmdeliverydateFrom: $("#searchBmdeliverydateFrom").datebox("getValue"),
+                searchBmdeliverydateTo: $("#searchBmdeliverydateTo").datebox("getValue"),
+                searchTuserIduser: $("#searchTuserIduser").combobox("getValue")
             });
 
         });
-
 
 
     })

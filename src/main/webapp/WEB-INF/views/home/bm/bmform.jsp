@@ -59,13 +59,6 @@
                                class="textInput textbox-width"
                                style="resize:none;width:96%;height:20px">
                     </td>
-                    <th>包装要求</th>
-                    <td style="text-align:left;">
-                        <input type="text" name="bmpacreq" id="bmpacreq" class="textInput textbox-width"
-                               style="resize:none;width:96%;height:20px">
-                    </td>
-                </tr>
-                <tr>
                     <th>负责人<span class="impSpan">*</span></th>
                     <td style="text-align:left;" colspan="3">
                         <input id="tuserIduser" name="tuserIduser" class="easyui-combobox"
