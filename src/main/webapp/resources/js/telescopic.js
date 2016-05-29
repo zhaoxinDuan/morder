@@ -1,37 +1,36 @@
-/*Ë®Æ½ÉìËõ*/
-var hTelescopicState=false;/*Ë®Æ½·½ÏòÊÇ·ñ´¦ÓÚÊÕËõ×´Ì¬£¬´Ë²ÎÊıÖ»ÔÊĞíHTelescopic()·½·¨Ê¹ÓÃ*/
-var hTelescopicDelay = 300;/*Ë®Æ½ÉìËõÑÓÊ±£¬ÒÔºÁÃëÎªµ¥Î»£¬´Ë²ÎÊıÖ»ÔÊĞíHTelescopic()·½·¨Ê¹ÓÃ*/
+/*æ°´å¹³ä¼¸ç¼©*/
+var hTelescopicState=false;/*æ°´å¹³æ–¹å‘æ˜¯å¦å¤„äºæ”¶ç¼©çŠ¶æ€ï¼Œæ­¤å‚æ•°åªå…è®¸HTelescopic()æ–¹æ³•ä½¿ç”¨*/
+var hTelescopicDelay = 300;/*æ°´å¹³ä¼¸ç¼©å»¶æ—¶ï¼Œä»¥æ¯«ç§’ä¸ºå•ä½ï¼Œæ­¤å‚æ•°åªå…è®¸HTelescopic()æ–¹æ³•ä½¿ç”¨*/
 function HTelescopic(){
     if(!hTelescopicState){
-        hTelescopicState = true;/*¸üĞÂ×´Ì¬*/
+        hTelescopicState = true;/*æ›´æ–°çŠ¶æ€*/
         $('#arrowH').animate({left:'0px'},hTelescopicDelay);
         $('#arrowHImg').removeClass().addClass('arrowHD');
         $('.cRight').animate({left:'6px'},hTelescopicDelay);
     } else {
-        hTelescopicState = false;/*¸üĞÂ×´Ì¬*/
+        hTelescopicState = false;/*æ›´æ–°çŠ¶æ€*/
         $('#arrowH').animate({left:'210px'},hTelescopicDelay);
         $('#arrowHImg').removeClass().addClass('arrowHA');
         $('.cRight').animate({left:'216px'},hTelescopicDelay);
     }
-    event.cancelBubble = true;/*È¡ÏûÊÂ¼şÃ°Åİ*/
+    event.cancelBubble = true;/*å–æ¶ˆäº‹ä»¶å†’æ³¡*/
 }
 
-/*´¹Ö±ÉìËõ*/
-var vTelescopicState=false;/*´¹Ö±·½ÏòÊÇ·ñ´¦ÓÚÊÕËõ×´Ì¬£¬´Ë²ÎÊıÖ»ÔÊĞíVTelescopic()·½·¨Ê¹ÓÃ*/
-var vTelescopicDelay = 300;/*´¹Ö±ÉìËõÑÓÊ±£¬ÒÔºÁÃëÎªµ¥Î»£¬´Ë²ÎÊıÖ»ÔÊĞíVTelescopic()·½·¨Ê¹ÓÃ*/
+/*å‚ç›´ä¼¸ç¼©*/
+var vTelescopicState=false;/*å‚ç›´æ–¹å‘æ˜¯å¦å¤„äºæ”¶ç¼©çŠ¶æ€ï¼Œæ­¤å‚æ•°åªå…è®¸VTelescopic()æ–¹æ³•ä½¿ç”¨*/
+var vTelescopicDelay = 300;/*å‚ç›´ä¼¸ç¼©å»¶æ—¶ï¼Œä»¥æ¯«ç§’ä¸ºå•ä½ï¼Œæ­¤å‚æ•°åªå…è®¸VTelescopic()æ–¹æ³•ä½¿ç”¨*/
 function VTelescopic(){
     if(!vTelescopicState){
-        vTelescopicState = true;/*¸üĞÂ×´Ì¬*/
+        vTelescopicState = true;/*æ›´æ–°çŠ¶æ€*/
         $('#arrowV').animate({top:'0px'},vTelescopicDelay);
         $('#arrowVImg').removeClass().addClass('arrowVS');
         $('.indContent').animate({top:'6px'},vTelescopicDelay);
     } else {
-        vTelescopicState = false;/*¸üĞÂ×´Ì¬*/
+        vTelescopicState = false;/*æ›´æ–°çŠ¶æ€*/
         $('#arrowV').animate({top:'80px'},vTelescopicDelay);
         $('#arrowVImg').removeClass().addClass('arrowVW');
         $('.indContent').animate({top:'86px'},vTelescopicDelay);
     }
-    event.cancelBubble = true;/*È¡ÏûÊÂ¼şÃ°Åİ*/
+    event.cancelBubble = true;/*å–æ¶ˆäº‹ä»¶å†’æ³¡*/
 }
-
 

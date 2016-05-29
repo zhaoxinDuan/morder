@@ -94,6 +94,9 @@
         产品数量：<span id="totalitems"></span>
         &nbsp;&nbsp;&nbsp;&nbsp;
         订单金额：<span id="totalamount"></span>
+        <span style="float: right"><a data-options="iconCls:'icon-redo'" href="javascript:void(0)" class="easyui-linkbutton"
+                 id="export_bmorder">导出execl</a></span>
+
     </div>
 
     <div class="eleContainer elePaddingBtm">
@@ -122,8 +125,8 @@
 //                        return rows[0].bmordernum + ' - ' + rows.length + ' 项';
 //                    },
                     frozenColumns: [[
-                        {field: 'bmcusname', title: '客户名称', width: 90},
-                        {field: 'bmordernum', title: '订单编号', width: 90}
+                        {field: 'bmordernum', title: '订单编号', width: 90},
+                        {field: 'bmcusname', title: '客户名称', width: 90}
                     ]],
                     columns: [[
 
@@ -142,27 +145,30 @@
                         },
                         {field: 'bmorderitemcol', title: '产品规格', width: 90},
                         {field: 'bmiproname', title: '产品名称', width: 90},
-                        {field: 'bmiproname', title: '包装要求（0）', width: 90},
+                        {field: 'bmpacreq', title: '包装要求', width: 90},
                         {
                             field: 'bmiprotype', title: '产品类型', width: 90,
                             formatter: function (value, row, index) {
                                 var str = "";
                                 if (value == 0) {
-                                    str = "锁线";
+                                    str = "折页";
                                 } else if (value == 1) {
-                                    str = "无线";
+                                    str = "切单张";
                                 } else if (value == 2) {
-                                    str = "成品折页";
+                                    str = "骑马钉";
                                 } else if (value == 3) {
-                                    str = "书本折页";
+                                    str = "锁线胶装";
                                 } else if (value == 4) {
-                                    str = "骑订";
+                                    str = "精装";
+                                }else if (value == 5) {
+                                    str = "YO装";
                                 }
                                 return str;
                             }
                         },
                         {field: 'bminum', title: '数量', width: 90},
                         {field: 'bmiamount', title: '金额', width: 90},
+                        {field: 'bmaddcosts', title: '额外费用', width: 90},
                         {field: 'bmorderamount', title: '订单金额', width: 90},
                         {field: 'bmcomments', title: '备注', width: 90},
 
@@ -250,6 +256,22 @@
         $("#search_bmorder_reset").bind("click", function () {
             $('#search_morderform').form('reset');
         });
+
+        $("#export_bmorder").bind("click", function () {
+            var data = $("#search_morderform").serializeArray();
+            openPostWindow('<c:url value="/home/bm/exportBmlistDetail.do?_csrf=${_csrf.token}"/>&t=' + new Date().getTime(),"导出订单列表",{
+                searchBmstatus:$("#searchBmstatus").combobox("getValue"),
+                searchTcustomerIdcustomer:$("#searchTcustomerIdcustomer").combobox("getValue"),
+                searchBmbillingdateFrom:$("#searchBmbillingdateFrom").datebox("getValue"),
+                searchBmbillingdateTo:$("#searchBmbillingdateTo").datebox("getValue"),
+                searchBmdeliverydateFrom:$("#searchBmdeliverydateFrom").datebox("getValue"),
+                searchBmdeliverydateTo:$("#searchBmdeliverydateTo").datebox("getValue"),
+                searchTuserIduser:$("#searchTuserIduser").combobox("getValue")
+            });
+
+        });
+
+
 
     })
 

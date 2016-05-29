@@ -5,21 +5,17 @@
 <html>
 <head>
     <jsp:include page="./header.jsp"></jsp:include>
-    <script type="text/javascript">
-
-    </script>
 </head>
 <body>
 <div class="indHead">
-    <div class="logo"></div>
+    <div class="logo"><h1>永望订单管理系统</h1></div>
     <div class="func">
+        <div class="funcIco icoUser"></div>
+        <div class="funcText">${tUser.urealname}</div>
         <div class="funcIco icoInfo"></div>
-        <div class="funcText">
-        </div>
+        <div class="funcText"><a href="javascript:void(0)" id="modifypwda">修改密码</a></div>
         <div class="funcIco icoUser"></div>
-        <div class="funcText"><a href="#"></a></div>
-        <div class="funcIco icoUser"></div>
-        <div class="funcText"><a href="<c:url value="/logout.do"/>">注销</a></div>
+        <div class="funcText"><a href="<c:url value="/logout.do"/>">退出</a></div>
     </div>
 </div>
 <div id="arrowV" class="arrowV" onclick="VTelescopic()">
@@ -58,6 +54,7 @@
         <iframe id="cFrame" name="cFrame" frameborder="0" width="100%" height="100%" scrolling="auto"></iframe>
     </div>
 </div>
+<jsp:include page="./modifypwd.jsp"></jsp:include>
 <jsp:include page="./footer.jsp"></jsp:include>
 </body>
 </html>

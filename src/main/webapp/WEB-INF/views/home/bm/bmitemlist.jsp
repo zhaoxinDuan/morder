@@ -23,12 +23,12 @@
                             <select id="bmiprotype" name="bmiprotype" class="easyui-combobox"
                                     data-options="editable:false "
                                     style="width:200px;">
-
-                                <option value="0">锁线</option>
-                                <option value="1">无线</option>
-                                <option value="2">成品折页</option>
-                                <option value="3">书本折页</option>
-                                <option value="4" selected>骑订</option>
+                                <option value="0">折页</option>
+                                <option value="1">切单张</option>
+                                <option value="2" selected>骑马钉</option>
+                                <option value="3">锁线胶装</option>
+                                <option value="4">精装</option>
+                                <option value="5">YO装</option>
                             </select>
                         </td>
                     </tr>
@@ -152,15 +152,17 @@
                             formatter: function (value, row, index) {
                                 var str = "";
                                 if (value == 0) {
-                                    str = "锁线";
+                                    str = "折页";
                                 } else if (value == 1) {
-                                    str = "无线";
+                                    str = "切单张";
                                 } else if (value == 2) {
-                                    str = "成品折页";
+                                    str = "骑马钉";
                                 } else if (value == 3) {
-                                    str = "书本折页";
+                                    str = "锁线胶装";
                                 } else if (value == 4) {
-                                    str = "骑订";
+                                    str = "精装";
+                                }else if (value == 5) {
+                                    str = "YO装";
                                 }
                                 return str;
                             }

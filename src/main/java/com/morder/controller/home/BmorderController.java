@@ -11,6 +11,8 @@ import com.morder.model.Tuser;
 import com.morder.service.BmorderService;
 import com.morder.service.TcustomerService;
 import com.morder.service.TuserService;
+import com.morder.utils.ConstantUtils;
+import com.morder.utils.ExportExcel;
 import com.morder.utils.JSONPage;
 import com.morder.utils.JSONResultUtils;
 import org.slf4j.Logger;
@@ -24,7 +26,10 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -98,11 +103,65 @@ public class BmorderController extends BaseController {
         Map map = new HashMap();
         map.put("totalamount",totalamount);
         map.put("totalitems",pageInfo.getTotal());
-        map.put("totalorders",totalorder);
+        map.put("totalorders", totalorder);
         jsonPage.setOthermap(map);
         return jsonPage;
     }
 
+    @RequestMapping("/exportBmlistDetail.do")
+    public void exportBmlistDetail(BmorderSearchForm bmorderSearchForm,HttpServletResponse response){
+        String consql = bmorderSearchForm.getBuilderSql();
+        String filters = (!StringUtils.isEmpty(consql)?" where 1=1 "+consql:"");
+//        String filters = "";
+        PageInfo pageInfo = this.bmorderService.findAllBmordersByDetails(1, 60000, filters);
+        BigDecimal totalamount =  this.bmorderService.selectSumBmorderamount(filters);
+        Integer totalorder = this.bmorderService.selectBmorderCount(filters);
+        String title = "订单详情";
+
+
+        String[] rowsName = new String[]{"序号","订单编号","客户名称","开单日期","交货日期","产品规格"
+                ,"产品名称","包装要求","产品类型","数量","金额","额外费用","订单金额","备注","订单状态","负责人"};
+        List<Object[]>  dataList = new ArrayList<Object[]>();
+        Object[] objs = null;
+        List datalist = pageInfo.getList();
+        Map rowmap  = null;
+        for (int i = 0; i < datalist.size(); i++) {
+            rowmap = (Map)datalist.get(i);
+            objs = new Object[rowsName.length];
+            objs[0] = i;
+            objs[1] = rowmap.get("bmordernum");
+            objs[2] = rowmap.get("bmcusname");
+            objs[3] = rowmap.get("bmbillingdate");
+            objs[4] = rowmap.get("bmbillingdate");
+            objs[5] = rowmap.get("bmorderitemcol");
+            objs[6] = rowmap.get("bmiproname");
+            objs[7] = rowmap.get("bmpacreq");
+
+            objs[8] = ConstantUtils.protypeMap.get(rowmap.get("bmiprotype"));
+            objs[9] = rowmap.get("bminum");
+            objs[10] = rowmap.get("bmiamount");
+            objs[11] = rowmap.get("bmaddcosts");
+            objs[12] = rowmap.get("bmorderamount");
+            objs[13] = rowmap.get("bmcomments");
+
+            objs[14] = ConstantUtils.statusMap.get(rowmap.get("bmstatus"));
+            objs[15] = rowmap.get("ownername");
+
+            dataList.add(objs);
+        }
+
+//        （订单数："+totalorder+" ,产品数量："+pageInfo.getTotal()+" ,订单金额："+totalamount+")"
+        Map<String,Object> othermap = new HashMap<String, Object>();
+        othermap.put("订单数",totalorder);
+        othermap.put("产品数量",pageInfo.getTotal());
+        othermap.put("订单金额",totalamount);
+        try {
+            ExportExcel ex = new ExportExcel(title, rowsName, dataList,othermap,response);
+            ex.export();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @RequestMapping("/delBmorderById.do")
     @ResponseBody

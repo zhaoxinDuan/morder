@@ -7,7 +7,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>永望业务信息管理系统</title>
+    <title>永望订单管理系统</title>
     <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/metro_blue/style.css"/>"/>
     <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/metro_blue/main.css"/>"/>
     <link rel="stylesheet" type="text/css" href="<c:url value="/resources/images/metro_blue/imagesUrl.css"/>"/>
@@ -30,7 +30,7 @@
     </div>
     <div class="loginBlk">
         <div class="loginLogo"></div>
-        <div class="loginTit">永望业务信息管理系统</div>
+        <div class="loginTit">永望订单管理系统</div>
         <div class="loginCtrl">
             <div class="mid_ctrl">
                 <%--<form id="subForm" action="<c:url value="/j_security_check.do"/>?_csrf=${_csrf.token}" method="post">--%>

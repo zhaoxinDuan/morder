@@ -30,6 +30,8 @@ public class Bmorder {
 
     private String bmcomments;
 
+    private String bmpacreq;
+
     private Integer bmstatus;
 
     private Integer bmcreateuserid;
@@ -118,6 +120,14 @@ public class Bmorder {
 
     public void setBmcomments(String bmcomments) {
         this.bmcomments = bmcomments == null ? null : bmcomments.trim();
+    }
+
+    public String getBmpacreq() {
+        return bmpacreq;
+    }
+
+    public void setBmpacreq(String bmpacreq) {
+        this.bmpacreq = bmpacreq == null ? null : bmpacreq.trim();
     }
 
     public Integer getBmstatus() {
