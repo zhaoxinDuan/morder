@@ -31,4 +31,6 @@ public interface BmorderMapper {
     BigDecimal selectSumBmorderamount(@Param("filters")String fiters);
 
     Integer selectBmorderCount(@Param("filters")String fiters);
+
+    Map findBmorderAndItemByItemid(@Param("idbmitem")Integer idbmitem);
 }

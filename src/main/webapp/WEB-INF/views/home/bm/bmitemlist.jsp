@@ -40,6 +40,13 @@
                         </td>
                     </tr>
                     <tr>
+                        <th>单位<span class="impSpan">*</span></th>
+                        <td style="text-align:left;">
+                            <input type="text" name="bmiunit" id="bmiunit" class="textInput textbox-width"
+                                   style="resize:none;width:200px;height:20px">
+                        </td>
+                    </tr>
+                    <tr>
                         <th>单价</th>
                         <td style="text-align:left;">
                             <input type="text" name="bmiprice" id="bmiprice"
@@ -180,6 +187,7 @@
                             title: '产品名称',
                             width: 50
                         },
+                        {field: 'bmiunit', title: '单位', width: 50},
                         {field: 'bmiprice', title: '单价', width: 50},
                         {field: 'bminum', title: '数量', width: 50},
                         {field: 'bmiamount', title: '金额', width: 50},
@@ -214,6 +222,7 @@
                             $("#bmioutternum").val('');
                             $("#bmorderitemcol").val('');
                             $("#bmipacreq").val('');
+                            $("#bmiunit").val('');
 
                         }
                     }, '-', {
@@ -236,6 +245,7 @@
                                 $("#bmioutternum").val(record.bmioutternum);
                                 $("#bmorderitemcol").val(record.bmorderitemcol);
                                 $("#bmipacreq").val(record.bmipacreq);
+                                $("#bmiunit").val(record.bmiunit);
                                 $("#bmiprotype").combobox("setValue", record.bmiprotype);
                                 $("#bmiistax").combobox("setValue", record.bmiistax);
                             }

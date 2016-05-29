@@ -5,6 +5,7 @@ import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletResponse;
@@ -19,9 +20,11 @@ import java.util.List;
  */
 @Component
 public class ModifyAndExportExcel {
+    @Autowired
+    private TemplateConfig templateConfig;
     public void modifyExcel(HttpServletResponse response, String filepath, String templatename, List<ExcelModel> modifyls, Integer userid) throws Exception {
         String fromfile = filepath + templatename;
-        String tofile = filepath +  "temp" + File.separator + userid + String.valueOf(System.currentTimeMillis()).substring(4, 13) + ".xls";
+        String tofile = templateConfig.getExecltemplatetemppath() + userid + String.valueOf(System.currentTimeMillis()).substring(4, 13) + ".xls";
         FileUtil.copyFile(fromfile, tofile);
         FileInputStream fis = null;
         HSSFWorkbook workbook = null;

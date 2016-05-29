@@ -232,7 +232,7 @@
          bm.idbmorder, bm.bmcusname, bm.bmordernum, bm.bmbillingdate, bm.bmdeliverydate, bm.bmpaymethod, bm.bmcurrencytype,
     bm.bmaddcosts, bm.bmorderamount, bm.bmcomments,bm.bmpacreq,bm.bmstatus,bm.bmcreateuserid, bm.bmdelivery_idbmdelivery,bm.tuser_iduser,bm.tcustomer_idcustomer,
     bmi.idbmitem, bmi.bmiproname, bmi.bmiprotype, bmi.bmiprice, bmi.bminum, bmi.bmiamount, bmi.bmiistax, bmi.bmioutternum,
-    bmi.bmorderitemcol,bmi.bmipacreq, bmi.bmorder_idbmorder,t.uname as ownername
+    bmi.bmorderitemcol,bmi.bmipacreq, bmi.bmiunit, bmi.bmorder_idbmorder,t.uname as ownername
          from bmorder bm
          left join bmorderitem bmi on bm.idbmorder = bmi.bmorder_idbmorder
          left join tuser t on t.iduser = bm.tuser_iduser ${filters} order by bm.bmordernum asc
@@ -252,7 +252,7 @@
         bm.idbmorder, bm.bmcusname, bm.bmordernum, bm.bmbillingdate, bm.bmdeliverydate, bm.bmpaymethod, bm.bmcurrencytype,
         bm.bmaddcosts, bm.bmorderamount, bm.bmcomments,bm.bmpacreq,bm.bmstatus,bm.bmcreateuserid, bm.bmdelivery_idbmdelivery,bm.tuser_iduser,bm.tcustomer_idcustomer,
         bmi.idbmitem, bmi.bmiproname, bmi.bmiprotype, bmi.bmiprice, bmi.bminum, bmi.bmiamount, bmi.bmiistax, bmi.bmioutternum,
-        bmi.bmorderitemcol,bmi.bmipacreq, bmi.bmorder_idbmorder,t.uname as ownername,tc.cname,tca.cacontacts,tca.camphone,tca.carecaddress
+        bmi.bmorderitemcol,bmi.bmipacreq,bmi.bmiunit, bmi.bmorder_idbmorder,t.uname as ownername,tc.cname,tca.cacontacts,tca.camphone,tca.carecaddress
         from bmorder bm
         left join bmorderitem bmi on bm.idbmorder = bmi.bmorder_idbmorder
         left join tuser t on t.iduser = bm.tuser_iduser
@@ -260,4 +260,17 @@
         left join tcustomerappend tca on tca.idcusapp = tc.tcustomerappend_idcusapp
         where bmi.idbmitem = #{idbmitem,jdbcType=INTEGER}
     </select>
+
+    <select id="findBmorderAndItemByItemid" resultType="java.util.HashMap">
+        select
+        bm.idbmorder, bm.bmcusname, bm.bmordernum, bm.bmbillingdate, bm.bmdeliverydate, bm.bmpaymethod, bm.bmcurrencytype,
+        bm.bmaddcosts, bm.bmorderamount, bm.bmcomments,bm.bmpacreq,bm.bmstatus,bm.bmcreateuserid, bm.bmdelivery_idbmdelivery,bm.tuser_iduser,bm.tcustomer_idcustomer,
+        bmi.idbmitem, bmi.bmiproname, bmi.bmiprotype, bmi.bmiprice, bmi.bminum, bmi.bmiamount, bmi.bmiistax, bmi.bmioutternum,
+        bmi.bmorderitemcol,bmi.bmipacreq,bmi.bmiunit, bmi.bmorder_idbmorder
+        from bmorder bm
+        left join bmorderitem bmi on bm.idbmorder = bmi.bmorder_idbmorder
+        where bmi.idbmitem = #{idbmitem,jdbcType=INTEGER}
+    </select>
+
+
 </mapper>

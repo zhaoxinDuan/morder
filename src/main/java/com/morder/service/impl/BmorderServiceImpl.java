@@ -122,4 +122,8 @@ public class BmorderServiceImpl implements BmorderService {
     public Map findAllBmordersByItemid(Integer idbmitem) {
         return this.bmorderMapper.findAllBmordersByItemid(idbmitem);
     }
+
+    public Map findBmorderAndItemByItemid(Integer idbmitem){
+        return this.bmorderMapper.findBmorderAndItemByItemid(idbmitem);
+    }
 }

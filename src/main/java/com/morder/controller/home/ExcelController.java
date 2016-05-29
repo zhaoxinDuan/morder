@@ -33,8 +33,6 @@ public class ExcelController extends BaseController {
     @Autowired
     private BmorderService bmorderService;
     @Autowired
-    private TcustomerService tcustomerService;
-    @Autowired
     private TemplateConfig templateConfig;
     @Autowired
     private ExportExcel exportExcel;
@@ -83,38 +81,48 @@ public class ExcelController extends BaseController {
     @RequestMapping("/createstemplate.do")
     public void createstemplate(String idbmitems,Integer iduser, HttpServletResponse response) throws Exception {
         String filepath = templateConfig.getExecltemplatepath();
-        Map resultmap = this.bmorderService.findAllBmordersByItemid(idbmitem);
+        String[] arridbmitems = idbmitems.split("\\|");
         List<ExcelModel> excelModels = new ArrayList<ExcelModel>();
+        int count = 4;
+        BigDecimal bmiamount = new BigDecimal(0);
+        String strbmiamount = null;
+        for(String striditem:arridbmitems){
+            if(!StringUtils.isEmpty(striditem)){
+                Map resultmap = this.bmorderService.findBmorderAndItemByItemid(Integer.parseInt(striditem));
+                //订单编号
+                excelModels.add(new ExcelModel(count,0, Utils.getObjectToString(resultmap.get("bmordernum"))));
+                //外发单号
+                excelModels.add(new ExcelModel(count,1, Utils.getObjectToString(resultmap.get("bmioutternum"))));
+                //装钉类型
+                excelModels.add(new ExcelModel(5,1, ConstantUtils.protypeMap.get(Utils.getObjectToInteger(resultmap.get("bmiprotype")))));
+                //名称及规格
+                excelModels.add(new ExcelModel(count,3, Utils.getObjectToString(resultmap.get("bmiproname"))+","
+                        +Utils.getObjectToString(resultmap.get("bmorderitemcol"))));
+                //单位
+                excelModels.add(new ExcelModel(count,4, Utils.getObjectToString(resultmap.get("bmiunit"))));
+                //数量
+                excelModels.add(new ExcelModel(count,5, Utils.getObjectToString(resultmap.get("bminum"))));
+                //单价
+                excelModels.add(new ExcelModel(count,6, Utils.getObjectToString(resultmap.get("bmiprice"))));
+                //金额
+                strbmiamount = Utils.getObjectToString(resultmap.get("bmiamount"));
+                if(!StringUtils.isEmpty(strbmiamount)){
+                    bmiamount = bmiamount.add(new BigDecimal(strbmiamount));
+                }
+                excelModels.add(new ExcelModel(count,7, strbmiamount));
+                count ++;
+            }
+        }
 
-        //订单编号
-        excelModels.add(new ExcelModel(1,11, Utils.getObjectToString(resultmap.get("bmordernum"))));
-        //客户名称
-        excelModels.add(new ExcelModel(2,2, Utils.getObjectToString(resultmap.get("cname"))));
-        //联系电话
-        excelModels.add(new ExcelModel(2,7, Utils.getObjectToString(resultmap.get("camphone"))));
-        //开单日期
-        excelModels.add(new ExcelModel(2,11, Utils.getDataObjectToStringCN(resultmap.get("bmbillingdate"))));
-        //名称
-        excelModels.add(new ExcelModel(3,1, Utils.getObjectToString(resultmap.get("bmiproname"))));
-        //规格
-        excelModels.add(new ExcelModel(3,8, Utils.getObjectToString(resultmap.get("bmorderitemcol"))));
-        //交货数量
-        excelModels.add(new ExcelModel(3,11, Utils.getObjectToString(resultmap.get("bminum"))));
-        //外发单号
-        excelModels.add(new ExcelModel(4,2, Utils.getObjectToString(resultmap.get("bmioutternum"))));
-        //交货日期
-        excelModels.add(new ExcelModel(4,8, Utils.getDataObjectToStringCN(resultmap.get("bmdeliverydate"))));
-        //打包要求
-        excelModels.add(new ExcelModel(4,11, Utils.getObjectToString(resultmap.get("bmipacreq"))));
-        //产品类别
-        excelModels.add(new ExcelModel(5,1, ConstantUtils.protypeMap.get(Utils.getObjectToInteger(resultmap.get("bmiprotype")))));
 
-        //备注
-        excelModels.add(new ExcelModel(6,1, Utils.getObjectToString(resultmap.get("bmcomments"))));
-        //开单人
-        excelModels.add(new ExcelModel(22,2, Utils.getObjectToString(resultmap.get("ownername"))));
+        excelModels.add(new ExcelModel(15,0, "金额(大写)："+
+                Utils.convertToChineseNumberNew(bmiamount.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue())
+        +" ￥："+bmiamount.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue()));
 
-        modifyAndExportExcel.modifyExcel(response,filepath,"ptemplate.xls",excelModels,iduser);
+
+
+
+        modifyAndExportExcel.modifyExcel(response,filepath,"stemplate.xls",excelModels,iduser);
 
     }
 

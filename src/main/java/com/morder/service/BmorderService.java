@@ -41,5 +41,7 @@ public interface BmorderService {
 
     Map findAllBmordersByItemid(Integer idbmitem);
 
+    Map findBmorderAndItemByItemid(Integer idbmitem);
+
 
 }

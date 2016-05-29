@@ -12,11 +12,12 @@
     <result column="bmioutternum" property="bmioutternum" jdbcType="VARCHAR" />
     <result column="bmorderitemcol" property="bmorderitemcol" jdbcType="VARCHAR" />
     <result column="bmipacreq" property="bmipacreq" jdbcType="VARCHAR" />
+    <result column="bmiunit" property="bmiunit" jdbcType="VARCHAR" />
     <result column="bmorder_idbmorder" property="bmorderIdbmorder" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
     idbmitem, bmiproname, bmiprotype, bmiprice, bminum, bmiamount, bmiistax, bmioutternum, 
-    bmorderitemcol,bmipacreq, bmorder_idbmorder
+    bmorderitemcol,bmipacreq,bmiunit, bmorder_idbmorder
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -31,12 +32,12 @@
   <insert id="insert" parameterType="com.morder.model.Bmorderitem" useGeneratedKeys="true" keyProperty="idbmitem">
     insert into bmorderitem (idbmitem, bmiproname, bmiprotype, 
       bmiprice, bminum, bmiamount, 
-      bmiistax, bmioutternum, bmorderitemcol,  bmipacreq,
+      bmiistax, bmioutternum, bmorderitemcol,  bmipacreq,bmiunit,
       bmorder_idbmorder)
     values (#{idbmitem,jdbcType=INTEGER}, #{bmiproname,jdbcType=VARCHAR}, #{bmiprotype,jdbcType=INTEGER}, 
       #{bmiprice,jdbcType=DECIMAL}, #{bminum,jdbcType=INTEGER}, #{bmiamount,jdbcType=DECIMAL}, 
       #{bmiistax,jdbcType=INTEGER}, #{bmioutternum,jdbcType=VARCHAR}, #{bmorderitemcol,jdbcType=VARCHAR},
-       #{bmipacreq,jdbcType=VARCHAR},
+       #{bmipacreq,jdbcType=VARCHAR},#{bmiunit,jdbcType=VARCHAR},
       #{bmorderIdbmorder,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.morder.model.Bmorderitem" useGeneratedKeys="true" keyProperty="idbmitem">
@@ -71,6 +72,9 @@
       </if>
       <if test="bmipacreq != null" >
         bmipacreq,
+      </if>
+      <if test="bmiunit != null" >
+        bmiunit,
       </if>
       <if test="bmorderIdbmorder != null" >
         bmorder_idbmorder,
@@ -107,6 +111,9 @@
       <if test="bmipacreq != null" >
         #{bmipacreq,jdbcType=VARCHAR},
       </if>
+      <if test="bmiunit != null" >
+        #{bmiunit,jdbcType=VARCHAR},
+      </if>
       <if test="bmorderIdbmorder != null" >
         #{bmorderIdbmorder,jdbcType=INTEGER},
       </if>
@@ -142,6 +149,9 @@
       <if test="bmipacreq != null" >
         bmipacreq = #{bmipacreq,jdbcType=VARCHAR},
       </if>
+      <if test="bmiunit != null" >
+        bmiunit = #{bmiunit,jdbcType=VARCHAR},
+      </if>
       <if test="bmorderIdbmorder != null" >
         bmorder_idbmorder = #{bmorderIdbmorder,jdbcType=INTEGER},
       </if>
@@ -159,6 +169,7 @@
       bmioutternum = #{bmioutternum,jdbcType=VARCHAR},
       bmorderitemcol = #{bmorderitemcol,jdbcType=VARCHAR},
       bmipacreq = #{bmipacreq,jdbcType=VARCHAR},
+      bmiunit = #{bmiunit,jdbcType=VARCHAR},
       bmorder_idbmorder = #{bmorderIdbmorder,jdbcType=INTEGER}
     where idbmitem = #{idbmitem,jdbcType=INTEGER}
   </update>
