@@ -3,6 +3,7 @@ package com.morder.mapper;
 import com.morder.model.Bmorderitem;
 import org.apache.ibatis.session.RowBounds;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface BmorderitemMapper {
@@ -22,5 +23,6 @@ public interface BmorderitemMapper {
 
     int deleteItemsByIdbmorder(Integer bmorderIdbmorder);
 
-    List findAllBmorderitemsByPage(RowBounds rowBounds);
+    List findAllBmorderitemsByPage();
+
 }

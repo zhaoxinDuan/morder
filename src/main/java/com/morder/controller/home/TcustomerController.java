@@ -1,10 +1,12 @@
 package com.morder.controller.home;
 
+import com.github.pagehelper.PageInfo;
 import com.morder.controller.BaseController;
 import com.morder.model.Tcustomer;
 import com.morder.model.Tuser;
 import com.morder.service.TcustomerService;
 import com.morder.service.TuserService;
+import com.morder.utils.JSONPage;
 import com.morder.utils.JSONResultUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,8 +47,12 @@ public class TcustomerController extends BaseController {
 
     @RequestMapping("/findAllCustomers.do")
     @ResponseBody
-    public List findAllCustomers(Integer rows, Integer page) throws Exception {
-        return this.tcustomerService.findAllCustomers((page - 1) * rows, rows);
+    public JSONPage findAllCustomers(Integer rows, Integer page) throws Exception {
+        PageInfo pageInfo = this.tcustomerService.findAllCustomers(page, rows);
+        JSONPage jsonPage = new JSONPage();
+        jsonPage.setRows(pageInfo.getList());
+        jsonPage.setTotal(pageInfo.getTotal());
+        return jsonPage;
     }
 
     @RequestMapping("/findAllCustomersNolimit.do")

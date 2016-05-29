@@ -215,4 +215,24 @@
 (SELECT  GROUP_CONCAT(bmiproname SEPARATOR ',') FROM bmorderitem where idbmorder=bmorder_idbmorder) as product
  from bmorder a,tuser b where a.tuser_iduser = b.iduser
     </select>
+
+    <select id="findAllBmordersByDetails" resultType="java.util.HashMap">
+        select
+         bm.idbmorder, bm.bmcusname, bm.bmordernum, bm.bmbillingdate, bm.bmdeliverydate, bm.bmpaymethod, bm.bmcurrencytype,
+    bm.bmaddcosts, bm.bmorderamount, bm.bmcomments,bm.bmstatus,bm.bmcreateuserid, bm.bmdelivery_idbmdelivery,bm.tuser_iduser,bm.tcustomer_idcustomer,
+    bmi.idbmitem, bmi.bmiproname, bmi.bmiprotype, bmi.bmiprice, bmi.bminum, bmi.bmiamount, bmi.bmiistax, bmi.bmioutternum,
+    bmi.bmorderitemcol, bmi.bmorder_idbmorder,t.uname as ownername
+         from bmorder bm
+         left join bmorderitem bmi on bm.idbmorder = bmi.bmorder_idbmorder
+         left join tuser t on t.iduser = bm.tuser_iduser ${filters} order by bm.bmordernum asc
+    </select>
+
+    <select id="selectSumBmorderamount" resultType="java.math.BigDecimal">
+        select sum(bmorderamount) from bmorder  ${filters}
+    </select>
+
+
+    <select id="selectBmorderCount" resultType="java.lang.Integer">
+       select count(1) from bmorder ${filters}
+    </select>
 </mapper>

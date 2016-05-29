@@ -1,5 +1,6 @@
 package com.morder.service;
 
+import com.github.pagehelper.PageInfo;
 import com.morder.model.Bmorder;
 import com.morder.model.Bmorderitem;
 
@@ -19,7 +20,13 @@ public interface BmorderService {
 
     Bmorder selectByPrimaryKey(Integer idbmorder);
 
-    List findAllBmorders(Integer start,Integer limit);
+    PageInfo findAllBmorders(Integer start,Integer limit);
+
+    PageInfo findAllBmordersByDetails(Integer start,Integer limit,String filters);
+
+    BigDecimal selectSumBmorderamount(String filters);
+
+    Integer selectBmorderCount(String filters);
 
     Integer saveItemSelective(Bmorderitem record,BigDecimal changebmorderamount);
 
@@ -29,6 +36,8 @@ public interface BmorderService {
 
     List findItemsByIdbmorder(Integer idbmorder);
 
-    List findAllBmorderitems(Integer start,Integer limit);
+    PageInfo findAllBmorderitems(Integer start,Integer limit);
+
+
 
 }

@@ -19,11 +19,11 @@ public interface TuserMapper {
 
     int updateByPrimaryKey(Tuser record);
 
-    List findAllUsersByPage(RowBounds rowBounds);
+    List findAllUsersByPage();
 
     List findAllUsersNoLimit();
 
-    List findAllUnitUsersByPage(RowBounds rowBounds,@Param("idunit")Integer idunit);
+    List findAllUnitUsersByPage(@Param("idunit")Integer idunit);
 
     int userUpdateStatus(@Param("iduser")Integer iduser,@Param("uisdel")Integer uisdel);
 

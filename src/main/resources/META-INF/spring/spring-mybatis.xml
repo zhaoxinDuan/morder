@@ -53,8 +53,11 @@
                     <property name="properties">
                         <value>
                             dialect=mysql
+                            offsetAsPageNum = true
+                            rowBoundsWithCount = true
                         </value>
                     </property>
+
                 </bean>
             </array>
         </property>

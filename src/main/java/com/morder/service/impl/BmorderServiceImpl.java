@@ -1,5 +1,7 @@
 package com.morder.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.morder.mapper.BmorderMapper;
 import com.morder.mapper.BmorderitemMapper;
 import com.morder.model.Bmorder;
@@ -28,9 +30,9 @@ public class BmorderServiceImpl implements BmorderService {
 
     public Integer save(Bmorder record) {
         Integer count = null;
-        if(record.getIdbmorder()==null){
+        if (record.getIdbmorder() == null) {
             count = this.bmorderMapper.insert(record);
-        }else{
+        } else {
             count = this.bmorderMapper.updateByPrimaryKey(record);
         }
         return count;
@@ -38,14 +40,14 @@ public class BmorderServiceImpl implements BmorderService {
 
     public Integer saveSelective(Bmorder record) {
         Integer count = null;
-        if(record.getIdbmorder()==null){
+        if (record.getIdbmorder() == null) {
             count = this.bmorderMapper.insertSelective(record);
             Bmorder bmorder = new Bmorder();
             bmorder.setIdbmorder(record.getIdbmorder());
             bmorder.setBmordernum(OrderNumUtil.createOrderNum(record.getIdbmorder()));
             this.bmorderMapper.updateByPrimaryKeySelective(bmorder);
             record.setBmordernum(bmorder.getBmordernum());
-        }else{
+        } else {
             count = this.bmorderMapper.updateByPrimaryKeySelective(record);
         }
         return count;
@@ -60,26 +62,43 @@ public class BmorderServiceImpl implements BmorderService {
         return this.bmorderMapper.selectByPrimaryKey(idbmorder);
     }
 
-    public List findAllBmorders(Integer start, Integer limit) {
-        RowBounds rowBounds = new RowBounds(start, limit);
-        return this.bmorderMapper.findAllBmordersByPage(rowBounds);
+    public PageInfo findAllBmorders(Integer start, Integer limit) {
+
+        PageHelper.startPage(start, limit);
+        List list = this.bmorderMapper.findAllBmordersByPage();
+        PageInfo page = new PageInfo(list);
+        return page;
     }
 
-    public Integer saveItemSelective(Bmorderitem record,BigDecimal changebmorderamount) {
+    public PageInfo findAllBmordersByDetails(Integer start, Integer limit, String filters) {
+        PageHelper.startPage(start, limit);
+        List list = this.bmorderMapper.findAllBmordersByDetails(filters);
+        PageInfo page = new PageInfo(list);
+        return page;
+    }
+
+    public BigDecimal selectSumBmorderamount(String filters) {
+        return this.bmorderMapper.selectSumBmorderamount(filters);
+    }
+
+    public Integer selectBmorderCount(String filters) {
+        return this.bmorderMapper.selectBmorderCount(filters);
+    }
+    public Integer saveItemSelective(Bmorderitem record, BigDecimal changebmorderamount) {
         Integer count = null;
         Bmorder bmorder = new Bmorder();
         bmorder.setIdbmorder(record.getBmorderIdbmorder());
         bmorder.setBmorderamount(changebmorderamount);
         this.bmorderMapper.updateByPrimaryKeySelective(bmorder);
-        if(record.getIdbmitem()==null){
+        if (record.getIdbmitem() == null) {
             count = this.bmorderitemMapper.insertSelective(record);
-        }else{
+        } else {
             count = this.bmorderitemMapper.updateByPrimaryKeySelective(record);
         }
         return count;
     }
 
-    public Integer deleteItemByPrimaryKey(Integer idbmitem,Bmorder bmorder) {
+    public Integer deleteItemByPrimaryKey(Integer idbmitem, Bmorder bmorder) {
         this.bmorderMapper.updateByPrimaryKeySelective(bmorder);
         return this.bmorderitemMapper.deleteByPrimaryKey(idbmitem);
     }
@@ -92,9 +111,12 @@ public class BmorderServiceImpl implements BmorderService {
         return this.bmorderitemMapper.findItemsByIdbmorder(idbmorder);
     }
 
-    public List findAllBmorderitems(Integer start, Integer limit) {
-        RowBounds rowBounds = new RowBounds(start, limit);
-        return this.bmorderitemMapper.findAllBmorderitemsByPage(rowBounds);
+    public PageInfo findAllBmorderitems(Integer start, Integer limit) {
+        PageHelper.startPage(start, limit);
+        List list = this.bmorderitemMapper.findAllBmorderitemsByPage();
+        PageInfo page = new PageInfo(list);
+        return page;
     }
+
 
 }

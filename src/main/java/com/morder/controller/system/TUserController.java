@@ -1,8 +1,10 @@
 package com.morder.controller.system;
 
+import com.github.pagehelper.PageInfo;
 import com.morder.controller.BaseController;
 import com.morder.model.Tuser;
 import com.morder.service.TuserService;
+import com.morder.utils.JSONPage;
 import com.morder.utils.JSONResultUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,14 +31,24 @@ public class TUserController extends BaseController {
 
     @RequestMapping("/findAllUsers.do")
     @ResponseBody
-    public List findAllUsers(Integer rows, Integer page) throws Exception {
-        return this.tuserService.findAllUsers((page - 1) * rows, rows);
+    public JSONPage findAllUsers(Integer rows, Integer page) throws Exception {
+        PageInfo pageInfo = this.tuserService.findAllUsers(page, rows);
+        JSONPage jsonPage = new JSONPage();
+        jsonPage.setRows(pageInfo.getList());
+        jsonPage.setTotal(pageInfo.getTotal());
+
+        return jsonPage;
     }
 
     @RequestMapping("/findAllUnitUsers.do")
     @ResponseBody
-    public List findAllUnitUsers(Integer rows, Integer page,Integer idunit) throws Exception {
-        return this.tuserService.findAllUnitUsers((page - 1) * rows, rows,idunit);
+    public JSONPage findAllUnitUsers(Integer rows, Integer page,Integer idunit) throws Exception {
+        PageInfo pageInfo = this.tuserService.findAllUnitUsers(page, rows, idunit);
+        JSONPage jsonPage = new JSONPage();
+        jsonPage.setRows(pageInfo.getList());
+        jsonPage.setTotal(pageInfo.getTotal());
+
+        return jsonPage;
     }
 
     @RequestMapping("/delUserById.do")

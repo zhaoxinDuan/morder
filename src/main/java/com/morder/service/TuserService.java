@@ -1,5 +1,6 @@
 package com.morder.service;
 
+import com.github.pagehelper.PageInfo;
 import com.morder.model.Tuser;
 
 import java.util.List;
@@ -16,11 +17,11 @@ public interface TuserService {
 
     Tuser selectByPrimaryKey(Integer iduser);
 
-    List findAllUsers(Integer start, Integer limit);
+    PageInfo findAllUsers(Integer start, Integer limit);
 
     List findAllUsersNoLimit();
 
-    List findAllUnitUsers(Integer start, Integer limit, Integer idunit);
+    PageInfo findAllUnitUsers(Integer start, Integer limit, Integer idunit);
 
     Integer userUpdateStatus(Integer iduser, Integer uisdel);
 

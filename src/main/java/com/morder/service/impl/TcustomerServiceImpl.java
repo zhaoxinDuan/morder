@@ -1,5 +1,7 @@
 package com.morder.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.morder.mapper.TcustomerMapper;
 import com.morder.mapper.TcustomerappendMapper;
 import com.morder.mapper.TcustomertaxMapper;
@@ -67,9 +69,11 @@ public class TcustomerServiceImpl implements TcustomerService {
         return this.tcustomerMapper.selectByPrimaryKey(idcustomer);
     }
 
-    public List findAllCustomers(Integer start, Integer limit) {
-        RowBounds rowBounds = new RowBounds(start, limit);
-        return this.tcustomerMapper.findAllCustomersByPage(rowBounds);
+    public PageInfo findAllCustomers(Integer start, Integer limit) {
+        PageHelper.startPage(start, limit);
+        List list = this.tcustomerMapper.findAllCustomersByPage();
+        PageInfo page = new PageInfo(list);
+        return page;
     }
 
     public List findAllCustomersNolimit() {

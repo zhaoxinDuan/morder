@@ -1,5 +1,7 @@
 package com.morder.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.morder.mapper.TrelunitMapper;
 import com.morder.mapper.TuserMapper;
 import com.morder.model.Trelunit;
@@ -74,17 +76,22 @@ public class TuserServiceImpl implements TuserService {
         return this.tuserMapper.selectByPrimaryKey(iduser);
     }
 
-    public List findAllUsers(Integer start, Integer limit) {
-        RowBounds rowBounds = new RowBounds(start,limit);
-        return this.tuserMapper.findAllUsersByPage(rowBounds);
+    public PageInfo findAllUsers(Integer start, Integer limit) {
+        PageHelper.startPage(start, limit);
+        List list = this.tuserMapper.findAllUsersByPage();
+        PageInfo page = new PageInfo(list);
+        return page;
     }
 
     public List findAllUsersNoLimit() {
         return this.tuserMapper.findAllUsersNoLimit();
     }
 
-    public List findAllUnitUsers(Integer start, Integer limit, Integer idunit) {
-        return this.tuserMapper.findAllUnitUsersByPage(new RowBounds(start,limit),idunit);
+    public PageInfo findAllUnitUsers(Integer start, Integer limit, Integer idunit) {
+        PageHelper.startPage(start, limit);
+        List list = this.tuserMapper.findAllUnitUsersByPage(idunit);
+        PageInfo page = new PageInfo(list);
+        return page;
     }
 
     public Integer userUpdateStatus(Integer iduser,Integer uisdel) {

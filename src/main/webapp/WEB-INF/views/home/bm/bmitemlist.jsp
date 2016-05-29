@@ -299,13 +299,14 @@
                 handler: function () {
                     if (isEmpty('bmiproname', '产品名称'))return;
                     if (isEmpty('bmorderIdbmorder', '订单错误'))return;
+                    if(oldChangeBmiamount=="NaN")oldChangeBmiamount = 0;
                     var changebmorderamount = (parseFloat($("#bmiamount").val()) - parseFloat(oldChangeBmiamount) + parseFloat($("#bmorderamount").val())).toFixed(2);
                     $("#changebmorderamount").val(changebmorderamount);
 
                     var data = $("#subform").serializeArray();
                     $.ajax({
                         type: "POST",
-                        url: '<c:url value="/home/bm/saveMorderItemInfo.do?_csrf=${_csrf.token}"/>&t=' + new Date().getTime(),
+                        url: '<c:url value="/home/bm/saveMorderItemInfo.do?_csrf=${_csrf.token}"/>&changebmorderamount='+changebmorderamount+'&t=' + new Date().getTime(),
                         dataType: "json",
                         data: data,
                         beforeSend: function () {
@@ -328,7 +329,7 @@
                         },
                         error: function (msg) {
                             $.messager.progress('close');
-                            $.messager.alert('操作失败', '删除失败！', 'error');
+                            $.messager.alert('操作失败', '更新失败！'+msg, 'error');
                         }
                     })
                 }

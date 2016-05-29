@@ -1,6 +1,9 @@
 package com.morder.controller.home;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.morder.controller.BaseController;
+import com.morder.form.BmorderSearchForm;
 import com.morder.model.Bmorder;
 import com.morder.model.Bmorderitem;
 import com.morder.model.Tcustomer;
@@ -8,6 +11,7 @@ import com.morder.model.Tuser;
 import com.morder.service.BmorderService;
 import com.morder.service.TcustomerService;
 import com.morder.service.TuserService;
+import com.morder.utils.JSONPage;
 import com.morder.utils.JSONResultUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +20,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -40,14 +45,14 @@ public class BmorderController extends BaseController {
     private TcustomerService tcustomerService;
 
     @RequestMapping("/bmlist.do")
-    public String bmlist() throws Exception {
-
+    public String bmlist(ModelMap modelMap,Integer iduser) throws Exception {
+        modelMap.put("iduser", iduser);
         return "/home/bm/bmlist";
     }
 
     @RequestMapping("/bmlistdetail.do")
-    public String bmlistdetail() throws Exception {
-
+    public String bmlistdetail(ModelMap modelMap,Integer iduser) throws Exception {
+        modelMap.put("iduser", iduser);
         return "/home/bm/bmlistdetail";
     }
 
@@ -65,12 +70,37 @@ public class BmorderController extends BaseController {
         return "/home/bm/bmindex";
     }
 
-
     @RequestMapping("/findAllBmorders.do")
     @ResponseBody
-    public List findAllBmorders(Integer rows, Integer page) throws Exception {
-        List list = this.bmorderService.findAllBmorders((page - 1) * rows, rows);
-        return list;
+    public JSONPage findAllBmorders(Integer rows, Integer page) throws Exception {
+
+        PageInfo pageInfo = this.bmorderService.findAllBmorders(page, rows);
+        JSONPage jsonPage = new JSONPage();
+        jsonPage.setRows(pageInfo.getList());
+        jsonPage.setTotal(pageInfo.getTotal());
+        return jsonPage;
+    }
+
+
+    @RequestMapping("/findAllBmordersByDetails.do")
+    @ResponseBody
+    public JSONPage findAllBmordersByDetails(Integer rows, Integer page,BmorderSearchForm bmorderSearchForm) throws Exception {
+        String consql = bmorderSearchForm.getBuilderSql();
+        String filters = (!StringUtils.isEmpty(consql)?" where 1=1 "+consql:"");
+//        String filters = "";
+        PageInfo pageInfo = this.bmorderService.findAllBmordersByDetails(page, rows, filters);
+        JSONPage jsonPage = new JSONPage();
+        jsonPage.setRows(pageInfo.getList());
+        jsonPage.setTotal(pageInfo.getTotal());
+
+        BigDecimal totalamount =  this.bmorderService.selectSumBmorderamount(filters);
+        Integer totalorder = this.bmorderService.selectBmorderCount(filters);
+        Map map = new HashMap();
+        map.put("totalamount",totalamount);
+        map.put("totalitems",pageInfo.getTotal());
+        map.put("totalorders",totalorder);
+        jsonPage.setOthermap(map);
+        return jsonPage;
     }
 
 
@@ -162,8 +192,12 @@ public class BmorderController extends BaseController {
 
     @RequestMapping("/findAllBmorderItems.do")
     @ResponseBody
-    public List findAllBmorderItems(Integer rows, Integer page) throws Exception {
-        return this.bmorderService.findAllBmorderitems((page - 1) * rows, rows);
+    public JSONPage findAllBmorderItems(Integer rows, Integer page) throws Exception {
+        PageInfo pageInfo = this.bmorderService.findAllBmorderitems(page, rows);
+        JSONPage jsonPage = new JSONPage();
+        jsonPage.setRows(pageInfo.getList());
+        jsonPage.setTotal(pageInfo.getTotal());
+        return jsonPage;
     }
 
 

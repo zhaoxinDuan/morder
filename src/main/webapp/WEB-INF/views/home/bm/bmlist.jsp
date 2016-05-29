@@ -138,7 +138,7 @@
                             }
                         }
                     }],
-                    onLoadSuccess: function () {
+                    onLoadSuccess: function (data) {
                         $('#bmlist').datagrid('resize');
                     },
                     onDblClickRow: function (index, row) {

@@ -1,5 +1,6 @@
 package com.morder.service;
 
+import com.github.pagehelper.PageInfo;
 import com.morder.model.Tcustomer;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public interface TcustomerService {
 
     Tcustomer selectByPrimaryKey(Integer idcustomer);
 
-    List findAllCustomers(Integer start,Integer limit);
+    PageInfo findAllCustomers(Integer start,Integer limit);
 
     List findAllCustomersNolimit();
 }
