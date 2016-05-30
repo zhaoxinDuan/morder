@@ -36,14 +36,14 @@
 
                 </tr>
                 <tr>
-                    <th>from 开单日期</th>
+                    <th>开单日期 从</th>
                     <td style="text-align:left;">
                         <input id="searchBmbillingdateFrom" name="searchBmbillingdateFrom" type="text"
                                class="easyui-datebox"
                                style="width:200px;">
 
                     </td>
-                    <th>to 开单日期</th>
+                    <th>至 开单日期</th>
                     <td style="text-align:left;">
                         <input type="text" name="searchBmbillingdateTo" id="searchBmbillingdateTo"
                                class="easyui-datebox"
@@ -51,14 +51,14 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>from 交货日期</th>
+                    <th>交货日期 从</th>
                     <td style="text-align:left;">
                         <input id="searchBmdeliverydateFrom" name="searchBmdeliverydateFrom" type="text"
                                class="easyui-datebox"
                                style="width:200px;">
 
                     </td>
-                    <th>to 交货日期</th>
+                    <th>至 交货日期</th>
                     <td style="text-align:left;">
                         <input type="text" name="searchBmdeliverydateTo" id="searchBmdeliverydateTo"
                                class="easyui-datebox"
@@ -121,7 +121,7 @@
                     url: '<c:url value="/home/bm/findAllBmordersByDetails.do?_csrf=${_csrf.token}"/>&t=' + new Date().getTime(),
                     title: '订单明细',
                     pagination: true,
-                    fitColumns: true,
+//                    fitColumns: true,
                     singleSelect: true,
                     pageSize: 15,
                     pageList: [15, 30, 45],
@@ -129,7 +129,7 @@
 
                     frozenColumns: [[
                         {
-                            field: 'op11', title: '送货清单', width: 50,
+                            field: 'op11', title: '送货清单', width: 55,algin:"center",
                             formatter: function (value, row, index) {
                                 return '<input type="checkbox" id="'+row.idbmitem+'" onclick="checkSHCheckBox('+row.idbmitem+','+row.bmstatus+')"  ' +
                                         'name="op11"  value="'+row.idbmitem+'">';
@@ -162,7 +162,7 @@
                             formatter: function (value, row, index) {
                                 var str = "";
                                 if (value == 0) {
-                                    str = "折页";
+                                    str = "成品折页";
                                 } else if (value == 1) {
                                     str = "切单张";
                                 } else if (value == 2) {
@@ -173,6 +173,10 @@
                                     str = "精装";
                                 } else if (value == 5) {
                                     str = "YO装";
+                                }else if (value == 6) {
+                                    str = "书本折页";
+                                }else if (value == 7) {
+                                    str = "无线胶装";
                                 }
                                 return str;
                             }
@@ -243,7 +247,7 @@
                         $("#totalitems").html(data.othermap.totalitems);
                         $("#totalorders").html(data.othermap.totalorders);
                         $('#bmlistdetail').datagrid('resize');
-                        $(this).datagrid("autoMergeCells", ['bmordernum', 'bmcusname', 'bmorderamount', 'bmbillingdate', 'bmbillingdate', 'bmorderamount', 'bmcomments']);
+//                        $(this).datagrid("autoMergeCells", ['bmordernum', 'bmcusname', 'bmorderamount', 'bmbillingdate', 'bmbillingdate', 'bmorderamount', 'bmcomments']);
 
 
                     },
@@ -291,7 +295,9 @@
             }
         });
         $("#search_bmorder").bind("click", function () {
-
+            $.messager.progress({
+                text: '请求正在提交中，请稍候...'
+            });
             $('#bmlistdetail').datagrid('load', {
                 searchBmstatus: $("#searchBmstatus").combobox("getValue"),
                 searchTcustomerIdcustomer: $("#searchTcustomerIdcustomer").combobox("getValue"),
@@ -301,6 +307,7 @@
                 searchBmdeliverydateTo: $("#searchBmdeliverydateTo").datebox("getValue"),
                 searchTuserIduser: $("#searchTuserIduser").combobox("getValue")
             });
+            $.messager.progress('close');
 
         });
         $("#search_bmorder_reset").bind("click", function () {
@@ -308,6 +315,9 @@
         });
 
         $("#export_bmorder").bind("click", function () {
+            $.messager.progress({
+                text: '请求正在提交中，请稍候...'
+            });
             openPostWindow('<c:url value="/home/execl/exportBmlistDetail.do?_csrf=${_csrf.token}"/>&t=' + new Date().getTime(), "导出订单列表", {
                 searchBmstatus: $("#searchBmstatus").combobox("getValue"),
                 searchTcustomerIdcustomer: $("#searchTcustomerIdcustomer").combobox("getValue"),
@@ -317,7 +327,7 @@
                 searchBmdeliverydateTo: $("#searchBmdeliverydateTo").datebox("getValue"),
                 searchTuserIduser: $("#searchTuserIduser").combobox("getValue")
             });
-
+            $.messager.progress('close');
         });
 
 

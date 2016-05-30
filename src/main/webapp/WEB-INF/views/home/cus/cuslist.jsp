@@ -340,7 +340,7 @@
                     if (isEmpty('cname', '客户名称'))return;
                     var uid =trimEasyUIValue("cofficeruid","easyui-combobox");
                     var uname =$("#cofficername").val();
-                    if((uid==null||nid=="")||(uname==null||uname=="")){
+                    if((uid==null||uid=="")||(uname==null||uname=="")){
                         $.messager.alert('请选择负责人', '请从下拉框重选择负责人，不要自己输入！', 'info');
                     }
                     var data = $("#subform").serializeArray();

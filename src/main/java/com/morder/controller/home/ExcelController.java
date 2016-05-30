@@ -94,7 +94,7 @@ public class ExcelController extends BaseController {
                 //外发单号
                 excelModels.add(new ExcelModel(count,1, Utils.getObjectToString(resultmap.get("bmioutternum"))));
                 //装钉类型
-                excelModels.add(new ExcelModel(5,1, ConstantUtils.protypeMap.get(Utils.getObjectToInteger(resultmap.get("bmiprotype")))));
+                excelModels.add(new ExcelModel(count,2, ConstantUtils.protypeMap.get(Utils.getObjectToInteger(resultmap.get("bmiprotype")))));
                 //名称及规格
                 excelModels.add(new ExcelModel(count,3, Utils.getObjectToString(resultmap.get("bmiproname"))+","
                         +Utils.getObjectToString(resultmap.get("bmorderitemcol"))));

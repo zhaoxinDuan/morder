@@ -23,12 +23,15 @@
                             <select id="bmiprotype" name="bmiprotype" class="easyui-combobox"
                                     data-options="editable:false "
                                     style="width:200px;">
-                                <option value="0">折页</option>
+                                <option value="0">成品折页</option>
+                                <option value="6">书本折页</option>
                                 <option value="1">切单张</option>
                                 <option value="2" selected>骑马钉</option>
                                 <option value="3">锁线胶装</option>
+                                <option value="7">无线胶装</option>
                                 <option value="4">精装</option>
                                 <option value="5">YO装</option>
+
                             </select>
                         </td>
                     </tr>
@@ -42,8 +45,14 @@
                     <tr>
                         <th>单位<span class="impSpan">*</span></th>
                         <td style="text-align:left;">
-                            <input type="text" name="bmiunit" id="bmiunit" class="textInput textbox-width"
-                                   style="resize:none;width:200px;height:20px">
+                            <%--<input type="text" name="bmiunit" id="bmiunit" class="textInput textbox-width"--%>
+                                   <%--style="resize:none;width:200px;height:20px">--%>
+                                <select id="bmiunit" name="bmiunit" class="easyui-combobox"
+                                        data-options="editable:true "
+                                        style="width:200px;">
+                                    <option value="本">本</option>
+                                    <option value="件">件</option>
+                                </select>
                         </td>
                     </tr>
                     <tr>
@@ -72,8 +81,8 @@
                             <select id="bmiistax" name="bmiistax" class="easyui-combobox"
                                     data-options="editable:false "
                                     style="width:200px;">
-                                <option value="0" selected>含税</option>
-                                <option value="1">不含税</option>
+                                <option value="0">含税</option>
+                                <option value="1" selected>不含税</option>
                             </select>
                         </td>
                     </tr>
@@ -167,7 +176,7 @@
                             formatter: function (value, row, index) {
                                 var str = "";
                                 if (value == 0) {
-                                    str = "折页";
+                                    str = "成品折页";
                                 } else if (value == 1) {
                                     str = "切单张";
                                 } else if (value == 2) {
@@ -178,6 +187,10 @@
                                     str = "精装";
                                 }else if (value == 5) {
                                     str = "YO装";
+                                }else if (value == 6) {
+                                    str = "书本折页";
+                                }else if (value == 7) {
+                                    str = "无线胶装";
                                 }
                                 return str;
                             }
@@ -222,7 +235,7 @@
                             $("#bmioutternum").val('');
                             $("#bmorderitemcol").val('');
                             $("#bmipacreq").val('');
-                            $("#bmiunit").val('');
+//                            $("#bmiunit").val('');
 
                         }
                     }, '-', {
@@ -245,9 +258,15 @@
                                 $("#bmioutternum").val(record.bmioutternum);
                                 $("#bmorderitemcol").val(record.bmorderitemcol);
                                 $("#bmipacreq").val(record.bmipacreq);
-                                $("#bmiunit").val(record.bmiunit);
+//                                $("#bmiunit").val(record.bmiunit);
                                 $("#bmiprotype").combobox("setValue", record.bmiprotype);
                                 $("#bmiistax").combobox("setValue", record.bmiistax);
+                                var _bminit = strTrimAll(record.bmiunit);
+                                if(_bminit!="本"&&_bminit!="件"){
+                                    $("#bmiunit").append("<option value='"+_bminit+"' selected>"+_bminit+"</option>");
+                                }else{
+                                    $("#bmiunit").combobox("setValue", _bminit);
+                                }
                             }
                         }
                     }, '-', {
@@ -313,8 +332,8 @@
             maximizable: true,
             cache: false,
             width: 600,
-            height: 380,
-            title: "用户定义",
+            height: 420,
+            title: "编辑",
             closed: true,
             buttons: [{
                 text: '提交',

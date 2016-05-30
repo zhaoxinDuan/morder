@@ -119,7 +119,7 @@ public class BmorderController extends BaseController {
     public String updateMorder(Integer idbmorder,Integer bmstatus) throws Exception {
         Bmorder bmorder = new Bmorder();
         bmorder.setIdbmorder(idbmorder);
-        bmorder.setBmstatus(2);
+        bmorder.setBmstatus(bmstatus);
         try {
             this.bmorderService.saveSelective(bmorder);
         } catch (Exception e) {

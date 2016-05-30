@@ -497,3 +497,10 @@ function formatDataFromNumber(t) {
     return date.Format("yyyy-MM-dd");
 
 }
+
+function formatterDate(date) {
+    var day = date.getDate() > 9 ? date.getDate() : "0" + date.getDate();
+    var month = (date.getMonth() + 1) > 9 ? (date.getMonth() + 1) : "0"
+    + (date.getMonth() + 1);
+    return date.getFullYear() + '-' + month + '-' + day;
+};
