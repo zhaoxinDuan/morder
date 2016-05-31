@@ -123,8 +123,8 @@
                     pagination: true,
 //                    fitColumns: true,
                     singleSelect: true,
-                    pageSize: 15,
-                    pageList: [15, 30, 45],
+                    pageSize: 10,
+                    pageList: [10, 20, 30],
                     rownumbers: true,
 
                     frozenColumns: [[
