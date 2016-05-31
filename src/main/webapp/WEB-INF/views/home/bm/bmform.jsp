@@ -15,6 +15,7 @@
                     <th>客户名称<span class="impSpan">*</span></th>
                     <td style="text-align:left;">
                         <input type="hidden" id="idbmorder" name="idbmorder">
+                        <input type="hidden" id="bmcusname" name="bmcusname">
                         <input type="hidden" id="bmcreateuserid" name="bmcreateuserid" value="${iduser}">
                         <input id="tcustomerIdcustomer" name="tcustomerIdcustomer" class="easyui-combobox"
                                data-options="editable:false "
@@ -150,6 +151,11 @@
     function saveMorder(ispost) {
 //        if (isEmptyEasyUI('bmbillingdate','开单日期'))return;
         if (isEmptyEasyUI('tcustomerIdcustomer', '客户名称'))return;
+        var tcustomerIdcustomerValue = $("#tcustomerIdcustomer").combobox("getValue")
+        if(!judgeNumber(tcustomerIdcustomerValue)){
+            $("#bmcusname").val(tcustomerIdcustomerValue);
+            $("#tcustomerIdcustomer").combobox("setValue",null);
+        }
         var data = $("#morderform").serializeArray();
         $.ajax({
             type: "POST",

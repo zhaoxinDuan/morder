@@ -139,8 +139,10 @@ public class BmorderController extends BaseController {
         }else{
             record.setBmstatus(0);
         }
-        Tcustomer tcustomer = this.tcustomerService.selectByPrimaryKey(record.getTcustomerIdcustomer());
-        record.setBmcusname(tcustomer.getCname());
+        if(record.getTcustomerIdcustomer()!=null) {
+            Tcustomer tcustomer = this.tcustomerService.selectByPrimaryKey(record.getTcustomerIdcustomer());
+            record.setBmcusname(tcustomer.getCname());
+        }
         try {
             this.bmorderService.saveSelective(record);
 

@@ -4,9 +4,10 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.morder.mapper.BmorderMapper;
 import com.morder.mapper.BmorderitemMapper;
-import com.morder.model.Bmorder;
-import com.morder.model.Bmorderitem;
+import com.morder.mapper.TcustomerMapper;
+import com.morder.model.*;
 import com.morder.service.BmorderService;
+import com.morder.service.TcustomerService;
 import com.morder.utils.OrderNumUtil;
 import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
@@ -28,6 +29,8 @@ public class BmorderServiceImpl implements BmorderService {
     private BmorderMapper bmorderMapper;
     @Autowired
     private BmorderitemMapper bmorderitemMapper;
+    @Autowired
+    private TcustomerService tcustomerService;
 
     public Integer save(Bmorder record) {
         Integer count = null;
@@ -41,6 +44,19 @@ public class BmorderServiceImpl implements BmorderService {
 
     public Integer saveSelective(Bmorder record) {
         Integer count = null;
+        if(record.getTcustomerIdcustomer()==null){
+            Tcustomer tcustomer = new Tcustomer();
+            tcustomer.setCname(record.getBmcusname());
+            Tcustomerappend tcustomerappend = new Tcustomerappend();
+            tcustomerappend.setCacontacts("");
+            tcustomerappend.setCamphone("");
+            tcustomer.setTcustomerappend(tcustomerappend);
+            Tcustomertax tcustomertax = new Tcustomertax();
+            tcustomertax.setTcbankname("");
+            tcustomer.setTcustomertax(tcustomertax);
+            this.tcustomerService.saveSelective(tcustomer);
+            record.setTcustomerIdcustomer(tcustomer.getIdcustomer());
+        }
         if (record.getIdbmorder() == null) {
             count = this.bmorderMapper.insertSelective(record);
             Bmorder bmorder = new Bmorder();

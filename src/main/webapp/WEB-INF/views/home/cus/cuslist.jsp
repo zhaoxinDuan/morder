@@ -342,6 +342,7 @@
                     var uname =$("#cofficername").val();
                     if((uid==null||uid=="")||(uname==null||uname=="")){
                         $.messager.alert('请选择负责人', '请从下拉框重选择负责人，不要自己输入！', 'info');
+                        return;
                     }
                     var data = $("#subform").serializeArray();
                     $.ajax({

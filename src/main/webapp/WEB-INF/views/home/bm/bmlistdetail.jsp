@@ -109,8 +109,8 @@
 <script type="text/javascript">
     function checkSHCheckBox(idbmitem,bmstatus){
         if(bmstatus==2){
-            $.messager.alert('提示', '已完成订单不能再生成送货清单。', 'info');
-            $("#"+idbmitem).attr("checked",false);
+//            $.messager.alert('提示', '已完成订单不能再生成送货清单。', 'info');
+//            $("#"+idbmitem).attr("checked",false);
         }
 
     }

@@ -130,7 +130,8 @@
                 var tmp = 0;
                 if (judgeNumber(bminum)) {
                     tmp = (parseFloat(newValue) * parseFloat(bminum)).toFixed(2);
-                    oldChangeBmiamount = (parseFloat(oldValue) * parseFloat(bminum)).toFixed(2);
+                        oldChangeBmiamount = (parseFloat(oldValue) * parseFloat(bminum)).toFixed(2);
+
                 } else {
                     tmp = newValue;
                 }
@@ -230,8 +231,8 @@
                             $("#bmorderIdbmorder").val($("#idbmorder").val());
                             $("#bmiproname").val('');
                             $('#bmiprice').numberbox('setValue', 0);
-                            $('#bminum').numberbox('setValue', 1);
-                            $("#bmiamount").val('');
+                            $('#bminum').numberbox('setValue', 0);
+                            $("#bmiamount").val(0);
                             $("#bmioutternum").val('');
                             $("#bmorderitemcol").val('');
                             $("#bmipacreq").val('');

@@ -235,7 +235,7 @@
     bmi.bmorderitemcol,bmi.bmipacreq, bmi.bmiunit, bmi.bmorder_idbmorder,t.uname as ownername
          from bmorder bm
          left join bmorderitem bmi on bm.idbmorder = bmi.bmorder_idbmorder
-         left join tuser t on t.iduser = bm.tuser_iduser ${filters} order by bm.bmordernum asc
+         left join tuser t on t.iduser = bm.tuser_iduser ${filters} order by bm.bmordernum desc
     </select>
 
     <select id="selectSumBmorderamount" resultType="java.math.BigDecimal">
