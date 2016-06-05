@@ -10,7 +10,7 @@ public interface BmmarkerMapper {
     int insertSelective(Bmmarker record);
 
     Bmmarker selectByPrimaryKey(Integer idbmmarker);
-    
+
 
     Bmmarker selectByBmmtype(Integer bmmtype);
 
