@@ -94,8 +94,8 @@
 
 
 <script type="text/javascript">
-    function checkSHCheckBox(idbmitem,bmstatus){
-        if(bmstatus==2){
+    function checkSHCheckBox(idbmitem, bmstatus) {
+        if (bmstatus == 2) {
 //            $.messager.alert('提示', '已完成订单不能再生成送货清单。', 'info');
 //            $("#"+idbmitem).attr("checked",false);
         }
@@ -108,39 +108,81 @@
                     url: '<c:url value="/home/bm/findAllBmorders.do?_csrf=${_csrf.token}"/>&t=' + new Date().getTime(),
 //                    title: '处理中订单列表',
                     pagination: true,
-                    fitColumns: true,
+//                    fitColumns: true,
                     singleSelect: true,
                     pageSize: 10,
                     pageList: [10, 20, 30],
                     collapsible: true,
                     rownumbers: true,
-                    columns: [[
+                    frozenColumns: [[
                         {
-                            field: 'op11', title: '送货清单', width: 30,algin:"center",
+                            field: 'op11', title: '送货清单', width: 50, algin: "center",
                             formatter: function (value, row, index) {
-                                return '<input type="checkbox" id="'+row.idbmorder+'" onclick="checkSHCheckBox('+row.idbmorder+','+row.bmstatus+')"  ' +
-                                        'name="op11"  value="'+row.idbmorder+'">';
+                                return '<input type="checkbox" id="' + row.idbmorder + '" onclick="checkSHCheckBox(' + row.idbmorder + ',' + row.bmstatus + ')"  ' +
+                                        'name="op11"  value="' + row.idbmorder + '">';
                             }
                         },
-                        {field: 'bmordernum', title: '订单编号', width: 50},
-                        {field: 'bmcusname', title: '客户名称', width: 50},
-                        {field: 'product', title: '产品', width: 125},
-                        {field: 'bmorderamount', title: '订单金额', width: 50},
                         {
-                            field: 'bmbillingdate', title: '开单日期', width: 40,
+                            field: 'bmordernum', title: '订单编号', width: 90,
+                            formatter: function (value, row, index) {
+                                var url = '<c:url value="/home/bm/bmindex.do?_csrf=${_csrf.token}"/>&isedit=true&idbmorder=' + row.idbmorder + '&t=' + new Date().getTime();
+                                return '<a href="' + url + '">' + value + '</a>';
+                            }
+                        },
+                        {field: 'bmcusname', title: '客户名称', width: 90}
+
+                    ]],
+                    columns: [[
+
+                        {field: 'product', title: '产品', width: 200},
+                        {
+                            field: 'protype', title: '产品类型', width: 200,
+                            formatter: function (value, row, index) {
+                                var str = "";
+                                if (value != null) {
+                                    var strs = value.split(",");
+                                    for (var i = 0; i < strs.length; i++) {
+                                        if(i!=0)str = str+",";
+                                        if (strs[i] == 0) {
+                                            str = str+"成品折页";
+                                        } else if (strs[i] == 1) {
+                                            str = str+"切单张";
+                                        } else if (strs[i] == 2) {
+                                            str = str+"骑马钉";
+                                        } else if (strs[i] == 3) {
+                                            str = str+"锁线胶装";
+                                        } else if (strs[i] == 4) {
+                                            str = str+"精装";
+                                        } else if (strs[i] == 5) {
+                                            str = str+"YO装";
+                                        }else if (strs[i] == 6) {
+                                            str = str+"书本折页";
+                                        }else if (strs[i] == 7) {
+                                            str = str+"无线胶装";
+                                        }
+
+                                    }
+
+                                    return str;
+                                }
+                            }
+                        },
+                        {field: 'bmorderamount', title: '订单金额', width: 80},
+                        {
+                            field: 'bmbillingdate', title: '开单日期', width: 80,
                             formatter: function (value, row, index) {
 
                                 return formatDataFromNumber(value);
                             }
                         },
                         {
-                            field: 'bmbillingdate', title: '交货日期', width: 40,
+                            field: 'bmbillingdate', title: '交货日期', width: 80,
                             formatter: function (value, row, index) {
                                 return formatDataFromNumber(value);
                             }
                         },
                         {
-                            field: 'bmstatus', title: '订单状态', width: 50,
+                            field: 'bmstatus', title: '订单状态', width: 80,
                             formatter: function (value, row, index) {
                                 var str = "";
                                 if (value == 0) {
@@ -153,10 +195,10 @@
                                 return str;
                             }
                         },
-                        {field: 'ownername', title: '负责人', width: 30},
-                        {field: 'bmdenum', title: '送货编号', width: 50},
+                        {field: 'ownername', title: '负责人', width: 80},
+                        {field: 'bmdenum', title: '送货编号', width: 80},
                         {
-                            field: 'operation', title: '操作', width: 50, align: 'left',
+                            field: 'operation', title: '操作', width: 80, align: 'left',
                             formatter: function (value, row) {
                                 var idbmorder = row.idbmorder;
                                 var str = "";
@@ -178,7 +220,7 @@
                             if (record == null) {
                                 $.messager.alert('提示', '请选择某行数据再进行编辑。', 'info');
                             } else {
-                                window.location.href = '<c:url value="/home/bm/bmindex.do?_csrf=${_csrf.token}"/>&idbmorder=' + record.idbmorder + '&t=' + new Date().getTime();
+                                window.location.href = '<c:url value="/home/bm/bmindex.do?_csrf=${_csrf.token}"/>&isedit=true&idbmorder=' + record.idbmorder + '&t=' + new Date().getTime();
                             }
                         }
                     }, '-', {
@@ -225,7 +267,7 @@
                                 }
                             }
                         }
-                    },'-----',{
+                    }, '-----', {
                         text: '生成工程单',
                         iconCls: 'icon-print',
                         handler: function () {

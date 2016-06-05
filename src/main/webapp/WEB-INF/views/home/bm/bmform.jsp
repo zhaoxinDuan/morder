@@ -23,7 +23,7 @@
                     </td>
                     <th>订单编号</th>
                     <td style="text-align:left;">
-                        <input type="text" name="bmordernum" id="bmordernum" readonly class="textInput textbox-width"
+                        <input type="text" name="bmordernum" id="bmordernum" ${isedit==true?"":"readonly"} class="textInput textbox-width"
                                style="resize:none;width:96%;height:20px">
                     </td>
                 </tr>

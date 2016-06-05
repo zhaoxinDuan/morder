@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.morder.mapper.BmaddcostsMapper" >
+  <resultMap id="BaseResultMap" type="com.morder.model.Bmaddcosts" >
+    <id column="idbmaddcosts" property="idbmaddcosts" jdbcType="INTEGER" />
+    <result column="bmcosts" property="bmcosts" jdbcType="DECIMAL" />
+    <result column="bmcostsdesc" property="bmcostsdesc" jdbcType="VARCHAR" />
+    <result column="bmorder_idbmorder" property="bmorderIdbmorder" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    idbmaddcosts, bmcosts, bmcostsdesc, bmorder_idbmorder
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from bmaddcosts
+    where idbmaddcosts = #{idbmaddcosts,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from bmaddcosts
+    where idbmaddcosts = #{idbmaddcosts,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.morder.model.Bmaddcosts" useGeneratedKeys="true" keyProperty="idbmaddcosts">
+    insert into bmaddcosts (idbmaddcosts, bmcosts, bmcostsdesc, 
+      bmorder_idbmorder)
+    values (#{idbmaddcosts,jdbcType=INTEGER}, #{bmcosts,jdbcType=DECIMAL}, #{bmcostsdesc,jdbcType=VARCHAR}, 
+      #{bmorderIdbmorder,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.morder.model.Bmaddcosts" useGeneratedKeys="true" keyProperty="idbmaddcosts">
+    insert into bmaddcosts
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="idbmaddcosts != null" >
+        idbmaddcosts,
+      </if>
+      <if test="bmcosts != null" >
+        bmcosts,
+      </if>
+      <if test="bmcostsdesc != null" >
+        bmcostsdesc,
+      </if>
+      <if test="bmorderIdbmorder != null" >
+        bmorder_idbmorder,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="idbmaddcosts != null" >
+        #{idbmaddcosts,jdbcType=INTEGER},
+      </if>
+      <if test="bmcosts != null" >
+        #{bmcosts,jdbcType=DECIMAL},
+      </if>
+      <if test="bmcostsdesc != null" >
+        #{bmcostsdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="bmorderIdbmorder != null" >
+        #{bmorderIdbmorder,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.morder.model.Bmaddcosts" >
+    update bmaddcosts
+    <set >
+      <if test="bmcosts != null" >
+        bmcosts = #{bmcosts,jdbcType=DECIMAL},
+      </if>
+      <if test="bmcostsdesc != null" >
+        bmcostsdesc = #{bmcostsdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="bmorderIdbmorder != null" >
+        bmorder_idbmorder = #{bmorderIdbmorder,jdbcType=INTEGER},
+      </if>
+    </set>
+    where idbmaddcosts = #{idbmaddcosts,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.morder.model.Bmaddcosts" >
+    update bmaddcosts
+    set bmcosts = #{bmcosts,jdbcType=DECIMAL},
+      bmcostsdesc = #{bmcostsdesc,jdbcType=VARCHAR},
+      bmorder_idbmorder = #{bmorderIdbmorder,jdbcType=INTEGER}
+    where idbmaddcosts = #{idbmaddcosts,jdbcType=INTEGER}
+  </update>
+
+  <select id="findCostsByIdbmorder" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from bmaddcosts where bmorder_idbmorder= #{bmorderIdbmorder,jdbcType=INTEGER}
+  </select>
+
+  <select id="findAllBmCostsByPage" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from bmaddcosts
+  </select>
+
+  <delete id="deleteCostsByIdbmorder" parameterType="java.lang.Integer" >
+    delete from bmaddcosts
+    where bmorder_idbmorder = #{bmorderIdbmorder,jdbcType=INTEGER}
+  </delete>
+
+</mapper>

@@ -43,6 +43,10 @@ public class BmorderServiceImpl implements BmorderService {
         return count;
     }
 
+    public Integer updateStatus(Bmorder record) {
+        return this.bmorderMapper.updateByPrimaryKeySelective(record);
+    }
+
     public Integer saveSelective(Bmorder record) {
         Integer count = null;
         if (record.getTcustomerIdcustomer() == null) {

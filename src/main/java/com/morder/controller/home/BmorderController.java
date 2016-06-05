@@ -57,7 +57,7 @@ public class BmorderController extends BaseController {
 
 
     @RequestMapping("/bmindex.do")
-    public String cusindex(ModelMap modelMap,Integer idbmorder,Integer iduser) throws Exception {
+    public String cusindex(ModelMap modelMap,Integer idbmorder,Integer iduser,Boolean isedit) throws Exception {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 //        Tuser tUser = this.tuserService.selectByUname(user.getUsername());
         Bmorder bmorder = null;
@@ -65,6 +65,7 @@ public class BmorderController extends BaseController {
             bmorder = bmorderService.selectByPrimaryKey(idbmorder);
         }
         modelMap.put("bmorder", bmorder);
+        modelMap.put("isedit", isedit);
         modelMap.put("iduser", iduser);
         return "/home/bm/bmindex";
     }
@@ -123,7 +124,7 @@ public class BmorderController extends BaseController {
         bmorder.setIdbmorder(idbmorder);
         bmorder.setBmstatus(bmstatus);
         try {
-            this.bmorderService.saveSelective(bmorder);
+            this.bmorderService.updateStatus(bmorder);
         } catch (Exception e) {
             e.printStackTrace();
             return JSONResultUtils.MSG_ERROR;

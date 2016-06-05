@@ -128,14 +128,12 @@
                     rownumbers: true,
 
                     frozenColumns: [[
-//                        {
-//                            field: 'op11', title: '送货清单', width: 55,algin:"center",
-//                            formatter: function (value, row, index) {
-//                                return '<input type="checkbox" id="'+row.idbmitem+'" onclick="checkSHCheckBox('+row.idbmitem+','+row.bmstatus+')"  ' +
-//                                        'name="op11"  value="'+row.idbmitem+'">';
-//                            }
-//                        },
-                        {field: 'bmordernum', title: '订单编号', width: 80},
+                        {field: 'bmordernum', title: '订单编号', width: 80,
+                            formatter:function(value,row,index){
+                                var url = '<c:url value="/home/bm/bmindex.do?_csrf=${_csrf.token}"/>&isedit=true&idbmorder=' + row.idbmorder + '&t=' + new Date().getTime();
+                                return '<a href="'+url+'">'+value+'</a>';
+                            }
+                        },
                         {field: 'bmcusname', title: '客户名称', width: 90}
 
                     ]],

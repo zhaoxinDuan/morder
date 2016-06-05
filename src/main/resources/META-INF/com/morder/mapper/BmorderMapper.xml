@@ -234,7 +234,8 @@
         select idbmorder,bmcusname,bmordernum,bmbillingdate,bmdeliverydate,bmpaymethod,bmcurrencytype,bmaddcosts
 ,bmorderamount,bmcomments,bmpacreq,bmdenum,bmstatus,bmcreateuserid,bmdelivery_idbmdelivery,tuser_iduser
 ,tcustomer_idcustomer,b.uname as ownername,
-(SELECT  GROUP_CONCAT(bmiproname SEPARATOR ',') FROM bmorderitem where idbmorder=bmorder_idbmorder) as product
+(SELECT  GROUP_CONCAT(bmiproname SEPARATOR ',') FROM bmorderitem where idbmorder=bmorder_idbmorder) as product,
+(SELECT  GROUP_CONCAT(bmiprotype SEPARATOR ',') FROM bmorderitem where idbmorder=bmorder_idbmorder) as protype
  from bmorder a
  left join tuser b on a.tuser_iduser = b.iduser
  ${filters} order by idbmorder desc
@@ -251,7 +252,7 @@
          from bmorder bm
          left join bmorderitem bmi on bm.idbmorder = bmi.bmorder_idbmorder
          left join tuser t on t.iduser = bm.tuser_iduser
-         ${filters} order by bm.bmordernum desc
+         ${filters} order by bm.idbmorder desc
     </select>
 
     <select id="selectSumBmorderamount" resultType="java.math.BigDecimal">

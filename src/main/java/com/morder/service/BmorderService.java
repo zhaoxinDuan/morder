@@ -19,6 +19,8 @@ public interface BmorderService {
 
     Integer saveSelective(Bmorder record);
 
+    Integer updateStatus(Bmorder record);
+
     Integer deleteByPrimaryKey(Integer idbmorder);
 
     Bmorder selectByPrimaryKey(Integer idbmorder);
