@@ -157,11 +157,12 @@ public class ExcelController extends BaseController {
                 if (bmmarker == null) {
                     bmmarker = new Bmmarker();
                     bmmarker.setBmmtype(bmmtype);
+                    bmmarker.setBmmnum(1);
                     bmdenum = bmmtype + 1;
                 } else {
-                    bmdenum = bmmarker.getBmmnum() + 1;
+                    bmdenum = bmmarker.getBmmtype()+bmmarker.getBmmnum() + 1;
+                    bmmarker.setBmmnum(bmmarker.getBmmnum() + 1);
                 }
-                bmmarker.setBmmnum(bmdenum);
                 this.bmorderService.saveBmNum(emptyDeNumls, bmmarker,Boolean.FALSE);
             }else{
                 bmmarker = new Bmmarker();
