@@ -210,11 +210,15 @@ public class BmorderServiceImpl implements BmorderService {
             for(Integer idbmorder:idbmorderls){
                 bmorder = new Bmorder();
                 bmorder.setIdbmorder(idbmorder);
-                bmorder.setBmdenum(String.valueOf(bmmarker.getBmmnum()));
+                if(!isOnlyUpdateMorder) {
+                    bmorder.setBmdenum(String.valueOf(bmmarker.getBmmtype() + bmmarker.getBmmnum()));
+                }else{
+                    bmorder.setBmdenum(String.valueOf(bmmarker.getBmmnum()));
+                }
                 this.bmorderMapper.updateByPrimaryKeySelective(bmorder);
             }
         }
-        if(isOnlyUpdateMorder) {
+        if(!isOnlyUpdateMorder) {
             if (bmmarker.getIdbmmarker() == null) {
                 this.bmmarkerMapper.insertSelective(bmmarker);
             } else {
