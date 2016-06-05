@@ -22,15 +22,18 @@ public interface BmorderMapper {
     int updateByPrimaryKey(Bmorder record);
 
 //    List findAllBmordersByPage(RowBounds rowBounds);
-    List findAllBmordersByPage();
+    List findAllBmordersByPage(@Param("filters")String fiters);
 
     List findAllBmordersByDetails(@Param("filters")String fiters);
 
-    Map findAllBmordersByItemid(@Param("idbmitem")Integer idbmitem);
+
 
     BigDecimal selectSumBmorderamount(@Param("filters")String fiters);
 
     Integer selectBmorderCount(@Param("filters")String fiters);
 
-    Map findBmorderAndItemByItemid(@Param("idbmitem")Integer idbmitem);
+
+    List<Map> findAllBmordersByMorderid(@Param("idbmorder")Integer idbmorder);
+
+    List<Map> findBmorderAndItemByMorderid(@Param("idbmorder")Integer idbmorder);
 }

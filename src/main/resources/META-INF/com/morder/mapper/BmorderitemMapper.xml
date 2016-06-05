@@ -182,7 +182,7 @@
   <select id="findAllBmorderitemsByPage" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List"/>
-    from bmorderitem}
+    from bmorderitem
   </select>
   <delete id="deleteItemsByIdbmorder" parameterType="java.lang.Integer" >
     delete from bmorderitem

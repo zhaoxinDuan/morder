@@ -119,7 +119,7 @@
 
         $('#bmlistdetail').datagrid({
                     url: '<c:url value="/home/bm/findAllBmordersByDetails.do?_csrf=${_csrf.token}"/>&t=' + new Date().getTime(),
-                    title: '订单明细',
+//                    title: '订单明细',
                     pagination: true,
 //                    fitColumns: true,
                     singleSelect: true,
@@ -128,13 +128,13 @@
                     rownumbers: true,
 
                     frozenColumns: [[
-                        {
-                            field: 'op11', title: '送货清单', width: 55,algin:"center",
-                            formatter: function (value, row, index) {
-                                return '<input type="checkbox" id="'+row.idbmitem+'" onclick="checkSHCheckBox('+row.idbmitem+','+row.bmstatus+')"  ' +
-                                        'name="op11"  value="'+row.idbmitem+'">';
-                            }
-                        },
+//                        {
+//                            field: 'op11', title: '送货清单', width: 55,algin:"center",
+//                            formatter: function (value, row, index) {
+//                                return '<input type="checkbox" id="'+row.idbmitem+'" onclick="checkSHCheckBox('+row.idbmitem+','+row.bmstatus+')"  ' +
+//                                        'name="op11"  value="'+row.idbmitem+'">';
+//                            }
+//                        },
                         {field: 'bmordernum', title: '订单编号', width: 80},
                         {field: 'bmcusname', title: '客户名称', width: 90}
 
@@ -183,7 +183,7 @@
                         },
                         {field: 'bminum', title: '数量', width: 90},
                         {field: 'bmiamount', title: '金额', width: 90},
-                        {field: 'bmaddcosts', title: '额外费用', width: 90},
+                        {field: 'addcosts', title: '额外费用', width: 90},
                         {field: 'bmorderamount', title: '订单金额', width: 90},
                         {field: 'bmcomments', title: '备注', width: 90},
 
@@ -201,47 +201,11 @@
                                 return str;
                             }
                         },
-                        {field: 'ownername', title: '负责人', width: 90}
+                        {field: 'ownername', title: '负责人', width: 90},
+                        {field: 'bmdenum', title: '送货编号', width: 90,algin:'left'}
                     ]],
 
-                    toolbar: [{
-                        text: '生成工程单',
-                        iconCls: 'icon-print',
-                        handler: function () {
-                            var record = $('#bmlistdetail').datagrid('getSelected');
-                            if (record == null) {
-                                $.messager.alert('提示', '请选择需要生成工程单的数据。', 'info');
-                            } else {
-                                openPostWindow('<c:url value="/home/execl/createptemplate.do?_csrf=${_csrf.token}"/>&t=' + new Date().getTime(),
-                                        "生成工程单", {
-                                            idbmitem: record.idbmitem, iduser:${iduser}
-                                        });
-
-                            }
-                        }
-                    }, '-',
-                        {
-                            text: '生产送货清单',
-                            iconCls: 'icon-print',
-                            handler: function () {
-                                var items = $("input[name='op11']:checked");
-                                var result = "";
-                                $.each(items, function (index, item) {
-
-                                    result = result + "|" + item.value;
-
-                                });
-                                if (result == "") {
-                                    $.messager.alert('提示', '请选择勾选需要生产的送货清单数据。', 'info');
-                                } else {
-                                    openPostWindow('<c:url value="/home/execl/createstemplate.do?_csrf=${_csrf.token}"/>&t=' + new Date().getTime(),
-                                            "生产送货清单", {
-                                                idbmitems: result, iduser:${iduser}
-                                            });
-
-                                }
-                            }
-                        }],
+//                    toolbar: [],
                     onLoadSuccess: function (data) {
                         $("#totalamount").html(data.othermap.totalamount);
                         $("#totalitems").html(data.othermap.totalitems);

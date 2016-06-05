@@ -2,14 +2,11 @@ package com.morder.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.morder.mapper.BmorderMapper;
-import com.morder.mapper.BmorderitemMapper;
-import com.morder.mapper.TcustomerMapper;
+import com.morder.mapper.*;
 import com.morder.model.*;
 import com.morder.service.BmorderService;
 import com.morder.service.TcustomerService;
-import com.morder.utils.OrderNumUtil;
-import org.apache.ibatis.session.RowBounds;
+import com.morder.utils.NumUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +28,10 @@ public class BmorderServiceImpl implements BmorderService {
     private BmorderitemMapper bmorderitemMapper;
     @Autowired
     private TcustomerService tcustomerService;
+    @Autowired
+    private BmaddcostsMapper bmaddcostsMapper;
+    @Autowired
+    private BmmarkerMapper bmmarkerMapper;
 
     public Integer save(Bmorder record) {
         Integer count = null;
@@ -44,7 +45,7 @@ public class BmorderServiceImpl implements BmorderService {
 
     public Integer saveSelective(Bmorder record) {
         Integer count = null;
-        if(record.getTcustomerIdcustomer()==null){
+        if (record.getTcustomerIdcustomer() == null) {
             Tcustomer tcustomer = new Tcustomer();
             tcustomer.setCname(record.getBmcusname());
             Tcustomerappend tcustomerappend = new Tcustomerappend();
@@ -61,7 +62,24 @@ public class BmorderServiceImpl implements BmorderService {
             count = this.bmorderMapper.insertSelective(record);
             Bmorder bmorder = new Bmorder();
             bmorder.setIdbmorder(record.getIdbmorder());
-            bmorder.setBmordernum(OrderNumUtil.createOrderNum(record.getIdbmorder()));
+            synchronized (this) {
+                Integer bmmtype = NumUtil.getCurrOrderType();
+                Bmmarker bmmarker = this.bmmarkerMapper.selectByBmmtype(bmmtype);
+                String ordernum = null;
+                if (bmmarker == null) {
+                    bmmarker = new Bmmarker();
+                    bmmarker.setBmmnum(1);
+                    bmmarker.setBmmtype(bmmtype);
+                    this.bmmarkerMapper.insertSelective(bmmarker);
+                    ordernum = String.valueOf(bmmtype + 1);
+                } else {
+                    bmmarker.setBmmnum(bmmarker.getBmmnum() + 1);
+                    ordernum = String.valueOf(bmmtype + bmmarker.getBmmnum());
+                    this.bmmarkerMapper.updateByPrimaryKeySelective(bmmarker);
+                }
+                bmorder.setBmordernum(ordernum);
+            }
+
             this.bmorderMapper.updateByPrimaryKeySelective(bmorder);
             record.setBmordernum(bmorder.getBmordernum());
         } else {
@@ -71,6 +89,7 @@ public class BmorderServiceImpl implements BmorderService {
     }
 
     public Integer deleteByPrimaryKey(Integer idbmorder) {
+        this.bmaddcostsMapper.deleteCostsByIdbmorder(idbmorder);
         this.bmorderitemMapper.deleteItemsByIdbmorder(idbmorder);
         return this.bmorderMapper.deleteByPrimaryKey(idbmorder);
     }
@@ -79,10 +98,10 @@ public class BmorderServiceImpl implements BmorderService {
         return this.bmorderMapper.selectByPrimaryKey(idbmorder);
     }
 
-    public PageInfo findAllBmorders(Integer start, Integer limit) {
+    public PageInfo findAllBmorders(Integer start, Integer limit,String filters) {
 
         PageHelper.startPage(start, limit);
-        List list = this.bmorderMapper.findAllBmordersByPage();
+        List list = this.bmorderMapper.findAllBmordersByPage(filters);
         PageInfo page = new PageInfo(list);
         return page;
     }
@@ -101,6 +120,7 @@ public class BmorderServiceImpl implements BmorderService {
     public Integer selectBmorderCount(String filters) {
         return this.bmorderMapper.selectBmorderCount(filters);
     }
+
     public Integer saveItemSelective(Bmorderitem record, BigDecimal changebmorderamount) {
         Integer count = null;
         Bmorder bmorder = new Bmorder();
@@ -135,11 +155,67 @@ public class BmorderServiceImpl implements BmorderService {
         return page;
     }
 
-    public Map findAllBmordersByItemid(Integer idbmitem) {
-        return this.bmorderMapper.findAllBmordersByItemid(idbmitem);
+
+    public Integer saveCostSelective(Bmaddcosts record, BigDecimal changebmorderamount) {
+        Integer count = null;
+        Bmorder bmorder = new Bmorder();
+        bmorder.setIdbmorder(record.getBmorderIdbmorder());
+        bmorder.setBmorderamount(changebmorderamount);
+        this.bmorderMapper.updateByPrimaryKeySelective(bmorder);
+        if (record.getIdbmaddcosts() == null) {
+            count = this.bmaddcostsMapper.insertSelective(record);
+        } else {
+            count = this.bmaddcostsMapper.updateByPrimaryKeySelective(record);
+        }
+        return count;
     }
 
-    public Map findBmorderAndItemByItemid(Integer idbmitem){
-        return this.bmorderMapper.findBmorderAndItemByItemid(idbmitem);
+    public Bmaddcosts selectCostByPrimaryKey(Integer idbmaddcosts) {
+        return this.bmaddcostsMapper.selectByPrimaryKey(idbmaddcosts);
+    }
+
+    public Integer deleteCostmByPrimaryKey(Integer idbmaddcosts, Bmorder bmorder) {
+        this.bmorderMapper.updateByPrimaryKeySelective(bmorder);
+        return this.bmaddcostsMapper.deleteByPrimaryKey(idbmaddcosts);
+    }
+
+    public List findCostsByIdbmorder(Integer idbmorder) {
+        return this.bmaddcostsMapper.findCostsByIdbmorder(idbmorder);
+    }
+
+    public PageInfo findAllBmCosts(Integer start, Integer limit) {
+        PageHelper.startPage(start, limit);
+        List list = this.bmaddcostsMapper.findAllBmCostsByPage();
+        PageInfo page = new PageInfo(list);
+        return page;
+    }
+
+
+
+    public List<Map> findAllBmordersByMorderid(Integer idbmorder) {
+        return this.bmorderMapper.findAllBmordersByMorderid(idbmorder);
+    }
+
+    public List<Map> findBmorderAndItemByMorderid(Integer idbmorder) {
+        return this.bmorderMapper.findBmorderAndItemByMorderid(idbmorder);
+    }
+
+    public void saveBmNum(List<Integer> idbmorderls,Bmmarker bmmarker,Boolean isOnlyUpdateMorder){
+        if(idbmorderls!=null&&idbmorderls.size()>0){
+            Bmorder bmorder = null;
+            for(Integer idbmorder:idbmorderls){
+                bmorder = new Bmorder();
+                bmorder.setIdbmorder(idbmorder);
+                bmorder.setBmdenum(String.valueOf(bmmarker.getBmmnum()));
+                this.bmorderMapper.updateByPrimaryKeySelective(bmorder);
+            }
+        }
+        if(isOnlyUpdateMorder) {
+            if (bmmarker.getIdbmmarker() == null) {
+                this.bmmarkerMapper.insertSelective(bmmarker);
+            } else {
+                this.bmmarkerMapper.updateByPrimaryKeySelective(bmmarker);
+            }
+        }
     }
 }

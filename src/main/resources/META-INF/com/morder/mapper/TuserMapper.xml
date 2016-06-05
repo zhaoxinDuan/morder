@@ -159,7 +159,7 @@
         select
         <include refid="Base_Column_List"/>
         from tuser
-        where uname = #{uname,jdbcType=VARCHAR}
+        where uname = #{uname,jdbcType=VARCHAR} and uisdel!=1
     </select>
 
 </mapper>

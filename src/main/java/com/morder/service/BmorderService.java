@@ -1,6 +1,8 @@
 package com.morder.service;
 
 import com.github.pagehelper.PageInfo;
+import com.morder.model.Bmaddcosts;
+import com.morder.model.Bmmarker;
 import com.morder.model.Bmorder;
 import com.morder.model.Bmorderitem;
 
@@ -21,13 +23,14 @@ public interface BmorderService {
 
     Bmorder selectByPrimaryKey(Integer idbmorder);
 
-    PageInfo findAllBmorders(Integer start,Integer limit);
+    PageInfo findAllBmorders(Integer start,Integer limit,String filters);
 
     PageInfo findAllBmordersByDetails(Integer start,Integer limit,String filters);
 
     BigDecimal selectSumBmorderamount(String filters);
 
     Integer selectBmorderCount(String filters);
+
 
     Integer saveItemSelective(Bmorderitem record,BigDecimal changebmorderamount);
 
@@ -39,9 +42,22 @@ public interface BmorderService {
 
     PageInfo findAllBmorderitems(Integer start,Integer limit);
 
-    Map findAllBmordersByItemid(Integer idbmitem);
 
-    Map findBmorderAndItemByItemid(Integer idbmitem);
+    Integer saveCostSelective(Bmaddcosts record,BigDecimal changebmorderamount);
+
+    Bmaddcosts selectCostByPrimaryKey(Integer idbmaddcosts);
+
+    Integer deleteCostmByPrimaryKey(Integer idbmaddcosts,Bmorder bmorder);
+
+    List findCostsByIdbmorder(Integer idbmorder);
+
+    PageInfo findAllBmCosts(Integer start,Integer limit);
 
 
+
+    List<Map> findAllBmordersByMorderid(Integer idbmorder);
+
+    List<Map> findBmorderAndItemByMorderid(Integer idbmorder);
+
+    void saveBmNum(List<Integer> idbmorderls,Bmmarker bmmarker,Boolean isOnlyUpdateMorder);
 }

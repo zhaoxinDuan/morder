@@ -13,6 +13,7 @@
         <result column="bmorderamount" property="bmorderamount" jdbcType="DECIMAL"/>
         <result column="bmcomments" property="bmcomments" jdbcType="VARCHAR"/>
         <result column="bmpacreq" property="bmpacreq" jdbcType="VARCHAR"/>
+        <result column="bmdenum" property="bmdenum" jdbcType="VARCHAR"/>
         <result column="bmstatus" property="bmstatus" jdbcType="INTEGER"/>
         <result column="bmcreateuserid" property="bmcreateuserid" jdbcType="INTEGER"/>
         <result column="bmdelivery_idbmdelivery" property="bmdeliveryIdbmdelivery" jdbcType="INTEGER"/>
@@ -21,7 +22,7 @@
     </resultMap>
     <sql id="Base_Column_List">
     idbmorder, bmcusname, bmordernum, bmbillingdate, bmdeliverydate, bmpaymethod, bmcurrencytype, 
-    bmaddcosts, bmorderamount, bmcomments, bmpacreq,bmstatus,bmcreateuserid, bmdelivery_idbmdelivery,tuser_iduser,tcustomer_idcustomer
+    bmaddcosts, bmorderamount, bmcomments, bmpacreq,bmdenum,bmstatus,bmcreateuserid, bmdelivery_idbmdelivery,tuser_iduser,tcustomer_idcustomer
   </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
@@ -37,11 +38,11 @@
     insert into bmorder (idbmorder, bmcusname, bmordernum, 
       bmbillingdate, bmdeliverydate, bmpaymethod, 
       bmcurrencytype, bmaddcosts, bmorderamount, 
-      bmcomments,bmpacreq,bmstatus, bmdelivery_idbmdelivery,tuser_iduser,tcustomer_idcustomer)
+      bmcomments,bmpacreq,bmdenum,bmstatus, bmdelivery_idbmdelivery,tuser_iduser,tcustomer_idcustomer)
     values (#{idbmorder,jdbcType=INTEGER}, #{bmcusname,jdbcType=VARCHAR}, #{bmordernum,jdbcType=VARCHAR}, 
       #{bmbillingdate,jdbcType=DATE}, #{bmdeliverydate,jdbcType=DATE}, #{bmpaymethod,jdbcType=VARCHAR}, 
       #{bmcurrencytype,jdbcType=INTEGER}, #{bmaddcosts,jdbcType=DECIMAL}, #{bmorderamount,jdbcType=DECIMAL}, 
-      #{bmcomments,jdbcType=VARCHAR}, #{bmpacreq,jdbcType=VARCHAR}, #{bmstatus,jdbcType=INTEGER}, #{bmcreateuserid,jdbcType=INTEGER}, #{bmdeliveryIdbmdelivery,jdbcType=INTEGER}, #{tuserIduser,jdbcType=INTEGER},
+      #{bmcomments,jdbcType=VARCHAR}, #{bmpacreq,jdbcType=VARCHAR}, #{bmdenum,jdbcType=VARCHAR}, #{bmstatus,jdbcType=INTEGER}, #{bmcreateuserid,jdbcType=INTEGER}, #{bmdeliveryIdbmdelivery,jdbcType=INTEGER}, #{tuserIduser,jdbcType=INTEGER},
       #{tcustomerIdcustomer,jdbcType=INTEGER})
   </insert>
     <insert id="insertSelective" parameterType="com.morder.model.Bmorder" useGeneratedKeys="true"
@@ -80,6 +81,9 @@
             </if>
             <if test="bmpacreq != null">
                 bmpacreq,
+            </if>
+            <if test="bmdenum != null">
+                bmdenum,
             </if>
             <if test="bmstatus != null">
                 bmstatus,
@@ -131,6 +135,9 @@
             <if test="bmpacreq != null">
                 #{bmpacreq,jdbcType=VARCHAR},
             </if>
+            <if test="bmdenum != null">
+                #{bmdenum,jdbcType=VARCHAR},
+            </if>
             <if test="bmstatus != null">
                 #{bmstatus,jdbcType=INTEGER},
             </if>
@@ -181,6 +188,9 @@
             <if test="bmpacreq != null">
                 bmpacreq = #{bmpacreq,jdbcType=VARCHAR},
             </if>
+            <if test="bmdenum != null">
+                bmdenum = #{bmdenum,jdbcType=VARCHAR},
+            </if>
             <if test="bmstatus != null">
                 bmstatus = #{bmstatus,jdbcType=INTEGER},
             </if>
@@ -211,6 +221,7 @@
       bmorderamount = #{bmorderamount,jdbcType=DECIMAL},
       bmcomments = #{bmcomments,jdbcType=VARCHAR},
       bmpacreq = #{bmpacreq,jdbcType=VARCHAR},
+      bmdenum = #{bmdenum,jdbcType=VARCHAR},
       bmstatus = #{bmstatus,jdbcType=INTEGER},
       bmcreateuserid = #{bmcreateuserid,jdbcType=INTEGER},
       bmdelivery_idbmdelivery = #{bmdeliveryIdbmdelivery,jdbcType=INTEGER},
@@ -221,21 +232,26 @@
 
     <select id="findAllBmordersByPage" resultType="java.util.HashMap">
         select idbmorder,bmcusname,bmordernum,bmbillingdate,bmdeliverydate,bmpaymethod,bmcurrencytype,bmaddcosts
-,bmorderamount,bmcomments,bmpacreq,bmstatus,bmcreateuserid,bmdelivery_idbmdelivery,tuser_iduser
+,bmorderamount,bmcomments,bmpacreq,bmdenum,bmstatus,bmcreateuserid,bmdelivery_idbmdelivery,tuser_iduser
 ,tcustomer_idcustomer,b.uname as ownername,
 (SELECT  GROUP_CONCAT(bmiproname SEPARATOR ',') FROM bmorderitem where idbmorder=bmorder_idbmorder) as product
- from bmorder a,tuser b where a.tuser_iduser = b.iduser
+ from bmorder a
+ left join tuser b on a.tuser_iduser = b.iduser
+ ${filters} order by idbmorder desc
     </select>
 
     <select id="findAllBmordersByDetails" resultType="java.util.HashMap">
         select
          bm.idbmorder, bm.bmcusname, bm.bmordernum, bm.bmbillingdate, bm.bmdeliverydate, bm.bmpaymethod, bm.bmcurrencytype,
-    bm.bmaddcosts, bm.bmorderamount, bm.bmcomments,bm.bmpacreq,bm.bmstatus,bm.bmcreateuserid, bm.bmdelivery_idbmdelivery,bm.tuser_iduser,bm.tcustomer_idcustomer,
+    bm.bmaddcosts, bm.bmorderamount, bm.bmcomments,bm.bmpacreq,bm.bmdenum,
+    bm.bmstatus,bm.bmcreateuserid, bm.bmdelivery_idbmdelivery,bm.tuser_iduser,bm.tcustomer_idcustomer,
     bmi.idbmitem, bmi.bmiproname, bmi.bmiprotype, bmi.bmiprice, bmi.bminum, bmi.bmiamount, bmi.bmiistax, bmi.bmioutternum,
-    bmi.bmorderitemcol,bmi.bmipacreq, bmi.bmiunit, bmi.bmorder_idbmorder,t.uname as ownername
+    bmi.bmorderitemcol,bmi.bmipacreq, bmi.bmiunit, bmi.bmorder_idbmorder,t.uname as ownername,
+    (select sum(bmcosts) from bmaddcosts bc where bc.bmorder_idbmorder = bm.idbmorder) as addcosts
          from bmorder bm
          left join bmorderitem bmi on bm.idbmorder = bmi.bmorder_idbmorder
-         left join tuser t on t.iduser = bm.tuser_iduser ${filters} order by bm.bmordernum desc
+         left join tuser t on t.iduser = bm.tuser_iduser
+         ${filters} order by bm.bmordernum desc
     </select>
 
     <select id="selectSumBmorderamount" resultType="java.math.BigDecimal">
@@ -247,10 +263,11 @@
        select count(1) from bmorder ${filters}
     </select>
 
-    <select id="findAllBmordersByItemid" resultType="java.util.HashMap">
+    <select id="findAllBmordersByMorderid" resultType="java.util.HashMap">
          select
         bm.idbmorder, bm.bmcusname, bm.bmordernum, bm.bmbillingdate, bm.bmdeliverydate, bm.bmpaymethod, bm.bmcurrencytype,
-        bm.bmaddcosts, bm.bmorderamount, bm.bmcomments,bm.bmpacreq,bm.bmstatus,bm.bmcreateuserid, bm.bmdelivery_idbmdelivery,bm.tuser_iduser,bm.tcustomer_idcustomer,
+        bm.bmaddcosts, bm.bmorderamount, bm.bmcomments,bm.bmpacreq,bm.bmdenum,
+        bm.bmstatus,bm.bmcreateuserid, bm.bmdelivery_idbmdelivery,bm.tuser_iduser,bm.tcustomer_idcustomer,
         bmi.idbmitem, bmi.bmiproname, bmi.bmiprotype, bmi.bmiprice, bmi.bminum, bmi.bmiamount, bmi.bmiistax, bmi.bmioutternum,
         bmi.bmorderitemcol,bmi.bmipacreq,bmi.bmiunit, bmi.bmorder_idbmorder,t.uname as ownername,tc.cname,tca.cacontacts,tca.camphone,tca.carecaddress
         from bmorder bm
@@ -258,18 +275,19 @@
         left join tuser t on t.iduser = bm.tuser_iduser
         left join tcustomer tc on tc.idcustomer = bm.tcustomer_idcustomer
         left join tcustomerappend tca on tca.idcusapp = tc.tcustomerappend_idcusapp
-        where bmi.idbmitem = #{idbmitem,jdbcType=INTEGER}
+        where bm.idbmorder = #{idbmorder,jdbcType=INTEGER} order by bmi.idbmitem asc
     </select>
 
-    <select id="findBmorderAndItemByItemid" resultType="java.util.HashMap">
+    <select id="findBmorderAndItemByMorderid" resultType="java.util.HashMap">
         select
         bm.idbmorder, bm.bmcusname, bm.bmordernum, bm.bmbillingdate, bm.bmdeliverydate, bm.bmpaymethod, bm.bmcurrencytype,
-        bm.bmaddcosts, bm.bmorderamount, bm.bmcomments,bm.bmpacreq,bm.bmstatus,bm.bmcreateuserid, bm.bmdelivery_idbmdelivery,bm.tuser_iduser,bm.tcustomer_idcustomer,
+        bm.bmaddcosts, bm.bmorderamount, bm.bmcomments,bm.bmpacreq,bm.bmdenum,
+        bm.bmstatus,bm.bmcreateuserid, bm.bmdelivery_idbmdelivery,bm.tuser_iduser,bm.tcustomer_idcustomer,
         bmi.idbmitem, bmi.bmiproname, bmi.bmiprotype, bmi.bmiprice, bmi.bminum, bmi.bmiamount, bmi.bmiistax, bmi.bmioutternum,
         bmi.bmorderitemcol,bmi.bmipacreq,bmi.bmiunit, bmi.bmorder_idbmorder
         from bmorder bm
         left join bmorderitem bmi on bm.idbmorder = bmi.bmorder_idbmorder
-        where bmi.idbmitem = #{idbmitem,jdbcType=INTEGER}
+        where bm.idbmorder = #{idbmorder,jdbcType=INTEGER} order by bm.idbmorder desc
     </select>
 
 

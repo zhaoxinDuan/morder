@@ -163,7 +163,7 @@
                     <c:if test="${bmorder!=null}">
                     url: '<c:url value="/home/bm/findItemsByIdbmorder.do?_csrf=${_csrf.token}"/>&idbmorder=${bmorder.idbmorder}&t=' + new Date().getTime(),
                     </c:if>
-                    title: '字段定义列表',
+//                    title: '字段定义列表',
                     pagination: true,
                     fitColumns: true,
                     singleSelect: true,

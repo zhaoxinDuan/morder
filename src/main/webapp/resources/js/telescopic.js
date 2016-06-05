@@ -27,9 +27,9 @@ function VTelescopic(){
         $('.indContent').animate({top:'6px'},vTelescopicDelay);
     } else {
         vTelescopicState = false;/*更新状态*/
-        $('#arrowV').animate({top:'80px'},vTelescopicDelay);
+        $('#arrowV').animate({top:'50px'},vTelescopicDelay);
         $('#arrowVImg').removeClass().addClass('arrowVW');
-        $('.indContent').animate({top:'86px'},vTelescopicDelay);
+        $('.indContent').animate({top:'56px'},vTelescopicDelay);
     }
     event.cancelBubble = true;/*取消事件冒泡*/
 }

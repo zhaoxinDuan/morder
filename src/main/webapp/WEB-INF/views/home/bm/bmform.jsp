@@ -52,24 +52,25 @@
                         </select>
 
                     </td>
-                    <th>额外费用</th>
-                    <td style="text-align:left;">
-                        <input type="text" name="bmaddcosts" id="bmaddcosts" value="0">
-                    </td>
-                </tr>
-                <tr>
-                    <th>订单金额</th>
-                    <td style="text-align:left;">
-                        <input type="text" name="bmorderamount" id="bmorderamount" readonly value="0"
-                               class="textInput textbox-width"
-                               style="resize:none;width:96%;height:20px">
-                    </td>
+                    <%--<th>额外费用</th>--%>
+                    <%--<td style="text-align:left;">--%>
+                    <%--<input type="text" name="bmaddcosts" id="bmaddcosts" value="0">--%>
+                    <%--</td>--%>
                     <th>负责人</th>
-                    <td style="text-align:left;" colspan="3">
+                    <td style="text-align:left;">
                         <input id="tuserIduser" name="tuserIduser" class="easyui-combobox"
                                data-options="editable:false "
                                style="width:200px;"/>
                     </td>
+                </tr>
+                <tr>
+                    <th>订单金额</th>
+                    <td style="text-align:left;" colspan="3">
+                        <input type="text" name="bmorderamount" id="bmorderamount" readonly value="0"
+                               class="textInput textbox-width"
+                               style="resize:none;width:96%;height:20px">
+                    </td>
+
                 </tr>
                 <tr>
                     <th>订单详情</th>
@@ -116,9 +117,9 @@
         </c:choose>
 
         </c:if>
-        <c:if test="${bmorder.bmaddcosts!=null}">
-        $("#bmaddcosts").val("${bmorder.bmaddcosts}");
-        </c:if>
+        <%--<c:if test="${bmorder.bmaddcosts!=null}">--%>
+        <%--$("#bmaddcosts").val("${bmorder.bmaddcosts}");--%>
+        <%--</c:if>--%>
         <c:if test="${bmorder.bmcomments!=null}">
         $("#bmcomments").val("${bmorder.bmcomments}");
         </c:if>
@@ -152,9 +153,9 @@
 //        if (isEmptyEasyUI('bmbillingdate','开单日期'))return;
         if (isEmptyEasyUI('tcustomerIdcustomer', '客户名称'))return;
         var tcustomerIdcustomerValue = $("#tcustomerIdcustomer").combobox("getValue")
-        if(!judgeNumber(tcustomerIdcustomerValue)){
+        if (!judgeNumber(tcustomerIdcustomerValue)) {
             $("#bmcusname").val(tcustomerIdcustomerValue);
-            $("#tcustomerIdcustomer").combobox("setValue",null);
+            $("#tcustomerIdcustomer").combobox("setValue", null);
         }
         var data = $("#morderform").serializeArray();
         $.ajax({
@@ -175,6 +176,7 @@
                     $.messager.alert('操作成功', '保存成功。', 'info');
                     if (!ispost) {
                         $("#bmitemlist").datagrid({url: '<c:url value="/home/bm/findItemsByIdbmorder.do?_csrf=${_csrf.token}"/>&idbmorder=' + msg.idbmorder + '&t=' + new Date().getTime()});
+                        $("#bmcostlist").datagrid({url: '<c:url value="/home/bm/findCostsByIdbmorder.do?_csrf=${_csrf.token}"/>&idbmorder=' + msg.idbmorder + '&t=' + new Date().getTime()});
                     } else {
                         window.location.href = "<c:url value="/home/bm/bmlist.do"/>";
                     }
@@ -192,9 +194,11 @@
     $(document).ready(function () {
         <c:if test="${bmorder==null}">
         $("#bmitemlistDiv").hide();
+        $("#bmconstsDiv").hide();
         </c:if>
         $("#savebmorder").bind("click", function () {
             $("#bmitemlistDiv").show();
+            $("#bmconstsDiv").show();
             saveMorder(false);
 
         });
@@ -252,27 +256,28 @@
             }
         });
 
-
-
-        $("#bmaddcosts").numberbox({
-            precision: "2",
-            max: "99999999.99",
-            size: "10",
-            maxlength: "10",
-            onChange: function (newValue, oldValue) {
-                var bmorderamount = $("#bmorderamount").val();
-                var temp_bmorderamount = 0;
-                if (judgeNumber(bmorderamount)) {
-                    temp_bmorderamount = ((parseFloat(bmorderamount) - parseFloat(oldValue) + parseFloat(newValue)).toFixed(2));
-
-                } else {
-                    temp_bmorderamount = newValue;
-                }
-                $("#bmorderamount").val(temp_bmorderamount);
-            }
-        });
+//
+//
+//        $("#bmaddcosts").numberbox({
+//            precision: "2",
+//            max: "99999999.99",
+//            size: "10",
+//            maxlength: "10",
+//            onChange: function (newValue, oldValue) {
+//                var bmorderamount = $("#bmorderamount").val();
+//                var temp_bmorderamount = 0;
+//                if (judgeNumber(bmorderamount)) {
+//                    temp_bmorderamount = ((parseFloat(bmorderamount) - parseFloat(oldValue) + parseFloat(newValue)).toFixed(2));
+//
+//                } else {
+//                    temp_bmorderamount = newValue;
+//                }
+//                $("#bmorderamount").val(temp_bmorderamount);
+//            }
+//        });
         $("#bmbillingdate").datebox('setValue', formatterDate(new Date()));
     })
     init();
 </script>
 <jsp:include page="./bmitemlist.jsp"/>
+<jsp:include page="./bmcostlist.jsp"/>

@@ -3,6 +3,7 @@ package com.morder.controller.home;
 import com.github.pagehelper.PageInfo;
 import com.morder.controller.BaseController;
 import com.morder.form.BmorderSearchForm;
+import com.morder.model.Bmaddcosts;
 import com.morder.model.Bmorder;
 import com.morder.model.Bmorderitem;
 import com.morder.model.Tcustomer;
@@ -70,9 +71,10 @@ public class BmorderController extends BaseController {
 
     @RequestMapping("/findAllBmorders.do")
     @ResponseBody
-    public JSONPage findAllBmorders(Integer rows, Integer page) throws Exception {
-
-        PageInfo pageInfo = this.bmorderService.findAllBmorders(page, rows);
+    public JSONPage findAllBmorders(Integer rows, Integer page,BmorderSearchForm bmorderSearchForm) throws Exception {
+        String consql = bmorderSearchForm.getBuilderSql();
+        String filters = (!StringUtils.isEmpty(consql)?" where 1=1 "+consql:"");
+        PageInfo pageInfo = this.bmorderService.findAllBmorders(page, rows,filters);
         JSONPage jsonPage = new JSONPage();
         jsonPage.setRows(pageInfo.getList());
         jsonPage.setTotal(pageInfo.getTotal());
@@ -201,11 +203,57 @@ public class BmorderController extends BaseController {
     }
 
 
+
+
+
+
+    @RequestMapping("/delBmCostsById.do")
+    @ResponseBody
+    public String delBmCostsById(Integer idbmaddcosts) throws Exception {
+        try {
+            Bmaddcosts bmaddcosts = this.bmorderService.selectCostByPrimaryKey(idbmaddcosts);
+            Bmorder bmorder = this.bmorderService.selectByPrimaryKey(bmaddcosts.getBmorderIdbmorder());
+            BigDecimal bmorderamount = bmorder.getBmorderamount().subtract(bmaddcosts.getBmcosts());
+            Bmorder bmorder1 = new Bmorder();
+            bmorder1.setIdbmorder(bmorder.getIdbmorder());
+            bmorder1.setBmorderamount(bmorderamount);
+            this.bmorderService.deleteCostmByPrimaryKey(idbmaddcosts,bmorder1);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return JSONResultUtils.MSG_ERROR;
+        }
+        return JSONResultUtils.MSG_SUCCESS;
+    }
+
+
+    @RequestMapping("/saveBmCostsInfo.do")
+    @ResponseBody
+    public String saveBmCostsInfo(Bmaddcosts record,BigDecimal changebmorderamount) throws Exception {
+        try {
+            this.bmorderService.saveCostSelective(record, changebmorderamount);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return JSONResultUtils.MSG_ERROR;
+        }
+        return JSONResultUtils.MSG_SUCCESS;
+    }
+
+
+
+    @RequestMapping("/findCostsByIdbmorder.do")
+    @ResponseBody
+    public List findCostsByIdbmorder(Integer idbmorder) throws Exception {
+        return this.bmorderService.findCostsByIdbmorder(idbmorder);
+    }
+
+
     @RequestMapping("/findItemsByIdbmorder.do")
     @ResponseBody
     public List findItemsByIdbmorder(Integer idbmorder) throws Exception {
         return this.bmorderService.findItemsByIdbmorder(idbmorder);
     }
+
+
 
 
 }
