@@ -51,7 +51,7 @@ public interface BmorderService {
 
     Integer deleteCostmByPrimaryKey(Integer idbmaddcosts,Bmorder bmorder);
 
-    List findCostsByIdbmorder(Integer idbmorder);
+    List<Bmaddcosts> findCostsByIdbmorder(Integer idbmorder);
 
     PageInfo findAllBmCosts(Integer start,Integer limit);
 

@@ -183,7 +183,7 @@ public class BmorderServiceImpl implements BmorderService {
         return this.bmaddcostsMapper.deleteByPrimaryKey(idbmaddcosts);
     }
 
-    public List findCostsByIdbmorder(Integer idbmorder) {
+    public List<Bmaddcosts> findCostsByIdbmorder(Integer idbmorder) {
         return this.bmaddcostsMapper.findCostsByIdbmorder(idbmorder);
     }
 

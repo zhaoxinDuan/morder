@@ -6,6 +6,7 @@ import com.morder.component.ModifyAndExportExcel;
 import com.morder.component.TemplateConfig;
 import com.morder.controller.BaseController;
 import com.morder.form.BmorderSearchForm;
+import com.morder.model.Bmaddcosts;
 import com.morder.model.Bmmarker;
 import com.morder.service.BmmarkerService;
 import com.morder.service.BmorderService;
@@ -50,10 +51,12 @@ public class ExcelController extends BaseController {
         List<Map> resultls = this.bmorderService.findAllBmordersByMorderid(idbmorder);
         List<List<ExcelModel>> lists = new ArrayList<List<ExcelModel>>();
         List<ExcelModel> excelModels = null;
+        String num = null;
 
         for (Map resultmap : resultls) {
 
             excelModels = new ArrayList<ExcelModel>();
+            num = Utils.getObjectToString(resultmap.get("bmordernum"));
 
             //订单编号
             excelModels.add(new ExcelModel(1, 11, Utils.getObjectToString(resultmap.get("bmordernum"))));
@@ -86,7 +89,7 @@ public class ExcelController extends BaseController {
             lists.add(excelModels);
         }
 
-        modifyAndExportExcel.modifyExcel(response, filepath, "ptemplate.xls", lists, iduser);
+        modifyAndExportExcel.modifyExcel(response, filepath, "ptemplate.xls", lists, iduser,num);
 
     }
 
@@ -118,7 +121,7 @@ public class ExcelController extends BaseController {
                     if (bmdenum == null) {
                         bmdenum = Utils.getObjectToInteger(resultmap.get("bmdenum"));
                     }
-                    if(Utils.getObjectToInteger(resultmap.get("bmdenum"))==null){
+                    if (Utils.getObjectToInteger(resultmap.get("bmdenum")) == null) {
                         emptyDeNumls.add(Integer.parseInt(stridorder));
                     }
                     //订单编号
@@ -145,6 +148,24 @@ public class ExcelController extends BaseController {
                     excelModels.add(new ExcelModel(count, 7, strbmiamount));
                     count++;
                 }
+                List<Bmaddcosts> bmaddcostses = this.bmorderService.findCostsByIdbmorder(Integer.parseInt(stridorder));
+                if(bmaddcostses!=null&&bmaddcostses.size()>0){
+                    BigDecimal costs = new BigDecimal(0);
+                    String addCostsDesc = "额外费用：\n";
+                    for(Bmaddcosts bmaddcosts:bmaddcostses){
+                        if(bmaddcosts.getBmcosts()!=null){
+                            costs = costs.add(bmaddcosts.getBmcosts());
+                            addCostsDesc =addCostsDesc+ bmaddcosts.getBmcostsdesc()+"(￥"+bmaddcosts.getBmcosts().setScale(2).doubleValue()+")\n";
+                        }
+                    }
+                    if(costs.intValue()!=0){
+                        bmiamount =bmiamount.add(costs);
+                        //额外费用
+                        excelModels.add(new ExcelModel(4, 8, addCostsDesc));
+                    }
+
+                }
+
             }
 
         }
@@ -160,14 +181,14 @@ public class ExcelController extends BaseController {
                     bmmarker.setBmmnum(1);
                     bmdenum = bmmtype + 1;
                 } else {
-                    bmdenum = bmmarker.getBmmtype()+bmmarker.getBmmnum() + 1;
+                    bmdenum = bmmarker.getBmmtype() + bmmarker.getBmmnum() + 1;
                     bmmarker.setBmmnum(bmmarker.getBmmnum() + 1);
                 }
-                this.bmorderService.saveBmNum(emptyDeNumls, bmmarker,Boolean.FALSE);
-            }else{
+                this.bmorderService.saveBmNum(emptyDeNumls, bmmarker, Boolean.FALSE);
+            } else {
                 bmmarker = new Bmmarker();
                 bmmarker.setBmmnum(bmdenum);
-                this.bmorderService.saveBmNum(emptyDeNumls, bmmarker,Boolean.TRUE);
+                this.bmorderService.saveBmNum(emptyDeNumls, bmmarker, Boolean.TRUE);
             }
 
 
@@ -189,10 +210,11 @@ public class ExcelController extends BaseController {
         }
         excelModels.add(new ExcelModel(2, 0, cell2));
 
-        excelModels.add(new ExcelModel(1, 0, "                                               送货清单                                   N0:"+bmdenum));
+        excelModels.add(new ExcelModel(1, 0, "                                               送货清单                                   N0:" + bmdenum));
 
         lists.add(excelModels);
-        modifyAndExportExcel.modifyExcel(response, filepath, "stemplate.xls", lists, iduser);
+        String num = String.valueOf(bmdenum);
+        modifyAndExportExcel.modifyExcel(response, filepath, "stemplate.xls", lists, iduser,num);
 
     }
 

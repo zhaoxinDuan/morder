@@ -17,7 +17,7 @@ public interface BmaddcostsMapper {
 
     int updateByPrimaryKey(Bmaddcosts record);
 
-    List findCostsByIdbmorder(Integer bmorderIdbmorder);
+    List<Bmaddcosts> findCostsByIdbmorder(Integer bmorderIdbmorder);
 
     int deleteCostsByIdbmorder(Integer bmorderIdbmorder);
 

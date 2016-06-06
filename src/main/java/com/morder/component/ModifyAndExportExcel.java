@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.List;
 
 /**
@@ -22,7 +19,7 @@ import java.util.List;
 public class ModifyAndExportExcel {
     @Autowired
     private TemplateConfig templateConfig;
-    public void modifyExcel(HttpServletResponse response, String filepath, String templatename, List<List<ExcelModel>> lists, Integer userid) throws Exception {
+    public void modifyExcel(HttpServletResponse response, String filepath, String templatename, List<List<ExcelModel>> lists, Integer userid,String num) throws Exception {
         String fromfile = filepath + templatename;
         String tofile = templateConfig.getExecltemplatetemppath() + userid + String.valueOf(System.currentTimeMillis()).substring(4, 13) + ".xls";
         FileUtil.copyFile(fromfile, tofile);
@@ -60,15 +57,30 @@ public class ModifyAndExportExcel {
         }
 
         if (workbook != null) {
+            String savefilepath = filepath;
+            File file = null;
+            if(templatename.indexOf("ptemplate")>-1){
+                savefilepath = savefilepath+"ptemplate/"+num+"_"+userid+".xls";
+            }else{
+                savefilepath = savefilepath+"stemplate/"+num+"_"+userid+".xls";
+            }
+            file = new File(savefilepath);
+
+
+            FileOutputStream fos = new FileOutputStream(file);
             try {
-                String fileName = userid + String.valueOf(System.currentTimeMillis()).substring(4, 13) + ".xls";
+                String fileName = num+"_"+userid+ ".xls";
                 String headStr = "attachment; filename=\"" + fileName + "\"";
                 response.setContentType("APPLICATION/OCTET-STREAM");
                 response.setHeader("Content-Disposition", headStr);
                 OutputStream out = response.getOutputStream();
                 workbook.write(out);
+                workbook.write(fos);
             } catch (IOException e) {
                 throw e;
+            }finally {
+                if(workbook!=null)workbook.close();
+                if(fos!=null)fos.close();
             }
         }
 
