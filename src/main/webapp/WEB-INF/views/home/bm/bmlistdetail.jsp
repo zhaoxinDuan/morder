@@ -180,6 +180,7 @@
                             }
                         },
                         {field: 'bminum', title: '数量', width: 90},
+                        {field: 'bmiprice', title: '单价', width: 90},
                         {field: 'bmiamount', title: '金额', width: 90},
                         {field: 'addcosts', title: '额外费用', width: 90},
                         {field: 'bmorderamount', title: '订单金额', width: 90},

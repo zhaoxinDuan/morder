@@ -82,14 +82,14 @@ public class ExcelController extends BaseController {
             excelModels.add(new ExcelModel(5, 1, ConstantUtils.protypeMap.get(Utils.getObjectToInteger(resultmap.get("bmiprotype")))));
 
             //备注
-            excelModels.add(new ExcelModel(6, 1, Utils.getObjectToString(resultmap.get("bmcomments"))));
+            excelModels.add(new ExcelModel(6, 1, Utils.getObjectToString(resultmap.get("bmcomments")), true));
             //开单人
             excelModels.add(new ExcelModel(22, 2, Utils.getObjectToString(resultmap.get("ownername"))));
 
             lists.add(excelModels);
         }
 
-        modifyAndExportExcel.modifyExcel(response, filepath, "ptemplate.xls", lists, iduser,num);
+        modifyAndExportExcel.modifyExcel(response, filepath, "ptemplate.xls", lists, iduser, num);
 
     }
 
@@ -107,6 +107,7 @@ public class ExcelController extends BaseController {
         String bmcusname = null;
         String bmdeliverydate = null;
         Integer bmdenum = null;
+        String addCostsDesc = "";
         List<Integer> emptyDeNumls = new ArrayList<Integer>();
         for (String stridorder : arridorders) {
             if (!StringUtils.isEmpty(stridorder)) {
@@ -149,19 +150,18 @@ public class ExcelController extends BaseController {
                     count++;
                 }
                 List<Bmaddcosts> bmaddcostses = this.bmorderService.findCostsByIdbmorder(Integer.parseInt(stridorder));
-                if(bmaddcostses!=null&&bmaddcostses.size()>0){
+                if (bmaddcostses != null && bmaddcostses.size() > 0) {
                     BigDecimal costs = new BigDecimal(0);
-                    String addCostsDesc = "额外费用：\n";
-                    for(Bmaddcosts bmaddcosts:bmaddcostses){
-                        if(bmaddcosts.getBmcosts()!=null){
+                    addCostsDesc = addCostsDesc + "额外费用：\r\n";
+                    for (Bmaddcosts bmaddcosts : bmaddcostses) {
+                        if (bmaddcosts.getBmcosts() != null) {
                             costs = costs.add(bmaddcosts.getBmcosts());
-                            addCostsDesc =addCostsDesc+ bmaddcosts.getBmcostsdesc()+"(￥"+bmaddcosts.getBmcosts().setScale(2).doubleValue()+")\n";
+                            addCostsDesc = addCostsDesc + bmaddcosts.getBmcostsdesc() + ":" + bmaddcosts.getBmcosts().setScale(2).doubleValue() + "\r\n";
                         }
                     }
-                    if(costs.intValue()!=0){
-                        bmiamount =bmiamount.add(costs);
-                        //额外费用
-                        excelModels.add(new ExcelModel(4, 8, addCostsDesc));
+                    if (costs.intValue() != 0) {
+                        bmiamount = bmiamount.add(costs);
+
                     }
 
                 }
@@ -169,6 +169,9 @@ public class ExcelController extends BaseController {
             }
 
         }
+        //额外费用
+        excelModels.add(new ExcelModel(4, 8, addCostsDesc, true));
+
 
         Bmmarker bmmarker = null;
         synchronized (this) {
@@ -214,7 +217,7 @@ public class ExcelController extends BaseController {
 
         lists.add(excelModels);
         String num = String.valueOf(bmdenum);
-        modifyAndExportExcel.modifyExcel(response, filepath, "stemplate.xls", lists, iduser,num);
+        modifyAndExportExcel.modifyExcel(response, filepath, "stemplate.xls", lists, iduser, num);
 
     }
 
@@ -231,10 +234,16 @@ public class ExcelController extends BaseController {
 
 
         String[] rowsName = new String[]{"序号", "订单编号", "客户名称", "开单日期", "交货日期", "产品规格"
-                , "产品名称", "包装要求", "产品类型", "数量", "金额", "额外费用", "订单金额", "备注", "订单状态", "负责人"};
+                , "产品名称", "包装要求", "产品类型", "单价","数量", "金额", "额外费用", "订单金额", "备注", "订单状态", "负责人", "额外费用明细"};
         List<Object[]> dataList = new ArrayList<Object[]>();
         Object[] objs = null;
         List datalist = pageInfo.getList();
+        String[] addcostsarr = null;
+        Object addcostsobj = null;
+        String[] addcostsdescarr = null;
+        Object addcostsdescobj = null;
+
+
         Map rowmap = null;
         for (int i = 0; i < datalist.size(); i++) {
             rowmap = (Map) datalist.get(i);
@@ -249,14 +258,35 @@ public class ExcelController extends BaseController {
             objs[7] = rowmap.get("bmpacreq");
 
             objs[8] = ConstantUtils.protypeMap.get(rowmap.get("bmiprotype"));
-            objs[9] = rowmap.get("bminum");
-            objs[10] = rowmap.get("bmiamount");
-            objs[11] = rowmap.get("bmaddcosts");
-            objs[12] = rowmap.get("bmorderamount");
-            objs[13] = rowmap.get("bmcomments");
+            objs[9] = rowmap.get("bmiprice");
+            objs[10] = rowmap.get("bminum");
+            objs[11] = rowmap.get("bmiamount");
+            objs[12] = rowmap.get("addcosts");
+            objs[13] = rowmap.get("bmorderamount");
+            objs[14] = rowmap.get("bmcomments");
 
-            objs[14] = ConstantUtils.statusMap.get(rowmap.get("bmstatus"));
-            objs[15] = rowmap.get("ownername");
+            objs[15] = ConstantUtils.statusMap.get(rowmap.get("bmstatus"));
+            objs[16] = rowmap.get("ownername");
+
+            addcostsobj = rowmap.get("addcostsarr");
+            addcostsdescobj = rowmap.get("addcostsdescarr");
+            if (addcostsobj != null && addcostsdescobj != null) {
+                StringBuilder adddesc = new StringBuilder("");
+                addcostsarr = String.valueOf(addcostsobj).split(",");
+                addcostsdescarr = String.valueOf(addcostsdescobj).split(",");
+                if (addcostsarr.length == addcostsdescarr.length) {
+                    for (int j = 0; j < addcostsarr.length; j++) {
+                        if (j != 0) {
+                            adddesc.append(" ;");
+                        }
+                        adddesc.append(addcostsdescarr[j] + ":" + addcostsarr[j]);
+                    }
+                }
+                objs[17] = adddesc.toString();
+            } else {
+                objs[17] = "";
+            }
+
 
             dataList.add(objs);
         }

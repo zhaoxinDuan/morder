@@ -121,7 +121,7 @@
 
 
         $("#bmiprice").numberbox({
-            precision: "2",
+            precision: "3",
             max: "99999999.99",
             size: "10",
             maxlength: "10",

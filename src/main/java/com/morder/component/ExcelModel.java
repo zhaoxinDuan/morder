@@ -7,11 +7,19 @@ public class ExcelModel {
     private Integer rownum;
     private Integer cellnum;
     private String value;
+    private boolean iscellstyle;
 
     public ExcelModel(Integer rownum, Integer cellnum, String value) {
         this.rownum = rownum;
         this.cellnum = cellnum;
         this.value = value;
+    }
+
+    public ExcelModel(Integer rownum, Integer cellnum, String value, boolean iscellstyle) {
+        this.rownum = rownum;
+        this.cellnum = cellnum;
+        this.value = value;
+        this.iscellstyle = iscellstyle;
     }
 
     public Integer getRownum() {
@@ -36,5 +44,13 @@ public class ExcelModel {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public boolean iscellstyle() {
+        return iscellstyle;
+    }
+
+    public void setIscellstyle(boolean iscellstyle) {
+        this.iscellstyle = iscellstyle;
     }
 }

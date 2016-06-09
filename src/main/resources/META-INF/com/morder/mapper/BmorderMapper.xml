@@ -248,7 +248,9 @@
     bm.bmstatus,bm.bmcreateuserid, bm.bmdelivery_idbmdelivery,bm.tuser_iduser,bm.tcustomer_idcustomer,
     bmi.idbmitem, bmi.bmiproname, bmi.bmiprotype, bmi.bmiprice, bmi.bminum, bmi.bmiamount, bmi.bmiistax, bmi.bmioutternum,
     bmi.bmorderitemcol,bmi.bmipacreq, bmi.bmiunit, bmi.bmorder_idbmorder,t.uname as ownername,
-    (select sum(bmcosts) from bmaddcosts bc where bc.bmorder_idbmorder = bm.idbmorder) as addcosts
+    (select sum(bmcosts) from bmaddcosts bc where bc.bmorder_idbmorder = bm.idbmorder) as addcosts,
+    (SELECT  GROUP_CONCAT((bmcosts) SEPARATOR ',') FROM bmaddcosts where idbmorder=bmorder_idbmorder) as addcostsarr,
+    (SELECT  GROUP_CONCAT((bmcostsdesc) SEPARATOR ',') FROM bmaddcosts where idbmorder=bmorder_idbmorder) as addcostsdescarr
          from bmorder bm
          left join bmorderitem bmi on bm.idbmorder = bmi.bmorder_idbmorder
          left join tuser t on t.iduser = bm.tuser_iduser
