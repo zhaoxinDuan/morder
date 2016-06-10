@@ -29,12 +29,16 @@ public class ModifyAndExportExcel {
         HSSFCell cell = null;
         List<ExcelModel> modifyls = null;
         HSSFCellStyle cellStyle = null;
+        String value = null;
 
         try {
             fis = new FileInputStream(new File(tofile));
             workbook = new HSSFWorkbook(fis);
-            cellStyle = workbook.createCellStyle();
-            cellStyle.setWrapText(true);
+
+
+            HSSFFont font = workbook.createFont();
+            font.setFontHeightInPoints((short)8); //字体大小
+            font.setFontName("宋体");
             for (int i = 0; i < lists.size(); i++) {
                 if (i > 0) {
                     sheet = workbook.cloneSheet(0);
@@ -46,11 +50,26 @@ public class ModifyAndExportExcel {
                 workbook.setSheetName(i, modifyls.get(4).getValue() + "-" + i);
 
                 for (ExcelModel excelModel : modifyls) {
+                    value = excelModel.getValue();
                     cell = sheet.getRow(excelModel.getRownum()).getCell(excelModel.getCellnum());
                     if (excelModel.iscellstyle()) {
+                        cellStyle = workbook.createCellStyle();
+                        cellStyle.setWrapText(true);
                         cell.setCellStyle(cellStyle);
                     }
-                    cell.setCellValue(excelModel.getValue());
+
+                    if(excelModel.isAnicelllength()){
+                        if(value.length()>excelModel.getMaxsize()){
+                            cellStyle = workbook.createCellStyle();
+                            cellStyle.setWrapText(true);
+                            cellStyle.setFont(font);
+                            cell.setCellStyle(cellStyle);
+                            if(value.length()>excelModel.getSubsize()){
+                                value = value.substring(0, excelModel.getSubsize());
+                            }
+                        }
+                    }
+                    cell.setCellValue(value);
                 }
 
             }

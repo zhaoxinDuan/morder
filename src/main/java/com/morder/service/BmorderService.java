@@ -53,6 +53,8 @@ public interface BmorderService {
 
     List<Bmaddcosts> findCostsByIdbmorder(Integer idbmorder);
 
+    public Integer copyOrder(Integer idbmorder);
+
     PageInfo findAllBmCosts(Integer start,Integer limit);
 
 

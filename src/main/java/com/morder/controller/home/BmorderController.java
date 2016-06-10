@@ -247,6 +247,12 @@ public class BmorderController extends BaseController {
         return this.bmorderService.findCostsByIdbmorder(idbmorder);
     }
 
+    @RequestMapping("/copyOrder.do")
+    @ResponseBody
+    public Integer copyOrder(Integer idbmorder) throws Exception {
+        return this.bmorderService.copyOrder(idbmorder);
+    }
+
 
     @RequestMapping("/findItemsByIdbmorder.do")
     @ResponseBody

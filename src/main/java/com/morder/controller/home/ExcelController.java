@@ -108,6 +108,7 @@ public class ExcelController extends BaseController {
         String bmdeliverydate = null;
         Integer bmdenum = null;
         String addCostsDesc = "";
+        String productname=null;
         List<Integer> emptyDeNumls = new ArrayList<Integer>();
         for (String stridorder : arridorders) {
             if (!StringUtils.isEmpty(stridorder)) {
@@ -135,7 +136,9 @@ public class ExcelController extends BaseController {
                     //名称及规格
 //                    excelModels.add(new ExcelModel(count, 3, Utils.getObjectToString(resultmap.get("bmiproname")) + ","
 //                            + Utils.getObjectToString(resultmap.get("bmorderitemcol"))));
-                    excelModels.add(new ExcelModel(count, 3, Utils.getObjectToString(resultmap.get("bmiproname"))));
+                    productname =  Utils.getObjectToString(resultmap.get("bmiproname"));
+                    excelModels.add(new ExcelModel(count, 3,productname,false,true,12,16));
+//                    excelModels.add(new ExcelModel(count, 3,productname,true));
                     //单位
                     excelModels.add(new ExcelModel(count, 4, Utils.getObjectToString(resultmap.get("bmiunit"))));
                     //数量

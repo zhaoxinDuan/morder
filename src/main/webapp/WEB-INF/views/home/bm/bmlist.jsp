@@ -123,7 +123,7 @@
                             }
                         },
                         {
-                            field: 'bmordernum', title: '订单编号', width: 90,
+                            field: 'bmordernum', title: '订单编号', width: 110,
                             formatter: function (value, row, index) {
                                 var url = '<c:url value="/home/bm/bmindex.do?_csrf=${_csrf.token}"/>&isedit=true&idbmorder=' + row.idbmorder + '&t=' + new Date().getTime();
                                 return '<a href="' + url + '">' + value + '</a>';
@@ -142,23 +142,23 @@
                                 if (value != null) {
                                     var strs = value.split(",");
                                     for (var i = 0; i < strs.length; i++) {
-                                        if(i!=0)str = str+",";
+                                        if (i != 0)str = str + ",";
                                         if (strs[i] == 0) {
-                                            str = str+"成品折页";
+                                            str = str + "成品折页";
                                         } else if (strs[i] == 1) {
-                                            str = str+"切单张";
+                                            str = str + "切单张";
                                         } else if (strs[i] == 2) {
-                                            str = str+"骑马钉";
+                                            str = str + "骑马钉";
                                         } else if (strs[i] == 3) {
-                                            str = str+"锁线胶装";
+                                            str = str + "锁线胶装";
                                         } else if (strs[i] == 4) {
-                                            str = str+"精装";
+                                            str = str + "精装";
                                         } else if (strs[i] == 5) {
-                                            str = str+"YO装";
-                                        }else if (strs[i] == 6) {
-                                            str = str+"书本折页";
-                                        }else if (strs[i] == 7) {
-                                            str = str+"无线胶装";
+                                            str = str + "YO装";
+                                        } else if (strs[i] == 6) {
+                                            str = str + "书本折页";
+                                        } else if (strs[i] == 7) {
+                                            str = str + "无线胶装";
                                         }
 
                                     }
@@ -176,7 +176,7 @@
                             }
                         },
                         {
-                            field: 'bmbillingdate', title: '交货日期', width: 80,
+                            field: 'bmdeliverydate', title: '交货日期', width: 80,
                             formatter: function (value, row, index) {
                                 return formatDataFromNumber(value);
                             }
@@ -265,6 +265,43 @@
                                         }
                                     })
                                 }
+                            }
+                        }
+                    }, '-', {
+                        text: '复制新建',
+                        iconCls: 'icon-cut',
+                        handler: function () {
+                            var record = $('#bmlist').datagrid('getSelected');
+                            if (record == null) {
+                                $.messager.alert('提示', '请选择某行数据再进行复制新建。', 'info');
+                            } else {
+
+                                $.ajax({
+                                    type: "POST",
+                                    url: '<c:url value="/home/bm/copyOrder.do?_csrf=${_csrf.token}"/>&t=' + new Date().getTime(),
+                                    dataType: "json",
+                                    data: {
+                                        idbmorder: record.idbmorder,
+                                    },
+                                    beforeSend: function () {
+                                        $.messager.progress({
+                                            text: '请求正在提交中，请稍候...'
+                                        });
+                                    },
+                                    success: function (msg) {
+                                        $.messager.progress('close');
+                                        if (msg) {
+                                            window.location.href = '<c:url value="/home/bm/bmindex.do?_csrf=${_csrf.token}"/>&isedit=true&idbmorder=' + msg + '&t=' + new Date().getTime();
+                                        } else {
+                                            $.messager.alert('操作失败', '新建并复制失败！', 'error');
+                                        }
+                                    },
+                                    error: function (msg) {
+                                        $.messager.progress('close');
+                                        $.messager.alert('操作失败', '后台出现异常！' + msg, 'error');
+                                    }
+                                })
+
                             }
                         }
                     }, '-----', {

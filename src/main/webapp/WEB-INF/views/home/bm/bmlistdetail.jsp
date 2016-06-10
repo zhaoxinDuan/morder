@@ -128,7 +128,7 @@
                     rownumbers: true,
 
                     frozenColumns: [[
-                        {field: 'bmordernum', title: '订单编号', width: 80,
+                        {field: 'bmordernum', title: '订单编号', width: 110,
                             formatter:function(value,row,index){
                                 var url = '<c:url value="/home/bm/bmindex.do?_csrf=${_csrf.token}"/>&isedit=true&idbmorder=' + row.idbmorder + '&t=' + new Date().getTime();
                                 return '<a href="'+url+'">'+value+'</a>';
@@ -147,7 +147,7 @@
                             }
                         },
                         {
-                            field: 'bmbillingdate', title: '交货日期', width: 90,
+                            field: 'bmdeliverydate', title: '交货日期', width: 90,
                             formatter: function (value, row, index) {
                                 return formatDataFromNumber(value);
                             }

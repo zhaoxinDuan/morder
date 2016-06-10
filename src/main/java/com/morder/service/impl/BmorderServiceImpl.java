@@ -66,30 +66,33 @@ public class BmorderServiceImpl implements BmorderService {
             count = this.bmorderMapper.insertSelective(record);
             Bmorder bmorder = new Bmorder();
             bmorder.setIdbmorder(record.getIdbmorder());
-            synchronized (this) {
-                Integer bmmtype = NumUtil.getCurrOrderType();
-                Bmmarker bmmarker = this.bmmarkerMapper.selectByBmmtype(bmmtype);
-                String ordernum = null;
-                if (bmmarker == null) {
-                    bmmarker = new Bmmarker();
-                    bmmarker.setBmmnum(1);
-                    bmmarker.setBmmtype(bmmtype);
-                    this.bmmarkerMapper.insertSelective(bmmarker);
-                    ordernum = String.valueOf(bmmtype + 1);
-                } else {
-                    bmmarker.setBmmnum(bmmarker.getBmmnum() + 1);
-                    ordernum = String.valueOf(bmmtype + bmmarker.getBmmnum());
-                    this.bmmarkerMapper.updateByPrimaryKeySelective(bmmarker);
-                }
-                bmorder.setBmordernum(ordernum);
-            }
-
+            createOrderNum();
+            bmorder.setBmordernum(createOrderNum());
             this.bmorderMapper.updateByPrimaryKeySelective(bmorder);
             record.setBmordernum(bmorder.getBmordernum());
         } else {
             count = this.bmorderMapper.updateByPrimaryKeySelective(record);
         }
         return count;
+    }
+
+    private synchronized String createOrderNum() {
+
+            Integer bmmtype = NumUtil.getCurrOrderType();
+            Bmmarker bmmarker = this.bmmarkerMapper.selectByBmmtype(bmmtype);
+            String ordernum = null;
+            if (bmmarker == null) {
+                bmmarker = new Bmmarker();
+                bmmarker.setBmmnum(1);
+                bmmarker.setBmmtype(bmmtype);
+                this.bmmarkerMapper.insertSelective(bmmarker);
+                ordernum = String.valueOf(bmmtype + 1);
+            } else {
+                bmmarker.setBmmnum(bmmarker.getBmmnum() + 1);
+                ordernum = String.valueOf(bmmtype + bmmarker.getBmmnum());
+                this.bmmarkerMapper.updateByPrimaryKeySelective(bmmarker);
+            }
+        return "YW"+ordernum;
     }
 
     public Integer deleteByPrimaryKey(Integer idbmorder) {
@@ -185,6 +188,30 @@ public class BmorderServiceImpl implements BmorderService {
 
     public List<Bmaddcosts> findCostsByIdbmorder(Integer idbmorder) {
         return this.bmaddcostsMapper.findCostsByIdbmorder(idbmorder);
+    }
+
+    public Integer copyOrder(Integer idbmorder) {
+        Bmorder bmorder = this.bmorderMapper.selectByPrimaryKey(idbmorder);
+        List<Bmaddcosts> bmaddcostses = this.bmaddcostsMapper.findCostsByIdbmorder(idbmorder);
+        List<Bmorderitem> bmorderitems = this.bmorderitemMapper.findItemsByIdbmorder(idbmorder);
+        bmorder.setIdbmorder(null);
+        bmorder.setBmordernum(null);
+        bmorder.setBmdenum(null);
+        bmorder.setBmordernum(createOrderNum());
+        this.bmorderMapper.insertSelective(bmorder);
+        for(Bmorderitem bmorderitem:bmorderitems){
+            bmorderitem.setIdbmitem(null);
+            bmorderitem.setBmorderIdbmorder(bmorder.getIdbmorder());
+            this.bmorderitemMapper.insertSelective(bmorderitem);
+        }
+        for(Bmaddcosts bmaddcosts:bmaddcostses){
+            bmaddcosts.setIdbmaddcosts(null);
+            bmaddcosts.setBmorderIdbmorder(bmorder.getIdbmorder());
+            this.bmaddcostsMapper.insertSelective(bmaddcosts);
+        }
+
+        return bmorder.getIdbmorder();
+
     }
 
     public PageInfo findAllBmCosts(Integer start, Integer limit) {
