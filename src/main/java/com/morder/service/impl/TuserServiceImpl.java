@@ -69,6 +69,7 @@ public class TuserServiceImpl implements TuserService {
     }
 
     public Integer deleteByPrimaryKey(Integer iduser) {
+        this.trelunitMapper.deleteByUserid(iduser);
         return this.tuserMapper.deleteByPrimaryKey(iduser);
     }
 

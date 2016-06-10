@@ -293,7 +293,7 @@
                                             $.messager.alert('操作成功', '删除成功。', 'info');
                                             $('#cuslist').datagrid('reload');
                                         } else {
-                                            $.messager.alert('操作失败', '删除失败！', 'error');
+                                            $.messager.alert('操作失败', '删除失败,因为已有该客户订单，请先清除改客户订单信息，再删除该客户！', 'error');
                                         }
                                     },
                                     error: function (msg) {
