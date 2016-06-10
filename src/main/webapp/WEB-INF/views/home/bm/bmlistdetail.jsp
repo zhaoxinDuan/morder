@@ -201,6 +201,7 @@
                             }
                         },
                         {field: 'ownername', title: '负责人', width: 90},
+                        {field: 'bmioutternum', title: '外发编号', width: 90},
                         {field: 'bmdenum', title: '送货编号', width: 90,algin:'left'}
                     ]],
 

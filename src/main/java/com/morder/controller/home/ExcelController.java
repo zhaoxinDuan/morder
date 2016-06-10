@@ -133,8 +133,9 @@ public class ExcelController extends BaseController {
                     //装钉类型
                     excelModels.add(new ExcelModel(count, 2, ConstantUtils.protypeMap.get(Utils.getObjectToInteger(resultmap.get("bmiprotype")))));
                     //名称及规格
-                    excelModels.add(new ExcelModel(count, 3, Utils.getObjectToString(resultmap.get("bmiproname")) + ","
-                            + Utils.getObjectToString(resultmap.get("bmorderitemcol"))));
+//                    excelModels.add(new ExcelModel(count, 3, Utils.getObjectToString(resultmap.get("bmiproname")) + ","
+//                            + Utils.getObjectToString(resultmap.get("bmorderitemcol"))));
+                    excelModels.add(new ExcelModel(count, 3, Utils.getObjectToString(resultmap.get("bmiproname"))));
                     //单位
                     excelModels.add(new ExcelModel(count, 4, Utils.getObjectToString(resultmap.get("bmiunit"))));
                     //数量
@@ -233,7 +234,7 @@ public class ExcelController extends BaseController {
         String title = "订单详情";
 
 
-        String[] rowsName = new String[]{"序号", "订单编号", "客户名称", "开单日期", "交货日期", "产品规格"
+        String[] rowsName = new String[]{"序号", "订单编号","外发编号","送货编号", "客户名称", "开单日期", "交货日期", "产品规格"
                 , "产品名称", "包装要求", "产品类型", "单价","数量", "金额", "额外费用", "订单金额", "备注", "订单状态", "负责人", "额外费用明细"};
         List<Object[]> dataList = new ArrayList<Object[]>();
         Object[] objs = null;
@@ -250,23 +251,25 @@ public class ExcelController extends BaseController {
             objs = new Object[rowsName.length];
             objs[0] = i;
             objs[1] = rowmap.get("bmordernum");
-            objs[2] = rowmap.get("bmcusname");
-            objs[3] = rowmap.get("bmbillingdate");
-            objs[4] = rowmap.get("bmbillingdate");
-            objs[5] = rowmap.get("bmorderitemcol");
-            objs[6] = rowmap.get("bmiproname");
-            objs[7] = rowmap.get("bmpacreq");
+            objs[2] = rowmap.get("bmioutternum");
+            objs[3] = rowmap.get("bmdenum");
+            objs[4] = rowmap.get("bmcusname");
+            objs[5] = rowmap.get("bmbillingdate");
+            objs[6] = rowmap.get("bmbillingdate");
+            objs[7] = rowmap.get("bmorderitemcol");
+            objs[8] = rowmap.get("bmiproname");
+            objs[9] = rowmap.get("bmpacreq");
 
-            objs[8] = ConstantUtils.protypeMap.get(rowmap.get("bmiprotype"));
-            objs[9] = rowmap.get("bmiprice");
-            objs[10] = rowmap.get("bminum");
-            objs[11] = rowmap.get("bmiamount");
-            objs[12] = rowmap.get("addcosts");
-            objs[13] = rowmap.get("bmorderamount");
-            objs[14] = rowmap.get("bmcomments");
+            objs[10] = ConstantUtils.protypeMap.get(rowmap.get("bmiprotype"));
+            objs[11] = rowmap.get("bmiprice");
+            objs[12] = rowmap.get("bminum");
+            objs[13] = rowmap.get("bmiamount");
+            objs[14] = rowmap.get("addcosts");
+            objs[15] = rowmap.get("bmorderamount");
+            objs[16] = rowmap.get("bmcomments");
 
-            objs[15] = ConstantUtils.statusMap.get(rowmap.get("bmstatus"));
-            objs[16] = rowmap.get("ownername");
+            objs[17] = ConstantUtils.statusMap.get(rowmap.get("bmstatus"));
+            objs[18] = rowmap.get("ownername");
 
             addcostsobj = rowmap.get("addcostsarr");
             addcostsdescobj = rowmap.get("addcostsdescarr");
@@ -282,9 +285,9 @@ public class ExcelController extends BaseController {
                         adddesc.append(addcostsdescarr[j] + ":" + addcostsarr[j]);
                     }
                 }
-                objs[17] = adddesc.toString();
+                objs[19] = adddesc.toString();
             } else {
-                objs[17] = "";
+                objs[19] = "";
             }
 
 
