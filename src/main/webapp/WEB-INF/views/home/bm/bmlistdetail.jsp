@@ -128,6 +128,13 @@
                     rownumbers: true,
 
                     frozenColumns: [[
+                        {
+                            field: 'bmbillingdate', title: '开单日期', width: 90,
+                            formatter: function (value, row, index) {
+
+                                return formatDataFromNumber(value);
+                            }
+                        },
                         {field: 'bmordernum', title: '订单编号', width: 110,
                             formatter:function(value,row,index){
                                 var url = '<c:url value="/home/bm/bmindex.do?_csrf=${_csrf.token}"/>&isedit=true&idbmorder=' + row.idbmorder + '&t=' + new Date().getTime();
@@ -138,23 +145,16 @@
 
                     ]],
                     columns: [[
-
-                        {
-                            field: 'bmbillingdate', title: '开单日期', width: 90,
-                            formatter: function (value, row, index) {
-
-                                return formatDataFromNumber(value);
-                            }
-                        },
+                        {field: 'bmioutternum', title: '外发单号', width: 90},
+                        {field: 'bmdenum', title: '送货单号', width: 90,algin:'left'},
                         {
                             field: 'bmdeliverydate', title: '交货日期', width: 90,
                             formatter: function (value, row, index) {
                                 return formatDataFromNumber(value);
                             }
                         },
-                        {field: 'bmorderitemcol', title: '产品规格', width: 90},
                         {field: 'bmiproname', title: '产品名称', width: 90},
-                        {field: 'bmipacreq', title: '包装要求', width: 90},
+                        {field: 'bmorderitemcol', title: '产品规格', width: 90},
                         {
                             field: 'bmiprotype', title: '产品类型', width: 90,
                             formatter: function (value, row, index) {
@@ -179,12 +179,14 @@
                                 return str;
                             }
                         },
+                        {field: 'bmipacreq', title: '包装要求', width: 90},
+
                         {field: 'bminum', title: '数量', width: 90},
                         {field: 'bmiprice', title: '单价', width: 90},
                         {field: 'bmiamount', title: '金额', width: 90},
                         {field: 'addcosts', title: '额外费用', width: 90},
                         {field: 'bmorderamount', title: '订单金额', width: 90},
-                        {field: 'bmcomments', title: '备注', width: 90},
+                        {field: 'bmcomments', title: '订单详情', width: 90},
 
                         {
                             field: 'bmstatus', title: '订单状态', width: 90,
@@ -200,9 +202,8 @@
                                 return str;
                             }
                         },
-                        {field: 'ownername', title: '负责人', width: 90},
-                        {field: 'bmioutternum', title: '外发编号', width: 90},
-                        {field: 'bmdenum', title: '送货编号', width: 90,algin:'left'}
+                        {field: 'ownername', title: '负责人', width: 90}
+
                     ]],
 
 //                    toolbar: [],

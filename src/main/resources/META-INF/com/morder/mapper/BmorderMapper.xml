@@ -287,9 +287,11 @@
         bm.bmaddcosts, bm.bmorderamount, bm.bmcomments,bm.bmpacreq,bm.bmdenum,
         bm.bmstatus,bm.bmcreateuserid, bm.bmdelivery_idbmdelivery,bm.tuser_iduser,bm.tcustomer_idcustomer,
         bmi.idbmitem, bmi.bmiproname, bmi.bmiprotype, bmi.bmiprice, bmi.bminum, bmi.bmiamount, bmi.bmiistax, bmi.bmioutternum,
-        bmi.bmorderitemcol,bmi.bmipacreq,bmi.bmiunit, bmi.bmorder_idbmorder
+        bmi.bmorderitemcol,bmi.bmipacreq,bmi.bmiunit, bmi.bmorder_idbmorder,
+        t.uname as ownername
         from bmorder bm
         left join bmorderitem bmi on bm.idbmorder = bmi.bmorder_idbmorder
+        left join tuser t on t.iduser = bm.tuser_iduser
         where bm.idbmorder = #{idbmorder,jdbcType=INTEGER} order by bm.idbmorder desc
     </select>
 

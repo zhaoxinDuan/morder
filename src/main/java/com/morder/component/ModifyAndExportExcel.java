@@ -55,6 +55,10 @@ public class ModifyAndExportExcel {
                     if (excelModel.iscellstyle()) {
                         cellStyle = workbook.createCellStyle();
                         cellStyle.setWrapText(true);
+                        cellStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框
+                        cellStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框
+                        cellStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框
+                        cellStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框
                         cell.setCellStyle(cellStyle);
                     }
 
