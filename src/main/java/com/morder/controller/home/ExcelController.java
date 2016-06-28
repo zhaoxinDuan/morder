@@ -110,10 +110,17 @@ public class ExcelController extends BaseController {
         String addCostsDesc = "";
         String productname=null;
         List<Integer> emptyDeNumls = new ArrayList<Integer>();
+        List<String> ownernamels = new ArrayList<String>();
+        String ownername = null;
         for (String stridorder : arridorders) {
             if (!StringUtils.isEmpty(stridorder)) {
                 resultls = this.bmorderService.findBmorderAndItemByMorderid(Integer.parseInt(stridorder));
+
                 for (Map resultmap : resultls) {
+                    ownername = Utils.getObjectToString(resultmap.get("ownername"));
+                    if(!ownernamels.contains(ownername)){
+                        ownernamels.add(ownername);
+                    }
                     if (StringUtils.isEmpty(bmcusname)) {
                         bmcusname = Utils.getObjectToString(resultmap.get("bmcusname"));
                     }
@@ -208,8 +215,17 @@ public class ExcelController extends BaseController {
         if (StringUtils.isEmpty(bmcusname)) {
             cell2 = cell2 + "                                                        ";
         } else {
-            cell2 = cell2 + bmcusname + "                ";
+            StringBuffer sb = new StringBuffer(bmcusname);
+            if(bmcusname.length()<56) {
+                for (int i = 0; i < (56 - bmcusname.length()); i++) {
+                    sb.append(" ");
+                }
+            }else{
+                sb.append("         ");
+            }
+            cell2 = cell2 + sb.toString();
         }
+
         if (StringUtils.isEmpty(bmdeliverydate)) {
             cell2 = cell2 + "20     年    月    日";
         } else {
@@ -218,6 +234,7 @@ public class ExcelController extends BaseController {
         excelModels.add(new ExcelModel(2, 0, cell2));
 
         excelModels.add(new ExcelModel(1, 0, "                                               送货清单                                   N0:" + bmdenum));
+        excelModels.add(new ExcelModel(18, 0,"负责人："+Utils.listToString(ownernamels,',')));
 
         lists.add(excelModels);
         String num = String.valueOf(bmdenum);
@@ -237,6 +254,8 @@ public class ExcelController extends BaseController {
         String title = "订单详情";
 
 
+//        String[] rowsName = new String[]{"序号", "订单编号","外发编号","送货编号", "客户名称", "开单日期", "交货日期", "产品规格"
+//                , "产品名称", "包装要求", "产品类型", "单价","数量", "金额", "额外费用", "订单金额", "备注", "订单状态", "负责人", "额外费用明细"};
         String[] rowsName = new String[]{"序号", "订单编号","外发编号","送货编号", "客户名称", "开单日期", "交货日期", "产品规格"
                 , "产品名称", "包装要求", "产品类型", "单价","数量", "金额", "额外费用", "订单金额", "备注", "订单状态", "负责人", "额外费用明细"};
         List<Object[]> dataList = new ArrayList<Object[]>();
@@ -258,7 +277,7 @@ public class ExcelController extends BaseController {
             objs[3] = rowmap.get("bmdenum");
             objs[4] = rowmap.get("bmcusname");
             objs[5] = rowmap.get("bmbillingdate");
-            objs[6] = rowmap.get("bmbillingdate");
+            objs[6] = rowmap.get("bmdeliverydate");
             objs[7] = rowmap.get("bmorderitemcol");
             objs[8] = rowmap.get("bmiproname");
             objs[9] = rowmap.get("bmpacreq");
