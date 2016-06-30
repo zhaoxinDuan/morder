@@ -124,7 +124,7 @@
 
 
 <script type="text/javascript">
-    var oldChangeBmiamount = 0;
+    var oldChangeBmiamount = "NaN";
     $(document).ready(function () {
 
 
@@ -280,6 +280,7 @@
                                 }else{
                                     $("#bmiunit").combobox("setValue", _bminit);
                                 }
+                                oldChangeBmiamount = "NaN";
                             }
                         }
                     }, '-', {
@@ -311,6 +312,7 @@
                                                 $.messager.progress('close');
                                                 if (msg.success == true) {
                                                     $("#bmorderamount").val(($("#bmorderamount").val()-parseFloat(bmiamount)).toFixed(2));
+                                                    oldChangeBmiamount = "NaN";
                                                     $.messager.alert('操作成功', '删除成功。', 'info');
                                                     $('#bmitemlist').datagrid('reload');
                                                 } else {
@@ -335,6 +337,9 @@
                     },
                     onDblClickRow: function (index, row) {
 
+                    },
+                    onSelect:function(index,row){
+                        oldChangeBmiamount="NaN";
                     }
                 }
         );
@@ -354,7 +359,9 @@
                 handler: function () {
                     if (isEmpty('bmiproname', '产品名称'))return;
                     if (isEmpty('bmorderIdbmorder', '订单错误'))return;
-                    if(oldChangeBmiamount=="NaN")oldChangeBmiamount = 0;
+
+                    if(oldChangeBmiamount=="NaN")oldChangeBmiamount = $("#bmiamount").val();
+
                     var changebmorderamount = (parseFloat($("#bmiamount").val()) - parseFloat(oldChangeBmiamount) + parseFloat($("#bmorderamount").val())).toFixed(2);
                     $("#changebmorderamount").val(changebmorderamount);
 
@@ -376,7 +383,7 @@
                                 $('#bmitemlist').datagrid('reload');
                                 $("#bmorderamount").val(changebmorderamount);
                                 $('#bmitemDialog').dialog('close');
-
+                                oldChangeBmiamount = "NaN";
 
                             } else {
                                 $.messager.alert('操作失败', '保存失败！', 'error');
