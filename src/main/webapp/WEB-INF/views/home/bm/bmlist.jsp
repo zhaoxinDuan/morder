@@ -123,6 +123,19 @@
                             }
                         },
                         {
+                            field: 'bmbillingdate', title: '开单日期', width: 80,
+                            formatter: function (value, row, index) {
+
+                                return formatDataFromNumber(value);
+                            }
+                        },
+                        {
+                            field: 'bmdeliverydate', title: '交货日期', width: 80,
+                            formatter: function (value, row, index) {
+                                return formatDataFromNumber(value);
+                            }
+                        },
+                        {
                             field: 'bmordernum', title: '订单编号', width: 110,
                             formatter: function (value, row, index) {
                                 var url = '<c:url value="/home/bm/bmindex.do?_csrf=${_csrf.token}"/>&isedit=true&idbmorder=' + row.idbmorder + '&t=' + new Date().getTime();
@@ -167,20 +180,8 @@
                                 }
                             }
                         },
-                        {field: 'bmorderamount', title: '订单金额', width: 80},
-                        {
-                            field: 'bmbillingdate', title: '开单日期', width: 80,
-                            formatter: function (value, row, index) {
+//                        {field: 'bmorderamount', title: '订单金额', width: 80},
 
-                                return formatDataFromNumber(value);
-                            }
-                        },
-                        {
-                            field: 'bmdeliverydate', title: '交货日期', width: 80,
-                            formatter: function (value, row, index) {
-                                return formatDataFromNumber(value);
-                            }
-                        },
                         {
                             field: 'bmstatus', title: '订单状态', width: 80,
                             formatter: function (value, row, index) {
@@ -196,7 +197,7 @@
                             }
                         },
                         {field: 'ownername', title: '负责人', width: 80},
-                        {field: 'bmdenum', title: '送货编号', width: 80},
+                        {field: 'bmdenum', title: '送货单号', width: 80},
                         {
                             field: 'operation', title: '操作', width: 80, align: 'left',
                             formatter: function (value, row) {

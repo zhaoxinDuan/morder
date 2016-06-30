@@ -202,7 +202,8 @@
                                 return str;
                             }
                         },
-                        {field: 'ownername', title: '负责人', width: 90}
+                        {field: 'ownername', title: '负责人', width: 90},
+                        {field: 'bmiremark', title: '订单项备注', width: 90}
 
                     ]],
 

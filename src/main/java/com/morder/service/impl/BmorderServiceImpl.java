@@ -66,7 +66,6 @@ public class BmorderServiceImpl implements BmorderService {
             count = this.bmorderMapper.insertSelective(record);
             Bmorder bmorder = new Bmorder();
             bmorder.setIdbmorder(record.getIdbmorder());
-            createOrderNum();
             bmorder.setBmordernum(createOrderNum());
             this.bmorderMapper.updateByPrimaryKeySelective(bmorder);
             record.setBmordernum(bmorder.getBmordernum());

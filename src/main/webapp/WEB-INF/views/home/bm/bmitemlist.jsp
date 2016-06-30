@@ -87,7 +87,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th>外发编号</th>
+                        <th>外发单号</th>
                         <td style="text-align:left;">
                             <input type="text" name="bmioutternum" id="bmioutternum" class="textInput textbox-width"
                                    style="resize:none;width:200px;height:20px">
@@ -104,6 +104,14 @@
                         <th>包装要求</th>
                         <td style="text-align:left;">
                             <input type="text" name="bmipacreq" id="bmipacreq" class="textInput textbox-width"
+                                   style="resize:none;width:200px;height:20px">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>备注</th>
+                        <td style="text-align:left;">
+                            <input type="text" name="bmiremark" id="bmiremark" class="textInput textbox-width"
                                    style="resize:none;width:200px;height:20px">
                         </td>
                     </tr>
@@ -215,9 +223,10 @@
                                 }
                             }
                         },
-                        {field: 'bmioutternum', title: '外发编号', width: 50},
+                        {field: 'bmioutternum', title: '外发单号', width: 50},
                         {field: 'bmorderitemcol', title: '产品规格', width: 50},
-                        {field: 'bmipacreq', title: '包装要求', width: 50,algin:'left'}
+                        {field: 'bmipacreq', title: '包装要求', width: 50},
+                        {field: 'bmiremark', title: '备注', width: 50,algin:'left'}
 
                     ]],
                     toolbar: [{
@@ -236,6 +245,7 @@
                             $("#bmioutternum").val('');
                             $("#bmorderitemcol").val('');
                             $("#bmipacreq").val('');
+                            $("#bmiremark").val('');
 //                            $("#bmiunit").val('');
 
                         }
@@ -260,9 +270,11 @@
                                 $("#bmorderitemcol").val(record.bmorderitemcol);
                                 $("#bmipacreq").val(record.bmipacreq);
 //                                $("#bmiunit").val(record.bmiunit);
+                                $("#bmiremark").val(record.bmiremark);
                                 $("#bmiprotype").combobox("setValue", record.bmiprotype);
                                 $("#bmiistax").combobox("setValue", record.bmiistax);
                                 var _bminit = strTrimAll(record.bmiunit);
+
                                 if(_bminit!="本"&&_bminit!="件"){
                                     $("#bmiunit").append("<option value='"+_bminit+"' selected>"+_bminit+"</option>");
                                 }else{

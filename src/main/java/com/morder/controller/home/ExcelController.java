@@ -14,17 +14,14 @@ import com.morder.utils.ConstantUtils;
 import com.morder.component.ExportExcel;
 import com.morder.utils.NumUtil;
 import com.morder.utils.Utils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by amis on 16-5-29.
@@ -112,6 +109,8 @@ public class ExcelController extends BaseController {
         List<Integer> emptyDeNumls = new ArrayList<Integer>();
         List<String> ownernamels = new ArrayList<String>();
         String ownername = null;
+//        List<String> bmiremarkls = new LinkedList<String>();
+//        String bmiremark
         for (String stridorder : arridorders) {
             if (!StringUtils.isEmpty(stridorder)) {
                 resultls = this.bmorderService.findBmorderAndItemByMorderid(Integer.parseInt(stridorder));
@@ -254,10 +253,10 @@ public class ExcelController extends BaseController {
         String title = "订单详情";
 
 
-//        String[] rowsName = new String[]{"序号", "订单编号","外发编号","送货编号", "客户名称", "开单日期", "交货日期", "产品规格"
+//        String[] rowsName = new String[]{"序号", "订单编号","外发单号","送货单号", "客户名称", "开单日期", "交货日期", "产品规格"
 //                , "产品名称", "包装要求", "产品类型", "单价","数量", "金额", "额外费用", "订单金额", "备注", "订单状态", "负责人", "额外费用明细"};
-        String[] rowsName = new String[]{"序号", "订单编号","外发编号","送货编号", "客户名称", "开单日期", "交货日期", "产品规格"
-                , "产品名称", "包装要求", "产品类型", "单价","数量", "金额", "额外费用", "订单金额", "备注", "订单状态", "负责人", "额外费用明细"};
+        String[] rowsName = new String[]{"序号", "开单日期","订单编号","客户名称", "外发单号","送货单号","交货日期", "产品名称","产品规格"
+                ,"产品类型","包装要求", "数量","单价", "金额", "额外费用", "订单金额", "订单详情", "订单状态", "负责人", "额外费用明细","订单项备注"};
         List<Object[]> dataList = new ArrayList<Object[]>();
         Object[] objs = null;
         List datalist = pageInfo.getList();
@@ -272,24 +271,22 @@ public class ExcelController extends BaseController {
             rowmap = (Map) datalist.get(i);
             objs = new Object[rowsName.length];
             objs[0] = i;
-            objs[1] = rowmap.get("bmordernum");
-            objs[2] = rowmap.get("bmioutternum");
-            objs[3] = rowmap.get("bmdenum");
-            objs[4] = rowmap.get("bmcusname");
-            objs[5] = rowmap.get("bmbillingdate");
+            objs[1] = rowmap.get("bmbillingdate");
+            objs[2] = rowmap.get("bmordernum");
+            objs[3] = rowmap.get("bmcusname");
+            objs[4] = rowmap.get("bmioutternum");
+            objs[5] = rowmap.get("bmdenum");
             objs[6] = rowmap.get("bmdeliverydate");
-            objs[7] = rowmap.get("bmorderitemcol");
-            objs[8] = rowmap.get("bmiproname");
-            objs[9] = rowmap.get("bmpacreq");
-
-            objs[10] = ConstantUtils.protypeMap.get(rowmap.get("bmiprotype"));
-            objs[11] = rowmap.get("bmiprice");
-            objs[12] = rowmap.get("bminum");
+            objs[7] = rowmap.get("bmiproname");
+            objs[8] = rowmap.get("bmorderitemcol");
+            objs[9] = ConstantUtils.protypeMap.get(rowmap.get("bmiprotype"));
+            objs[10] = rowmap.get("bmpacreq");
+            objs[11] = rowmap.get("bminum");
+            objs[12] = rowmap.get("bmiprice");
             objs[13] = rowmap.get("bmiamount");
             objs[14] = rowmap.get("addcosts");
             objs[15] = rowmap.get("bmorderamount");
             objs[16] = rowmap.get("bmcomments");
-
             objs[17] = ConstantUtils.statusMap.get(rowmap.get("bmstatus"));
             objs[18] = rowmap.get("ownername");
 
@@ -312,7 +309,7 @@ public class ExcelController extends BaseController {
                 objs[19] = "";
             }
 
-
+            objs[20] = rowmap.get("bmiremark");
             dataList.add(objs);
         }
 
