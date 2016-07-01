@@ -156,7 +156,7 @@ public class ExcelController extends BaseController {
                     if (!StringUtils.isEmpty(strbmiamount)) {
                         bmiamount = bmiamount.add(new BigDecimal(strbmiamount));
                     }
-                    excelModels.add(new ExcelModel(count, 7, strbmiamount));
+                    excelModels.add(new ExcelModel(count, 7, strbmiamount,false,true,7,16));
                     count++;
                 }
                 List<Bmaddcosts> bmaddcostses = this.bmorderService.findCostsByIdbmorder(Integer.parseInt(stridorder));
@@ -232,7 +232,7 @@ public class ExcelController extends BaseController {
         }
         excelModels.add(new ExcelModel(2, 0, cell2));
 
-        excelModels.add(new ExcelModel(1, 0, "                                               送货清单                                   N0:" + bmdenum));
+        excelModels.add(new ExcelModel(1, 0, "                                               送货清单                                 N0:" + bmdenum));
         excelModels.add(new ExcelModel(18, 0,"负责人："+Utils.listToString(ownernamels,',')));
 
         lists.add(excelModels);
