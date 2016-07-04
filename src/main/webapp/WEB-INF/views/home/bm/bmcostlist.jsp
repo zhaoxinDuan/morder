@@ -28,7 +28,7 @@
                         <th>额外费用金额<span class="impSpan">*</span></th>
                         <td style="text-align:left;">
                             <input type="text" name="bmcosts" id="bmcosts"
-                                   style="resize:none;width:200px;height:20px">
+                                   style="resize:none;width:200px;height:20px" value="0">
                         </td>
                     </tr>
 
@@ -40,7 +40,7 @@
 
 
 <script type="text/javascript">
-    var oldChangeBmiamountcost = 0;
+    var oldChangeBmiamountcost = "NaN";
     $(document).ready(function () {
 
         $("#bmcosts").numberbox({
@@ -90,6 +90,7 @@
                         text: '编辑',
                         iconCls: 'icon-edit',
                         handler: function () {
+
                             var record = $('#bmcostlist').datagrid('getSelected');
                             if (record == null) {
                                 $.messager.alert('提示', '请选择某行数据再进行编辑。', 'info');
@@ -101,6 +102,7 @@
                                 $('#bmcosts').numberbox('setValue', record.bmcosts);
 //
                             }
+                            oldChangeBmiamountcost = "NaN";
                         }
                     }, '-', {
                         text: '删除',
@@ -135,6 +137,7 @@
                                                 } else {
                                                     $.messager.alert('操作失败', '删除失败！', 'error');
                                                 }
+                                                oldChangeBmiamountcost = "NaN";
                                             },
                                             error: function (msg) {
                                                 $.messager.progress('close');
@@ -154,6 +157,9 @@
                     },
                     onDblClickRow: function (index, row) {
 
+                    },
+                    onSelect:function(index,row){
+                        oldChangeBmiamountcost = "NaN";
                     }
                 }
         );
@@ -171,7 +177,7 @@
                 text: '提交',
                 iconCls: 'icon-ok',
                 handler: function () {
-                    if (oldChangeBmiamountcost == "NaN")oldChangeBmiamountcost = 0;
+                    if (oldChangeBmiamountcost == "NaN")oldChangeBmiamountcost = $("#bmcosts").val();
                     var changebmorderamount = (parseFloat($("#bmcosts").val()) - parseFloat(oldChangeBmiamountcost) + parseFloat($("#bmorderamount").val())).toFixed(2);
 
                     var data = $("#costSubform").serializeArray();
@@ -197,6 +203,7 @@
                             } else {
                                 $.messager.alert('操作失败', '保存失败！', 'error');
                             }
+                            oldChangeBmiamountcost = "NaN";
                         },
                         error: function (msg) {
                             $.messager.progress('close');
