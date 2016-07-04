@@ -79,7 +79,8 @@ public class ExcelController extends BaseController {
             excelModels.add(new ExcelModel(5, 1, ConstantUtils.protypeMap.get(Utils.getObjectToInteger(resultmap.get("bmiprotype")))));
 
             //备注
-            excelModels.add(new ExcelModel(6, 1, Utils.getObjectToString(resultmap.get("bmcomments")), true));
+//            excelModels.add(new ExcelModel(6, 1, Utils.getObjectToString(resultmap.get("bmcomments")), true,(short)18));
+            excelModels.add(new ExcelModel(6, 1, Utils.getObjectToString(resultmap.get("bmcomments"))));
             //开单人
             excelModels.add(new ExcelModel(22, 2, Utils.getObjectToString(resultmap.get("ownername"))));
 
@@ -207,7 +208,7 @@ public class ExcelController extends BaseController {
 
         }
 
-        excelModels.add(new ExcelModel(15, 0, "金额(大写)：" +
+        excelModels.add(new ExcelModel(13, 0, "金额(大写)：" +
                 Utils.convertToChineseNumberNew(bmiamount.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue())
                 + " ￥：" + bmiamount.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue()));
         String cell2 = "收货单位：";
@@ -232,8 +233,8 @@ public class ExcelController extends BaseController {
         }
         excelModels.add(new ExcelModel(2, 0, cell2));
 
-        excelModels.add(new ExcelModel(1, 0, "                                               送货清单                                 N0:" + bmdenum));
-        excelModels.add(new ExcelModel(18, 0,"负责人："+Utils.listToString(ownernamels,',')));
+        excelModels.add(new ExcelModel(1, 0, "                                         送货清单                                 N0:" + bmdenum));
+        excelModels.add(new ExcelModel(16, 0,"负责人："+Utils.listToString(ownernamels,',')));
 
         lists.add(excelModels);
         String num = String.valueOf(bmdenum);

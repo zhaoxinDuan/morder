@@ -11,6 +11,7 @@ public class ExcelModel {
     private boolean anicelllength = false;
     private Integer maxsize;
     private Integer subsize;
+    private short frontsize;
 
     public ExcelModel(Integer rownum, Integer cellnum, String value) {
         this.rownum = rownum;
@@ -23,6 +24,13 @@ public class ExcelModel {
         this.cellnum = cellnum;
         this.value = value;
         this.iscellstyle = iscellstyle;
+    }
+    public ExcelModel(Integer rownum, Integer cellnum, String value, boolean iscellstyle,short frontsize) {
+        this.rownum = rownum;
+        this.cellnum = cellnum;
+        this.value = value;
+        this.iscellstyle = iscellstyle;
+        this.frontsize = frontsize;
     }
 
     public ExcelModel(Integer rownum, Integer cellnum, String value, boolean iscellstyle, boolean anicelllength, Integer maxsize,Integer subsize) {
