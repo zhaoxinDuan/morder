@@ -71,7 +71,6 @@
                     pageList: [15, 30, 45],
                     collapsible: true,
                     rownumbers: true,
-                    loadFilter: pagerFilter,
                     columns: [[
                         {field: 'urealname', title: '姓名', width: 50},
                         {field: 'uname', title: '登陆名', width: 50},

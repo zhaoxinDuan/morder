@@ -189,11 +189,11 @@
                     pagination: true,
                     fitColumns: true,
                     singleSelect: true,
-                    pageSize: 15,
-                    pageList: [15, 30, 45],
+                    pageSize: 3,
+                    pageList: [3, 30, 45],
                     collapsible: true,
                     rownumbers: true,
-                    loadFilter: pagerFilter,
+//                    loadFilter: pagerFilter,
                     columns: [[
                         {
                             field: 'cname', title: '客户名称', width: 50

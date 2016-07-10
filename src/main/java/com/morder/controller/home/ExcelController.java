@@ -208,7 +208,7 @@ public class ExcelController extends BaseController {
 
         }
 
-        excelModels.add(new ExcelModel(13, 0, "金额(大写)：" +
+        excelModels.add(new ExcelModel(15, 0, "金额(大写)：" +
                 Utils.convertToChineseNumberNew(bmiamount.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue())
                 + " ￥：" + bmiamount.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue()));
         String cell2 = "收货单位：";
@@ -234,7 +234,17 @@ public class ExcelController extends BaseController {
         excelModels.add(new ExcelModel(2, 0, cell2));
 
         excelModels.add(new ExcelModel(1, 0, "                                         送货清单                                 N0:" + bmdenum));
-        excelModels.add(new ExcelModel(16, 0,"负责人："+Utils.listToString(ownernamels,',')));
+        String sendname=Utils.listToString(ownernamels, ',');
+        StringBuffer buffer =  new StringBuffer(sendname);
+        if(StringUtils.isNotEmpty(sendname)) {
+            for (int i = 0; i < 34 - sendname.length(); i++) {
+                buffer.append(" ");
+            }
+        }else{
+            buffer.append("                                   ");
+        }
+
+        excelModels.add(new ExcelModel(17, 0,"送货单位及经手人："+buffer.toString()+"收货单位及经手人："));
 
         lists.add(excelModels);
         String num = String.valueOf(bmdenum);
