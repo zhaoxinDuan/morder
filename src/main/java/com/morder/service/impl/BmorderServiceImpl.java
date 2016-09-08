@@ -7,6 +7,7 @@ import com.morder.model.*;
 import com.morder.service.BmorderService;
 import com.morder.service.TcustomerService;
 import com.morder.utils.NumUtil;
+import com.morder.utils.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,7 @@ public class BmorderServiceImpl implements BmorderService {
     }
 
     public Integer saveSelective(Bmorder record) {
+
         Integer count = null;
         if (record.getTcustomerIdcustomer() == null) {
             Tcustomer tcustomer = new Tcustomer();
@@ -63,6 +65,7 @@ public class BmorderServiceImpl implements BmorderService {
             record.setTcustomerIdcustomer(tcustomer.getIdcustomer());
         }
         if (record.getIdbmorder() == null) {
+            record.setBmorderamount(new BigDecimal(0));
             count = this.bmorderMapper.insertSelective(record);
             Bmorder bmorder = new Bmorder();
             bmorder.setIdbmorder(record.getIdbmorder());
@@ -70,6 +73,7 @@ public class BmorderServiceImpl implements BmorderService {
             this.bmorderMapper.updateByPrimaryKeySelective(bmorder);
             record.setBmordernum(bmorder.getBmordernum());
         } else {
+            record.setBmorderamount(null);
             count = this.bmorderMapper.updateByPrimaryKeySelective(record);
         }
         return count;
@@ -131,13 +135,17 @@ public class BmorderServiceImpl implements BmorderService {
         Integer count = null;
         Bmorder bmorder = new Bmorder();
         bmorder.setIdbmorder(record.getBmorderIdbmorder());
-        bmorder.setBmorderamount(changebmorderamount);
-        this.bmorderMapper.updateByPrimaryKeySelective(bmorder);
+        Bmorder instance = this.bmorderMapper.selectByPrimaryKey(record.getBmorderIdbmorder());
+
         if (record.getIdbmitem() == null) {
+            bmorder.setBmorderamount(instance.getBmorderamount().add(record.getBmiamount()));
             count = this.bmorderitemMapper.insertSelective(record);
         } else {
+            Bmorderitem record1 = this.bmorderitemMapper.selectByPrimaryKey(record.getIdbmitem());
+            bmorder.setBmorderamount(instance.getBmorderamount().subtract(record1.getBmiamount()).add(record.getBmiamount()));
             count = this.bmorderitemMapper.updateByPrimaryKeySelective(record);
         }
+        this.bmorderMapper.updateByPrimaryKeySelective(bmorder);
         return count;
     }
 
@@ -166,13 +174,18 @@ public class BmorderServiceImpl implements BmorderService {
         Integer count = null;
         Bmorder bmorder = new Bmorder();
         bmorder.setIdbmorder(record.getBmorderIdbmorder());
-        bmorder.setBmorderamount(changebmorderamount);
-        this.bmorderMapper.updateByPrimaryKeySelective(bmorder);
+        Bmorder instance = this.bmorderMapper.selectByPrimaryKey(record.getBmorderIdbmorder());
+
+
         if (record.getIdbmaddcosts() == null) {
+            bmorder.setBmorderamount(instance.getBmorderamount().add(record.getBmcosts()));
             count = this.bmaddcostsMapper.insertSelective(record);
         } else {
+            Bmaddcosts record1 = this.bmaddcostsMapper.selectByPrimaryKey(record.getIdbmaddcosts());
+            bmorder.setBmorderamount(instance.getBmorderamount().subtract(record1.getBmcosts()).add(record.getBmcosts()));
             count = this.bmaddcostsMapper.updateByPrimaryKeySelective(record);
         }
+        this.bmorderMapper.updateByPrimaryKeySelective(bmorder);
         return count;
     }
 
