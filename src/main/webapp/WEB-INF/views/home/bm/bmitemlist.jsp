@@ -23,12 +23,15 @@
                             <select id="bmiprotype" name="bmiprotype" class="easyui-combobox"
                                     data-options="editable:false "
                                     style="width:200px;">
-                                <option value="0">折页</option>
+                                <option value="0">成品折页</option>
+                                <option value="6">书本折页</option>
                                 <option value="1">切单张</option>
                                 <option value="2" selected>骑马钉</option>
                                 <option value="3">锁线胶装</option>
+                                <option value="7">无线胶装</option>
                                 <option value="4">精装</option>
                                 <option value="5">YO装</option>
+
                             </select>
                         </td>
                     </tr>
@@ -42,8 +45,14 @@
                     <tr>
                         <th>单位<span class="impSpan">*</span></th>
                         <td style="text-align:left;">
-                            <input type="text" name="bmiunit" id="bmiunit" class="textInput textbox-width"
-                                   style="resize:none;width:200px;height:20px">
+                            <%--<input type="text" name="bmiunit" id="bmiunit" class="textInput textbox-width"--%>
+                                   <%--style="resize:none;width:200px;height:20px">--%>
+                                <select id="bmiunit" name="bmiunit" class="easyui-combobox"
+                                        data-options="editable:true "
+                                        style="width:200px;">
+                                    <option value="本">本</option>
+                                    <option value="件">件</option>
+                                </select>
                         </td>
                     </tr>
                     <tr>
@@ -72,13 +81,13 @@
                             <select id="bmiistax" name="bmiistax" class="easyui-combobox"
                                     data-options="editable:false "
                                     style="width:200px;">
-                                <option value="0" selected>含税</option>
-                                <option value="1">不含税</option>
+                                <option value="0">含税</option>
+                                <option value="1" selected>不含税</option>
                             </select>
                         </td>
                     </tr>
                     <tr>
-                        <th>外发编号</th>
+                        <th>外发单号</th>
                         <td style="text-align:left;">
                             <input type="text" name="bmioutternum" id="bmioutternum" class="textInput textbox-width"
                                    style="resize:none;width:200px;height:20px">
@@ -99,6 +108,14 @@
                         </td>
                     </tr>
 
+                    <tr>
+                        <th>备注</th>
+                        <td style="text-align:left;">
+                            <input type="text" name="bmiremark" id="bmiremark" class="textInput textbox-width"
+                                   style="resize:none;width:200px;height:20px">
+                        </td>
+                    </tr>
+
                 </table>
             </form>
         </div>
@@ -107,12 +124,12 @@
 
 
 <script type="text/javascript">
-    var oldChangeBmiamount = 0;
+    var oldChangeBmiamount = "NaN";
     $(document).ready(function () {
 
 
         $("#bmiprice").numberbox({
-            precision: "2",
+            precision: "3",
             max: "99999999.99",
             size: "10",
             maxlength: "10",
@@ -121,7 +138,8 @@
                 var tmp = 0;
                 if (judgeNumber(bminum)) {
                     tmp = (parseFloat(newValue) * parseFloat(bminum)).toFixed(2);
-                    oldChangeBmiamount = (parseFloat(oldValue) * parseFloat(bminum)).toFixed(2);
+                        oldChangeBmiamount = (parseFloat(oldValue) * parseFloat(bminum)).toFixed(2);
+
                 } else {
                     tmp = newValue;
                 }
@@ -153,7 +171,7 @@
                     <c:if test="${bmorder!=null}">
                     url: '<c:url value="/home/bm/findItemsByIdbmorder.do?_csrf=${_csrf.token}"/>&idbmorder=${bmorder.idbmorder}&t=' + new Date().getTime(),
                     </c:if>
-                    title: '字段定义列表',
+//                    title: '字段定义列表',
                     pagination: true,
                     fitColumns: true,
                     singleSelect: true,
@@ -167,7 +185,7 @@
                             formatter: function (value, row, index) {
                                 var str = "";
                                 if (value == 0) {
-                                    str = "折页";
+                                    str = "成品折页";
                                 } else if (value == 1) {
                                     str = "切单张";
                                 } else if (value == 2) {
@@ -178,6 +196,10 @@
                                     str = "精装";
                                 }else if (value == 5) {
                                     str = "YO装";
+                                }else if (value == 6) {
+                                    str = "书本折页";
+                                }else if (value == 7) {
+                                    str = "无线胶装";
                                 }
                                 return str;
                             }
@@ -201,9 +223,10 @@
                                 }
                             }
                         },
-                        {field: 'bmioutternum', title: '外发编号', width: 50},
+                        {field: 'bmioutternum', title: '外发单号', width: 50},
                         {field: 'bmorderitemcol', title: '产品规格', width: 50},
-                        {field: 'bmipacreq', title: '包装要求', width: 50,algin:'left'}
+                        {field: 'bmipacreq', title: '包装要求', width: 50},
+                        {field: 'bmiremark', title: '备注', width: 50,algin:'left'}
 
                     ]],
                     toolbar: [{
@@ -217,12 +240,13 @@
                             $("#bmorderIdbmorder").val($("#idbmorder").val());
                             $("#bmiproname").val('');
                             $('#bmiprice').numberbox('setValue', 0);
-                            $('#bminum').numberbox('setValue', 1);
-                            $("#bmiamount").val('');
+                            $('#bminum').numberbox('setValue', 0);
+                            $("#bmiamount").val(0);
                             $("#bmioutternum").val('');
                             $("#bmorderitemcol").val('');
                             $("#bmipacreq").val('');
-                            $("#bmiunit").val('');
+                            $("#bmiremark").val('');
+//                            $("#bmiunit").val('');
 
                         }
                     }, '-', {
@@ -245,9 +269,18 @@
                                 $("#bmioutternum").val(record.bmioutternum);
                                 $("#bmorderitemcol").val(record.bmorderitemcol);
                                 $("#bmipacreq").val(record.bmipacreq);
-                                $("#bmiunit").val(record.bmiunit);
+//                                $("#bmiunit").val(record.bmiunit);
+                                $("#bmiremark").val(record.bmiremark);
                                 $("#bmiprotype").combobox("setValue", record.bmiprotype);
                                 $("#bmiistax").combobox("setValue", record.bmiistax);
+                                var _bminit = strTrimAll(record.bmiunit);
+
+                                if(_bminit!="本"&&_bminit!="件"){
+                                    $("#bmiunit").append("<option value='"+_bminit+"' selected>"+_bminit+"</option>");
+                                }else{
+                                    $("#bmiunit").combobox("setValue", _bminit);
+                                }
+                                oldChangeBmiamount = "NaN";
                             }
                         }
                     }, '-', {
@@ -279,6 +312,7 @@
                                                 $.messager.progress('close');
                                                 if (msg.success == true) {
                                                     $("#bmorderamount").val(($("#bmorderamount").val()-parseFloat(bmiamount)).toFixed(2));
+                                                    oldChangeBmiamount = "NaN";
                                                     $.messager.alert('操作成功', '删除成功。', 'info');
                                                     $('#bmitemlist').datagrid('reload');
                                                 } else {
@@ -303,6 +337,9 @@
                     },
                     onDblClickRow: function (index, row) {
 
+                    },
+                    onSelect:function(index,row){
+                        oldChangeBmiamount="NaN";
                     }
                 }
         );
@@ -313,8 +350,8 @@
             maximizable: true,
             cache: false,
             width: 600,
-            height: 380,
-            title: "用户定义",
+            height: 420,
+            title: "编辑",
             closed: true,
             buttons: [{
                 text: '提交',
@@ -322,7 +359,9 @@
                 handler: function () {
                     if (isEmpty('bmiproname', '产品名称'))return;
                     if (isEmpty('bmorderIdbmorder', '订单错误'))return;
-                    if(oldChangeBmiamount=="NaN")oldChangeBmiamount = 0;
+
+                    if(oldChangeBmiamount=="NaN")oldChangeBmiamount = $("#bmiamount").val();
+
                     var changebmorderamount = (parseFloat($("#bmiamount").val()) - parseFloat(oldChangeBmiamount) + parseFloat($("#bmorderamount").val())).toFixed(2);
                     $("#changebmorderamount").val(changebmorderamount);
 
@@ -344,7 +383,7 @@
                                 $('#bmitemlist').datagrid('reload');
                                 $("#bmorderamount").val(changebmorderamount);
                                 $('#bmitemDialog').dialog('close');
-
+                                oldChangeBmiamount = "NaN";
 
                             } else {
                                 $.messager.alert('操作失败', '保存失败！', 'error');

@@ -50,7 +50,7 @@
         <div id="arrowHImg" class="arrowHA"></div>
     </div>
     <div class="cRight">
-        <iframe id="cFrame" name="cFrame" frameborder="0" width="100%" height="100%" scrolling="auto"></iframe>
+        <iframe id="cFrame" name="cFrame" src="<c:url value="/home/bm/bmlist.do"/>?iduser=${tUser.iduser}" frameborder="0" width="100%" height="100%" scrolling="auto"></iframe>
     </div>
 </div>
 <jsp:include page="./modifypwd.jsp"></jsp:include>

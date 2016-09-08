@@ -28,4 +28,8 @@
       </if>
     </trim>
   </insert>
+  <delete id="deleteByUserid" parameterType="java.lang.Integer" >
+    delete from trelunit
+    where tuser_iduser = #{iduser,jdbcType=INTEGER}
+  </delete>
 </mapper>

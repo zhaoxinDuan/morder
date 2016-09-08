@@ -25,6 +25,8 @@ public class Bmorderitem {
 
     private String bmiunit;
 
+    private String bmiremark;
+
     private Integer bmorderIdbmorder;
 
     public Integer getIdbmitem() {
@@ -113,6 +115,14 @@ public class Bmorderitem {
 
     public void setBmiunit(String bmiunit) {
         this.bmiunit = bmiunit;
+    }
+
+    public String getBmiremark() {
+        return bmiremark;
+    }
+
+    public void setBmiremark(String bmiremark) {
+        this.bmiremark = bmiremark;
     }
 
     public Integer getBmorderIdbmorder() {

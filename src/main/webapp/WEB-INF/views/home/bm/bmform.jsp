@@ -15,6 +15,7 @@
                     <th>客户名称<span class="impSpan">*</span></th>
                     <td style="text-align:left;">
                         <input type="hidden" id="idbmorder" name="idbmorder">
+                        <input type="hidden" id="bmcusname" name="bmcusname">
                         <input type="hidden" id="bmcreateuserid" name="bmcreateuserid" value="${iduser}">
                         <input id="tcustomerIdcustomer" name="tcustomerIdcustomer" class="easyui-combobox"
                                data-options="editable:false "
@@ -22,7 +23,7 @@
                     </td>
                     <th>订单编号</th>
                     <td style="text-align:left;">
-                        <input type="text" name="bmordernum" id="bmordernum" readonly class="textInput textbox-width"
+                        <input type="text" name="bmordernum" id="bmordernum" ${isedit==true?"":"readonly"} class="textInput textbox-width"
                                style="resize:none;width:96%;height:20px">
                     </td>
                 </tr>
@@ -41,33 +42,38 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>付款方式<span class="impSpan">*</span></th>
+                    <th>付款方式</th>
                     <td style="text-align:left;">
-                        <input type="text" name="bmpaymethod" id="bmpaymethod" class="textInput textbox-width"
-                               style="resize:none;width:96%;height:20px">
+                        <select id="bmpaymethod" name="bmpaymethod" class="easyui-combobox"
+                                data-options="editable:true "
+                                style="width:200px;">
+                            <option value="现金">现金</option>
+                            <option value="月结">月结</option>
+                        </select>
 
                     </td>
-                    <th>额外费用</th>
+                    <%--<th>额外费用</th>--%>
+                    <%--<td style="text-align:left;">--%>
+                    <%--<input type="text" name="bmaddcosts" id="bmaddcosts" value="0">--%>
+                    <%--</td>--%>
+                    <th>负责人</th>
                     <td style="text-align:left;">
-                        <input type="text" name="bmaddcosts" id="bmaddcosts" value="0">
-                    </td>
-                </tr>
-                <tr>
-                    <th>订单金额<span class="impSpan">*</span></th>
-                    <td style="text-align:left;">
-                        <input type="text" name="bmorderamount" id="bmorderamount" readonly value="0"
-                               class="textInput textbox-width"
-                               style="resize:none;width:96%;height:20px">
-                    </td>
-                    <th>负责人<span class="impSpan">*</span></th>
-                    <td style="text-align:left;" colspan="3">
                         <input id="tuserIduser" name="tuserIduser" class="easyui-combobox"
                                data-options="editable:false "
                                style="width:200px;"/>
                     </td>
                 </tr>
                 <tr>
-                    <th>备注<span class="impSpan">*</span></th>
+                    <th>订单金额</th>
+                    <td style="text-align:left;" colspan="3">
+                        <input type="text" name="bmorderamount" id="bmorderamount" readonly value="0"
+                               class="textInput textbox-width"
+                               style="resize:none;width:96%;height:20px">
+                    </td>
+
+                </tr>
+                <tr>
+                    <th>订单详情</th>
                     <td style="text-align:left;" colspan="3">
                             <textarea type="text" name="bmcomments" id="bmcomments" rows="10" class="textArea"
                                       style="resize:none;width: 96%;"></textarea>
@@ -78,7 +84,7 @@
                         <a data-options="iconCls:'icon-save'" href="javascript:void(0)" class="easyui-linkbutton"
                            id="savebmorder">保存</a>&nbsp;&nbsp;&nbsp;
                         <a data-options="iconCls:'icon-save'" href="javascript:void(0)" class="easyui-linkbutton"
-                           id="postbmorder">完成订单</a>
+                           id="postbmorder">提交订单</a>
                     </td>
                 </tr>
             </table>
@@ -97,12 +103,23 @@
         $("#bmordernum").val("${bmorder.bmordernum}");
         </c:if>
 
-        <c:if test="${bmorder.bmpaymethod!=null}">
+        <c:if test='${bmorder.bmpaymethod!=null}'>
+
+        <c:choose>
+        <c:when test='${fn:trim(bmorder.bmpaymethod)!="现金"&&fn:trim(bmorder.bmpaymethod)!="月结"}'>
+        $("#bmpaymethod").append("<option value='${bmorder.bmpaymethod}' selected>${bmorder.bmpaymethod}</option>");
+        </c:when>
+        <c:otherwise>
         $("#bmpaymethod").val("${bmorder.bmpaymethod}");
+        <%--$("#bmpaymethod").combobox("setValue", "${bmorder.bmpaymethod}");--%>
+        </c:otherwise>
+
+        </c:choose>
+
         </c:if>
-        <c:if test="${bmorder.bmaddcosts!=null}">
-        $("#bmaddcosts").val("${bmorder.bmaddcosts}");
-        </c:if>
+        <%--<c:if test="${bmorder.bmaddcosts!=null}">--%>
+        <%--$("#bmaddcosts").val("${bmorder.bmaddcosts}");--%>
+        <%--</c:if>--%>
         <c:if test="${bmorder.bmcomments!=null}">
         $("#bmcomments").val("${bmorder.bmcomments}");
         </c:if>
@@ -114,19 +131,12 @@
         </c:if>
 
         <c:if test="${bmorder.bmbillingdate!=null}">
-        <%--$("#bmbillingdate").val("${bmorder.bmbillingdate}");--%>
         $('#bmbillingdate').datebox("setValue", "${bmorder.bmbillingdate}");
         </c:if>
         <c:if test="${bmorder.bmdeliverydate!=null}">
         $('#bmdeliverydate').datebox("setValue", "${bmorder.bmdeliverydate}");
-        <%--$("#bmdeliverydate").val("${bmorder.bmdeliverydate}");--%>
         </c:if>
-        <c:if test="${bmorder.tuserIduser!=null}">
-        $('#tuserIduser').combobox("setValue", "${bmorder.tuserIduser}");
-        </c:if>
-        <c:if test="${bmorder.tcustomerIdcustomer!=null}">
-        $('#tcustomerIdcustomer').combobox("setValue", "${bmorder.tcustomerIdcustomer}");
-        </c:if>
+
 
         </c:if>
     }
@@ -142,6 +152,11 @@
     function saveMorder(ispost) {
 //        if (isEmptyEasyUI('bmbillingdate','开单日期'))return;
         if (isEmptyEasyUI('tcustomerIdcustomer', '客户名称'))return;
+        var tcustomerIdcustomerValue = $("#tcustomerIdcustomer").combobox("getValue")
+        if (!judgeNumber(tcustomerIdcustomerValue)) {
+            $("#bmcusname").val(tcustomerIdcustomerValue);
+            $("#tcustomerIdcustomer").combobox("setValue", null);
+        }
         var data = $("#morderform").serializeArray();
         $.ajax({
             type: "POST",
@@ -159,10 +174,11 @@
                     $('#idbmorder').val(msg.idbmorder);
                     $('#bmordernum').val(msg.bmordernum);
                     $.messager.alert('操作成功', '保存成功。', 'info');
-                    if(!ispost){
+                    if (!ispost) {
                         $("#bmitemlist").datagrid({url: '<c:url value="/home/bm/findItemsByIdbmorder.do?_csrf=${_csrf.token}"/>&idbmorder=' + msg.idbmorder + '&t=' + new Date().getTime()});
-                    }else{
-                        window.location.href="<c:url value="/home/bm/bmlist.do"/>";
+                        $("#bmcostlist").datagrid({url: '<c:url value="/home/bm/findCostsByIdbmorder.do?_csrf=${_csrf.token}"/>&idbmorder=' + msg.idbmorder + '&t=' + new Date().getTime()});
+                    } else {
+                        window.location.href = "<c:url value="/home/bm/bmlist.do"/>";
                     }
 
                 } else {
@@ -178,9 +194,11 @@
     $(document).ready(function () {
         <c:if test="${bmorder==null}">
         $("#bmitemlistDiv").hide();
+        $("#bmconstsDiv").hide();
         </c:if>
         $("#savebmorder").bind("click", function () {
             $("#bmitemlistDiv").show();
+            $("#bmconstsDiv").show();
             saveMorder(false);
 
         });
@@ -199,7 +217,15 @@
                 return row[opts.textField].indexOf(q) >= 0;//这里改成>=即可在任意地方匹配
             },
             onLoadSuccess: function (msg) {
+                <c:if test="${bmorder!=null}">
+
+                <c:if test="${bmorder.tuserIduser!=null}">
+                $('#tuserIduser').combobox("setValue", "${bmorder.tuserIduser}");
+                </c:if>
+                </c:if>
+                <c:if test="${bmorder==null}">
                 $('#tuserIduser').combobox("setValue", "${iduser}");
+                </c:if>
 
             },
             onChange: function (newValue, oldValue) {
@@ -213,41 +239,45 @@
             required: "true",
             valueField: 'idcustomer',
             textField: 'cname',
-            url: '<c:url value="/home/cus/findAllCustomersNolimit.do?_csrf=${_csrf.token}"/>&t='+new Date().getTime,
+            url: '<c:url value="/home/cus/findAllCustomersNolimit.do?_csrf=${_csrf.token}"/>&t=' + new Date().getTime,
             filter: function (q, row) {
                 var opts = $(this).combobox('options');
                 return row[opts.textField].indexOf(q) >= 0;//这里改成>=即可在任意地方匹配
             },
             onLoadSuccess: function (msg) {
-
-
+                <c:if test="${bmorder!=null}">
+                <c:if test="${bmorder.tcustomerIdcustomer!=null}">
+                $('#tcustomerIdcustomer').combobox("setValue", "${bmorder.tcustomerIdcustomer}");
+                </c:if>
+                </c:if>
             },
             onChange: function (newValue, oldValue) {
 
             }
         });
 
-        init();
-
-        $("#bmaddcosts").numberbox({
-            precision: "2",
-            max: "99999999.99",
-            size: "10",
-            maxlength: "10",
-            onChange: function (newValue, oldValue) {
-                var bmorderamount = $("#bmorderamount").val();
-                var temp_bmorderamount = 0;
-                if (judgeNumber(bmorderamount)) {
-                    temp_bmorderamount = ((parseFloat(bmorderamount)-parseFloat(oldValue)+parseFloat(newValue)).toFixed(2));
-
-                } else {
-                    temp_bmorderamount = newValue;
-                }
-                $("#bmorderamount").val(temp_bmorderamount);
-            }
-        });
-
+//
+//
+//        $("#bmaddcosts").numberbox({
+//            precision: "2",
+//            max: "99999999.99",
+//            size: "10",
+//            maxlength: "10",
+//            onChange: function (newValue, oldValue) {
+//                var bmorderamount = $("#bmorderamount").val();
+//                var temp_bmorderamount = 0;
+//                if (judgeNumber(bmorderamount)) {
+//                    temp_bmorderamount = ((parseFloat(bmorderamount) - parseFloat(oldValue) + parseFloat(newValue)).toFixed(2));
+//
+//                } else {
+//                    temp_bmorderamount = newValue;
+//                }
+//                $("#bmorderamount").val(temp_bmorderamount);
+//            }
+//        });
+        $("#bmbillingdate").datebox('setValue', formatterDate(new Date()));
     })
-
+    init();
 </script>
 <jsp:include page="./bmitemlist.jsp"/>
+<jsp:include page="./bmcostlist.jsp"/>

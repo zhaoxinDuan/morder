@@ -189,11 +189,11 @@
                     pagination: true,
                     fitColumns: true,
                     singleSelect: true,
-                    pageSize: 15,
-                    pageList: [15, 30, 45],
+                    pageSize: 3,
+                    pageList: [3, 30, 45],
                     collapsible: true,
                     rownumbers: true,
-                    loadFilter: pagerFilter,
+//                    loadFilter: pagerFilter,
                     columns: [[
                         {
                             field: 'cname', title: '客户名称', width: 50
@@ -293,7 +293,7 @@
                                             $.messager.alert('操作成功', '删除成功。', 'info');
                                             $('#cuslist').datagrid('reload');
                                         } else {
-                                            $.messager.alert('操作失败', '删除失败！', 'error');
+                                            $.messager.alert('操作失败', '删除失败,因为已有该客户订单，请先清除改客户订单信息，再删除该客户！', 'error');
                                         }
                                     },
                                     error: function (msg) {
@@ -342,6 +342,7 @@
                     var uname =$("#cofficername").val();
                     if((uid==null||uid=="")||(uname==null||uname=="")){
                         $.messager.alert('请选择负责人', '请从下拉框重选择负责人，不要自己输入！', 'info');
+                        return;
                     }
                     var data = $("#subform").serializeArray();
                     $.ajax({

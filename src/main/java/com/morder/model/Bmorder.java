@@ -31,6 +31,7 @@ public class Bmorder {
     private String bmcomments;
 
     private String bmpacreq;
+    private String bmdenum;
 
     private Integer bmstatus;
 
@@ -128,6 +129,15 @@ public class Bmorder {
 
     public void setBmpacreq(String bmpacreq) {
         this.bmpacreq = bmpacreq == null ? null : bmpacreq.trim();
+    }
+
+
+    public String getBmdenum() {
+        return bmdenum;
+    }
+
+    public void setBmdenum(String bmdenum) {
+        this.bmdenum = bmdenum== null ? null : bmdenum.trim();
     }
 
     public Integer getBmstatus() {
