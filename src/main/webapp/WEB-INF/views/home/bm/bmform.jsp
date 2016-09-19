@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <div class="ctrlContainer" id="fieldDefDiv">
     <div class="eleContainer titleText textS16">
@@ -131,10 +132,10 @@
         </c:if>
 
         <c:if test="${bmorder.bmbillingdate!=null}">
-        $('#bmbillingdate').datebox("setValue", "${bmorder.bmbillingdate}");
+        $('#bmbillingdate').datebox("setValue", "<fmt:formatDate value="${bmorder.bmbillingdate}" pattern="yyyy-MM-dd"/>");
         </c:if>
         <c:if test="${bmorder.bmdeliverydate!=null}">
-        $('#bmdeliverydate').datebox("setValue", "${bmorder.bmdeliverydate}");
+        $('#bmdeliverydate').datebox("setValue", "<fmt:formatDate value="${bmorder.bmdeliverydate}" pattern="yyyy-MM-dd"/>");
         </c:if>
 
 
@@ -276,8 +277,9 @@
 //            }
 //        });
         $("#bmbillingdate").datebox('setValue', formatterDate(new Date()));
+        init();
     })
-    init();
+
 </script>
 <jsp:include page="./bmitemlist.jsp"/>
 <jsp:include page="./bmcostlist.jsp"/>
