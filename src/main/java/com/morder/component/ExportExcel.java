@@ -121,11 +121,15 @@ public class ExportExcel {
                 if (colNum == 0) {
 //                    sheet.setColumnWidth(colNum, (columnWidth - 2) * 256 + 1);
                     cwith = ((columnWidth - 2) * 256 + 1);
-                    sheet.setColumnWidth(colNum, cwith>254?254:cwith);
+                    sheet.setColumnWidth(colNum, cwith>5000?5000:cwith);
+//                    sheet.setColumnWidth(colNum, cwith);
+//                    System.out.println("cwith = " + cwith);
                 } else {
                     cwith = ((columnWidth + 4) * 256 + 1);
-                    sheet.setColumnWidth(colNum, cwith>254?254:cwith);
+                    sheet.setColumnWidth(colNum, cwith>5000?5000:cwith);
+//                    sheet.setColumnWidth(colNum, cwith);
 //                    sheet.setColumnWidth(colNum, (columnWidth + 4) * 256 + 1);
+//                    System.out.println("cwith = " + cwith);
                 }
             }
 
