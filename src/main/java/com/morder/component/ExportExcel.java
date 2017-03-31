@@ -67,7 +67,7 @@ public class ExportExcel {
                     } else {
                         cell = row.createCell(j, HSSFCell.CELL_TYPE_STRING);
                         if (!"".equals(obj[j]) && obj[j] != null) {
-                            cell.setCellValue(obj[j].toString());                       //设置单元格的值
+                            cell.setCellValue(obj[j].toString().length()>254?obj[j].toString().substring(0,254):obj[j].toString());                       //设置单元格的值
                         } else {
                             cell.setCellValue("");
                         }
