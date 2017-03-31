@@ -68,8 +68,9 @@ public class ExportExcel {
                     } else {
                         cell = row.createCell(j, HSSFCell.CELL_TYPE_STRING);
                         if (!"".equals(obj[j]) && obj[j] != null) {
-                            val = obj[j].toString();
-                            cell.setCellValue(val.length()>254?val.substring(0,254):val);                       //设置单元格的值
+//                            val = obj[j].toString();
+//                            cell.setCellValue(val.length()>254?val.substring(0,254):val);                       //设置单元格的值
+                            cell.setCellValue(obj[j].toString());                       //设置单元格的值
                         } else {
                             cell.setCellValue("");
                         }
@@ -119,10 +120,10 @@ public class ExportExcel {
                 int cwith = 0;
                 if (colNum == 0) {
 //                    sheet.setColumnWidth(colNum, (columnWidth - 2) * 256 + 1);
-                    cwith = (columnWidth - 2) * 256 + 1;
+                    cwith = ((columnWidth - 2) * 256 + 1);
                     sheet.setColumnWidth(colNum, cwith>254?254:cwith);
                 } else {
-                    cwith = (columnWidth + 4) * 256 + 1;
+                    cwith = ((columnWidth + 4) * 256 + 1);
                     sheet.setColumnWidth(colNum, cwith>254?254:cwith);
 //                    sheet.setColumnWidth(colNum, (columnWidth + 4) * 256 + 1);
                 }
