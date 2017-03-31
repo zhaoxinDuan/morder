@@ -56,6 +56,7 @@ public class ExportExcel {
             Object[] obj = null;
             HSSFRow row = null;
             HSSFCell cell = null;
+            String val = null;
             for (int i = 0; i < dataList.size(); i++) {
                 obj = dataList.get(i);//遍历每个对象
                 row = sheet.createRow(i + 3);//创建所需的行数
@@ -67,7 +68,8 @@ public class ExportExcel {
                     } else {
                         cell = row.createCell(j, HSSFCell.CELL_TYPE_STRING);
                         if (!"".equals(obj[j]) && obj[j] != null) {
-                            cell.setCellValue(obj[j].toString().length()>254?obj[j].toString().substring(0,254):obj[j].toString());                       //设置单元格的值
+                            val = obj[j].toString();
+                            cell.setCellValue(val.length()>254?val.substring(0,254):val);                       //设置单元格的值
                         } else {
                             cell.setCellValue("");
                         }
