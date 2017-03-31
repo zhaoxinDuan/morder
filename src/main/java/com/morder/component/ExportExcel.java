@@ -68,9 +68,9 @@ public class ExportExcel {
                     } else {
                         cell = row.createCell(j, HSSFCell.CELL_TYPE_STRING);
                         if (!"".equals(obj[j]) && obj[j] != null) {
-//                            val = obj[j].toString();
-//                            cell.setCellValue(val.length()>254?val.substring(0,254):val);                       //设置单元格的值
-                            cell.setCellValue(obj[j].toString());                       //设置单元格的值
+                            val = obj[j].toString();
+                            cell.setCellValue(val.length()>250?val.substring(0,250):val);                       //设置单元格的值
+//                            cell.setCellValue(obj[j].toString());                       //设置单元格的值
                         } else {
                             cell.setCellValue("");
                         }
