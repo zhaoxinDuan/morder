@@ -14,6 +14,7 @@ public class BmorderSearchForm {
     private String searchBmdeliverydateFrom;
     private String searchBmdeliverydateTo;
     private Integer searchTuserIduser;
+    private String searchBmiproname;
 
     public Integer getSearchBmstatus() {
         return searchBmstatus;
@@ -71,6 +72,14 @@ public class BmorderSearchForm {
         this.searchTuserIduser = searchTuserIduser;
     }
 
+    public String getSearchBmiproname() {
+        return searchBmiproname;
+    }
+
+    public void setSearchBmiproname(String searchBmiproname) {
+        this.searchBmiproname = searchBmiproname;
+    }
+
     public String getBuilderSql(){
         StringBuilder sqlBuilder = new StringBuilder("");
         if(this.searchBmstatus!=null&&this.searchBmstatus!=-1){
@@ -93,6 +102,9 @@ public class BmorderSearchForm {
         }
         if(!StringUtils.isEmpty(this.searchBmdeliverydateTo)){
             sqlBuilder.append(" and bmdeliverydate<'"+this.searchBmdeliverydateTo+"'");
+        }
+        if(!StringUtils.isEmpty(this.searchBmiproname)){
+            sqlBuilder.append(" and bmiproname like '%"+this.searchBmiproname+"%'");
         }
 
 

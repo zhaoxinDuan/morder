@@ -231,12 +231,13 @@
   </update>
 
     <select id="findAllBmordersByPage" resultType="java.util.HashMap">
-        select idbmorder,bmcusname,bmordernum,bmbillingdate,bmdeliverydate,bmpaymethod,bmcurrencytype,bmaddcosts
-,bmorderamount,bmcomments,bmpacreq,bmdenum,bmstatus,bmcreateuserid,bmdelivery_idbmdelivery,tuser_iduser
-,tcustomer_idcustomer,b.uname as ownername,
+        select a.idbmorder,a.bmcusname,a.bmordernum,a.bmbillingdate,a.bmdeliverydate,a.bmpaymethod,a.bmcurrencytype,a.bmaddcosts
+,a.bmorderamount,a.bmcomments,a.bmpacreq,a.bmdenum,a.bmstatus,a.bmcreateuserid,a.bmdelivery_idbmdelivery,a.tuser_iduser
+,a.tcustomer_idcustomer,b.uname as ownername,bmi.bmiproname,
 (SELECT  GROUP_CONCAT(bmiproname SEPARATOR ',') FROM bmorderitem where idbmorder=bmorder_idbmorder) as product,
 (SELECT  GROUP_CONCAT(bmiprotype SEPARATOR ',') FROM bmorderitem where idbmorder=bmorder_idbmorder) as protype
  from bmorder a
+ left join bmorderitem bmi on a.idbmorder = bmi.bmorder_idbmorder
  left join tuser b on a.tuser_iduser = b.iduser
  ${filters} order by idbmorder desc
     </select>
@@ -258,12 +259,14 @@
     </select>
 
     <select id="selectSumBmorderamount" resultType="java.math.BigDecimal">
-        select sum(bmorderamount) from bmorder  ${filters}
+        select sum(bmorderamount) from bmorder
+        left join bmorderitem bmi on idbmorder = bmi.bmorder_idbmorder ${filters}
     </select>
 
 
     <select id="selectBmorderCount" resultType="java.lang.Integer">
-       select count(1) from bmorder ${filters}
+       select count(1) from bmorder
+       left join bmorderitem bmi on idbmorder = bmi.bmorder_idbmorder ${filters}
     </select>
 
     <select id="findAllBmordersByMorderid" resultType="java.util.HashMap">

@@ -66,9 +66,14 @@
                 </tr>
                 <tr>
                     <th>负责人</th>
-                    <td style="text-align:left;" colspan="3">
+                    <td style="text-align:left;" >
                         <input id="searchTuserIduser" name="searchTuserIduser" class="easyui-combobox"
                                data-options="editable:false "
+                               style="width:200px;"/>
+                    </td>
+                    <th>产品名称</th>
+                    <td style="text-align:left;" colspan="3">
+                        <input id="searchBmiproname" name="searchBmiproname" class="textInput textbox-width"
                                style="width:200px;"/>
                     </td>
                 </tr>
@@ -400,7 +405,8 @@
                 searchBmbillingdateTo: $("#searchBmbillingdateTo").datebox("getValue"),
                 searchBmdeliverydateFrom: $("#searchBmdeliverydateFrom").datebox("getValue"),
                 searchBmdeliverydateTo: $("#searchBmdeliverydateTo").datebox("getValue"),
-                searchTuserIduser: $("#searchTuserIduser").combobox("getValue")
+                searchTuserIduser: $("#searchTuserIduser").combobox("getValue"),
+                searchBmiproname: $("#searchBmiproname").val()
             });
             $.messager.progress('close');
 
