@@ -231,9 +231,9 @@
   </update>
 
     <select id="findAllBmordersByPage" resultType="java.util.HashMap">
-        select a.idbmorder,a.bmcusname,a.bmordernum,a.bmbillingdate,a.bmdeliverydate,a.bmpaymethod,a.bmcurrencytype,a.bmaddcosts
+        select distinct a.idbmorder,a.bmcusname,a.bmordernum,a.bmbillingdate,a.bmdeliverydate,a.bmpaymethod,a.bmcurrencytype,a.bmaddcosts
 ,a.bmorderamount,a.bmcomments,a.bmpacreq,a.bmdenum,a.bmstatus,a.bmcreateuserid,a.bmdelivery_idbmdelivery,a.tuser_iduser
-,a.tcustomer_idcustomer,b.uname as ownername,bmi.bmiproname,
+,a.tcustomer_idcustomer,b.uname as ownername,
 (SELECT  GROUP_CONCAT(bmiproname SEPARATOR ',') FROM bmorderitem where idbmorder=bmorder_idbmorder) as product,
 (SELECT  GROUP_CONCAT(bmiprotype SEPARATOR ',') FROM bmorderitem where idbmorder=bmorder_idbmorder) as protype
  from bmorder a
@@ -259,13 +259,12 @@
     </select>
 
     <select id="selectSumBmorderamount" resultType="java.math.BigDecimal">
-        select sum(bmorderamount) from bmorder
-        left join bmorderitem bmi on idbmorder = bmi.bmorder_idbmorder ${filters}
+        select sum(bmorderamount) from bmorder  ${filters}
     </select>
 
 
     <select id="selectBmorderCount" resultType="java.lang.Integer">
-       select count(1) from bmorder
+       select count(distinct idbmorder) from bmorder
        left join bmorderitem bmi on idbmorder = bmi.bmorder_idbmorder ${filters}
     </select>
 
